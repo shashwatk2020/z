@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -42,6 +41,15 @@ import ReverseTextGenerator from "./pages/tools/text/ReverseTextGenerator";
 import TextToSpeechConverter from "./pages/tools/text/TextToSpeechConverter";
 import UnicodeCharacterConverter from "./pages/tools/text/UnicodeCharacterConverter";
 import NumberToWordsConverter from "./pages/tools/text/NumberToWordsConverter";
+import RandomPasswordGenerator from "./pages/tools/text/RandomPasswordGenerator";
+import LoremIpsumGenerator from "./pages/tools/text/LoremIpsumGenerator";
+import SlugGenerator from "./pages/tools/text/SlugGenerator";
+import RandomWordGenerator from "./pages/tools/text/RandomWordGenerator";
+import RandomLetterGenerator from "./pages/tools/text/RandomLetterGenerator";
+import TextRepeater from "./pages/tools/text/TextRepeater";
+import HashtagGenerator from "./pages/tools/text/HashtagGenerator";
+import BlogTitleGenerator from "./pages/tools/text/BlogTitleGenerator";
+import StrongPasswordGenerator from "./pages/tools/text/StrongPasswordGenerator";
 
 const queryClient = new QueryClient();
 
@@ -100,6 +108,15 @@ const App = () => (
             <Route path="/tools/text/text-to-speech-converter" element={<TextToSpeechConverter />} />
             <Route path="/tools/text/unicode-character-converter" element={<UnicodeCharacterConverter />} />
             <Route path="/tools/text/number-to-words-converter" element={<NumberToWordsConverter />} />
+            <Route path="/tools/text/random-password-generator" element={<RandomPasswordGenerator />} />
+            <Route path="/tools/text/lorem-ipsum-generator" element={<LoremIpsumGenerator />} />
+            <Route path="/tools/text/slug-generator" element={<SlugGenerator />} />
+            <Route path="/tools/text/random-word-generator" element={<RandomWordGenerator />} />
+            <Route path="/tools/text/random-letter-generator" element={<RandomLetterGenerator />} />
+            <Route path="/tools/text/text-repeater" element={<TextRepeater />} />
+            <Route path="/tools/text/hashtag-generator" element={<HashtagGenerator />} />
+            <Route path="/tools/text/blog-title-generator" element={<BlogTitleGenerator />} />
+            <Route path="/tools/text/strong-password-generator" element={<StrongPasswordGenerator />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
