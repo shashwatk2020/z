@@ -2,7 +2,7 @@
 import React from 'react';
 import Layout from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
-import { Check, Star, Zap } from 'lucide-react';
+import { Check, Star, Zap, Lock } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const Pricing = () => {
@@ -11,20 +11,21 @@ const Pricing = () => {
       name: 'Free',
       price: '$0',
       period: 'forever',
-      description: 'Perfect for getting started',
+      description: 'All tools available with basic features',
       features: [
+        'All 150+ tools included',
+        'Basic conversion features',
         '5 conversions per day',
-        'Basic image tools',
-        'PDF merge & split',
         'Standard processing speed',
         'Email support'
       ],
       limitations: [
         'Watermark on outputs',
         'Limited file size (10MB)',
-        'Basic tools only'
+        'No premium features',
+        'No batch processing'
       ],
-      buttonText: 'Get Started',
+      buttonText: 'Get Started Free',
       buttonVariant: 'outline' as const,
       popular: false
     },
@@ -32,10 +33,11 @@ const Pricing = () => {
       name: 'Pro',
       price: '$9.99',
       period: 'per month',
-      description: 'For professionals and power users',
+      description: 'All tools with premium features unlocked',
       features: [
+        'All 150+ tools included',
+        'All premium features unlocked',
         'Unlimited conversions',
-        'All tools included',
         'No watermarks',
         'Priority processing',
         'Large file support (1GB)',
@@ -44,7 +46,7 @@ const Pricing = () => {
         'API access'
       ],
       limitations: [],
-      buttonText: 'Start Free Trial',
+      buttonText: 'Upgrade to Pro',
       buttonVariant: 'default' as const,
       popular: true
     },
@@ -80,7 +82,7 @@ const Pricing = () => {
               Simple, Transparent Pricing
             </h1>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Choose the plan that's right for you. Upgrade or downgrade at any time.
+              All tools are free to use. Upgrade to unlock premium features and remove limitations.
             </p>
           </div>
 
@@ -120,9 +122,7 @@ const Pricing = () => {
                   ))}
                   {plan.limitations.map((limitation, limitationIndex) => (
                     <div key={limitationIndex} className="flex items-center opacity-60">
-                      <div className="h-5 w-5 mr-3 flex-shrink-0 flex items-center justify-center">
-                        <div className="h-1 w-3 bg-gray-400 rounded"></div>
-                      </div>
+                      <Lock className="h-4 w-4 mr-3 flex-shrink-0 text-gray-400" />
                       <span className="text-gray-500 text-sm">{limitation}</span>
                     </div>
                   ))}

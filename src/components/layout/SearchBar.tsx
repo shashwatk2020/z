@@ -1,19 +1,92 @@
 
 import React, { useState, useRef, useEffect } from 'react';
-import { Search } from 'lucide-react';
+import { Search, Lock } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const tools = [
-  { name: 'JPG to PNG Converter', category: 'Image Tools', url: '/tools/jpg-to-png' },
-  { name: 'PDF Merger', category: 'PDF Tools', url: '/tools/pdf-merger' },
-  { name: 'Video Compressor', category: 'Video Tools', url: '/tools/video-compressor' },
-  { name: 'Audio Converter', category: 'Audio Tools', url: '/tools/audio-converter' },
-  { name: 'Text Formatter', category: 'Text Tools', url: '/tools/text-formatter' },
-  { name: 'Image Resizer', category: 'Image Tools', url: '/tools/image-resizer' },
-  { name: 'PDF to Word', category: 'PDF Tools', url: '/tools/pdf-to-word' },
-  { name: 'GIF Maker', category: 'Video Tools', url: '/tools/gif-maker' },
-  { name: 'MP3 Converter', category: 'Audio Tools', url: '/tools/mp3-converter' },
-  { name: 'Word Counter', category: 'Text Tools', url: '/tools/word-counter' },
+  // Image Tools
+  { name: 'JPG to PNG Converter', category: 'Image Tools', url: '/tools/jpg-to-png', premium: false },
+  { name: 'PNG to JPG Converter', category: 'Image Tools', url: '/tools/png-to-jpg', premium: false },
+  { name: 'Image Resizer', category: 'Image Tools', url: '/tools/image-resizer', premium: false },
+  { name: 'Image Compressor', category: 'Image Tools', url: '/tools/image-compressor', premium: false },
+  { name: 'WebP Converter', category: 'Image Tools', url: '/tools/webp-converter', premium: false },
+  { name: 'HEIC to JPG', category: 'Image Tools', url: '/tools/heic-to-jpg', premium: false },
+  { name: 'Background Remover', category: 'Image Tools', url: '/tools/background-remover', premium: true },
+  { name: 'Image Enhancer', category: 'Image Tools', url: '/tools/image-enhancer', premium: true },
+  { name: 'Watermark Remover', category: 'Image Tools', url: '/tools/watermark-remover', premium: true },
+  { name: 'Photo Editor', category: 'Image Tools', url: '/tools/photo-editor', premium: true },
+  { name: 'Image Upscaler', category: 'Image Tools', url: '/tools/image-upscaler', premium: true },
+  { name: 'Cartoon Effect', category: 'Image Tools', url: '/tools/cartoon-effect', premium: true },
+
+  // PDF Tools
+  { name: 'PDF Merger', category: 'PDF Tools', url: '/tools/pdf-merger', premium: false },
+  { name: 'PDF Splitter', category: 'PDF Tools', url: '/tools/pdf-splitter', premium: false },
+  { name: 'PDF Compressor', category: 'PDF Tools', url: '/tools/pdf-compressor', premium: false },
+  { name: 'JPG to PDF', category: 'PDF Tools', url: '/tools/jpg-to-pdf', premium: false },
+  { name: 'Word to PDF', category: 'PDF Tools', url: '/tools/word-to-pdf', premium: false },
+  { name: 'Excel to PDF', category: 'PDF Tools', url: '/tools/excel-to-pdf', premium: false },
+  { name: 'PDF to Word', category: 'PDF Tools', url: '/tools/pdf-to-word', premium: true },
+  { name: 'PDF to Excel', category: 'PDF Tools', url: '/tools/pdf-to-excel', premium: true },
+  { name: 'PDF to PowerPoint', category: 'PDF Tools', url: '/tools/pdf-to-powerpoint', premium: true },
+  { name: 'PDF Password Remover', category: 'PDF Tools', url: '/tools/pdf-password-remover', premium: true },
+  { name: 'OCR Scanner', category: 'PDF Tools', url: '/tools/ocr-scanner', premium: true },
+  { name: 'PDF Editor', category: 'PDF Tools', url: '/tools/pdf-editor', premium: true },
+
+  // Video Tools
+  { name: 'Video Compressor', category: 'Video Tools', url: '/tools/video-compressor', premium: false },
+  { name: 'GIF Maker', category: 'Video Tools', url: '/tools/gif-maker', premium: false },
+  { name: 'MP4 Converter', category: 'Video Tools', url: '/tools/mp4-converter', premium: false },
+  { name: 'Video to Audio', category: 'Video Tools', url: '/tools/video-to-audio', premium: false },
+  { name: 'Screen Recorder', category: 'Video Tools', url: '/tools/screen-recorder', premium: false },
+  { name: 'Video Trimmer', category: 'Video Tools', url: '/tools/video-trimmer', premium: false },
+  { name: 'Video Converter', category: 'Video Tools', url: '/tools/video-converter', premium: true },
+  { name: 'Video Editor', category: 'Video Tools', url: '/tools/video-editor', premium: true },
+  { name: 'Subtitle Generator', category: 'Video Tools', url: '/tools/subtitle-generator', premium: true },
+  { name: 'Video Merger', category: 'Video Tools', url: '/tools/video-merger', premium: true },
+  { name: 'Video Stabilizer', category: 'Video Tools', url: '/tools/video-stabilizer', premium: true },
+  { name: 'Slow Motion Video', category: 'Video Tools', url: '/tools/slow-motion-video', premium: true },
+
+  // Audio Tools
+  { name: 'Audio Converter', category: 'Audio Tools', url: '/tools/audio-converter', premium: false },
+  { name: 'MP3 Converter', category: 'Audio Tools', url: '/tools/mp3-converter', premium: false },
+  { name: 'Audio Compressor', category: 'Audio Tools', url: '/tools/audio-compressor', premium: false },
+  { name: 'Audio Trimmer', category: 'Audio Tools', url: '/tools/audio-trimmer', premium: false },
+  { name: 'Volume Booster', category: 'Audio Tools', url: '/tools/volume-booster', premium: false },
+  { name: 'Audio Recorder', category: 'Audio Tools', url: '/tools/audio-recorder', premium: false },
+  { name: 'Voice Enhancer', category: 'Audio Tools', url: '/tools/voice-enhancer', premium: true },
+  { name: 'Noise Remover', category: 'Audio Tools', url: '/tools/noise-remover', premium: true },
+  { name: 'Audio Merger', category: 'Audio Tools', url: '/tools/audio-merger', premium: true },
+  { name: 'Pitch Changer', category: 'Audio Tools', url: '/tools/pitch-changer', premium: true },
+  { name: 'Karaoke Maker', category: 'Audio Tools', url: '/tools/karaoke-maker', premium: true },
+  { name: 'Audio Normalizer', category: 'Audio Tools', url: '/tools/audio-normalizer', premium: true },
+
+  // Text Tools
+  { name: 'Word Counter', category: 'Text Tools', url: '/tools/word-counter', premium: false },
+  { name: 'Text Formatter', category: 'Text Tools', url: '/tools/text-formatter', premium: false },
+  { name: 'Case Converter', category: 'Text Tools', url: '/tools/case-converter', premium: false },
+  { name: 'Text to Speech', category: 'Text Tools', url: '/tools/text-to-speech', premium: false },
+  { name: 'Lorem Ipsum Generator', category: 'Text Tools', url: '/tools/lorem-ipsum', premium: false },
+  { name: 'Text Diff Checker', category: 'Text Tools', url: '/tools/text-diff-checker', premium: false },
+  { name: 'Grammar Checker', category: 'Text Tools', url: '/tools/grammar-checker', premium: true },
+  { name: 'Plagiarism Checker', category: 'Text Tools', url: '/tools/plagiarism-checker', premium: true },
+  { name: 'Text Summarizer', category: 'Text Tools', url: '/tools/text-summarizer', premium: true },
+  { name: 'Paraphrasing Tool', category: 'Text Tools', url: '/tools/paraphrasing-tool', premium: true },
+  { name: 'Language Translator', category: 'Text Tools', url: '/tools/language-translator', premium: true },
+  { name: 'Keyword Density Checker', category: 'Text Tools', url: '/tools/keyword-density-checker', premium: true },
+
+  // Productivity Tools
+  { name: 'QR Code Generator', category: 'Productivity Tools', url: '/tools/qr-generator', premium: false },
+  { name: 'URL Shortener', category: 'Productivity Tools', url: '/tools/url-shortener', premium: false },
+  { name: 'Password Generator', category: 'Productivity Tools', url: '/tools/password-generator', premium: false },
+  { name: 'Hash Generator', category: 'Productivity Tools', url: '/tools/hash-generator', premium: false },
+  { name: 'Base64 Encoder/Decoder', category: 'Productivity Tools', url: '/tools/base64-encoder', premium: false },
+  { name: 'JSON Formatter', category: 'Productivity Tools', url: '/tools/json-formatter', premium: false },
+  { name: 'Color Palette Generator', category: 'Productivity Tools', url: '/tools/color-palette', premium: true },
+  { name: 'Favicon Generator', category: 'Productivity Tools', url: '/tools/favicon-generator', premium: true },
+  { name: 'Barcode Generator', category: 'Productivity Tools', url: '/tools/barcode-generator', premium: true },
+  { name: 'Unit Converter', category: 'Productivity Tools', url: '/tools/unit-converter', premium: true },
+  { name: 'Currency Converter', category: 'Productivity Tools', url: '/tools/currency-converter', premium: true },
+  { name: 'CSS Minifier', category: 'Productivity Tools', url: '/tools/css-minifier', premium: true },
 ];
 
 const SearchBar = () => {
@@ -83,7 +156,12 @@ const SearchBar = () => {
                 >
                   <div className="flex items-center justify-between">
                     <div>
-                      <div className="font-medium text-gray-900">{tool.name}</div>
+                      <div className="font-medium text-gray-900 flex items-center">
+                        {tool.name}
+                        {tool.premium && (
+                          <Lock className="h-3 w-3 text-yellow-600 ml-2" />
+                        )}
+                      </div>
                       <div className="text-sm text-gray-500">{tool.category}</div>
                     </div>
                   </div>
