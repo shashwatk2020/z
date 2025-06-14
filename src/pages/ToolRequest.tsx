@@ -9,7 +9,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
-import { Lock, Tool, Send } from 'lucide-react';
+import { Lock, Wrench, Send } from 'lucide-react';
 
 const ToolRequest = () => {
   const [formData, setFormData] = useState({
@@ -95,7 +95,7 @@ const ToolRequest = () => {
           {/* Header */}
           <div className="text-center mb-16">
             <div className="flex items-center justify-center mb-4">
-              <Tool className="h-12 w-12 text-blue-600 mr-3" />
+              <Wrench className="h-12 w-12 text-blue-600 mr-3" />
               <h1 className="text-4xl md:text-5xl font-bold text-gray-900">
                 Request a Tool
               </h1>
