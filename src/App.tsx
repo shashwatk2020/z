@@ -32,6 +32,16 @@ import VideoTools from "./pages/tools/VideoTools";
 import AudioTools from "./pages/tools/AudioTools";
 import PDFTools from "./pages/tools/PDFTools";
 import CaseConverter from "./pages/tools/text/CaseConverter";
+import SentenceCaseConverter from "./pages/tools/text/SentenceCaseConverter";
+import BinaryTextConverter from "./pages/tools/text/BinaryTextConverter";
+import TextToHexConverter from "./pages/tools/text/TextToHexConverter";
+import HexToTextConverter from "./pages/tools/text/HexToTextConverter";
+import TextToAsciiConverter from "./pages/tools/text/TextToAsciiConverter";
+import AsciiToTextConverter from "./pages/tools/text/AsciiToTextConverter";
+import ReverseTextGenerator from "./pages/tools/text/ReverseTextGenerator";
+import TextToSpeechConverter from "./pages/tools/text/TextToSpeechConverter";
+import UnicodeCharacterConverter from "./pages/tools/text/UnicodeCharacterConverter";
+import NumberToWordsConverter from "./pages/tools/text/NumberToWordsConverter";
 
 const queryClient = new QueryClient();
 
@@ -80,6 +90,16 @@ const App = () => (
             <Route path="/tools/audio" element={<AudioTools />} />
             <Route path="/tools/pdf" element={<PDFTools />} />
             <Route path="/tools/text/case-converter" element={<CaseConverter />} />
+            <Route path="/tools/text/sentence-case-converter" element={<SentenceCaseConverter />} />
+            <Route path="/tools/text/binary-text-converter" element={<BinaryTextConverter />} />
+            <Route path="/tools/text/text-to-hex-converter" element={<TextToHexConverter />} />
+            <Route path="/tools/text/hex-to-text-converter" element={<HexToTextConverter />} />
+            <Route path="/tools/text/text-to-ascii-converter" element={<TextToAsciiConverter />} />
+            <Route path="/tools/text/ascii-to-text-converter" element={<AsciiToTextConverter />} />
+            <Route path="/tools/text/reverse-text-generator" element={<ReverseTextGenerator />} />
+            <Route path="/tools/text/text-to-speech-converter" element={<TextToSpeechConverter />} />
+            <Route path="/tools/text/unicode-character-converter" element={<UnicodeCharacterConverter />} />
+            <Route path="/tools/text/number-to-words-converter" element={<NumberToWordsConverter />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
