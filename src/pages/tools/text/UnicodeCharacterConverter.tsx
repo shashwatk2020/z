@@ -412,10 +412,10 @@ const UnicodeCharacterConverter = () => {
                 <CardContent>
                   <ul className="space-y-2 text-sm">
                     <li><strong>Unicode Notation:</strong> Standard U+ABCD format</li>
-                    <li><strong>HTML Entity:</strong> Decimal format for HTML (&amp;#1234;)</li>
-                    <li><strong>HTML Hex:</strong> Hexadecimal format for HTML (&amp;#xABCD;)</li>
-                    <li><strong>CSS Code:</strong> Escape sequence for CSS (\\ABCD)</li>
-                    <li><strong>JavaScript:</strong> Unicode escape for JavaScript (\\u{ABCD})</li>
+                    <li><strong>HTML Entity:</strong> Decimal format for HTML (&#1234;)</li>
+                    <li><strong>HTML Hex:</strong> Hexadecimal format for HTML (&#xABCD;)</li>
+                    <li><strong>CSS Code:</strong> Escape sequence for CSS (\ABCD)</li>
+                    <li><strong>JavaScript:</strong> Unicode escape for JavaScript (\u{'{ABCD}'})</li>
                   </ul>
                 </CardContent>
               </Card>
@@ -470,7 +470,7 @@ const UnicodeCharacterConverter = () => {
                   <div>
                     <h4 className="font-semibold">Q: How do I use these codes in my code?</h4>
                     <p className="text-sm text-gray-600">
-                      Use the appropriate format for your language: \\u{ABCD} for JavaScript, \\ABCD for CSS, or &amp;#1234; for HTML.
+                      Use the appropriate format for your language: \u{'{ABCD}'} for JavaScript, \ABCD for CSS, or &#1234; for HTML.
                     </p>
                   </div>
                 </CardContent>
