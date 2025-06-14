@@ -1,8 +1,11 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useAuth } from '@/contexts/AuthContext';
 
 const Footer = () => {
+  const { user } = useAuth();
+
   return (
     <footer className="bg-gray-900 text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -24,6 +27,11 @@ const Footer = () => {
                 Terms of Service
               </a>
             </div>
+            <div className="mt-4">
+              <p className="text-gray-400 text-sm">
+                Contact us: <a href="mailto:contact@zipconvert.com" className="text-blue-400 hover:text-blue-300">contact@zipconvert.com</a>
+              </p>
+            </div>
           </div>
 
           {/* Quick Links */}
@@ -41,10 +49,18 @@ const Footer = () => {
           <div>
             <h3 className="font-semibold mb-4">Support</h3>
             <ul className="space-y-2">
-              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Help Center</a></li>
-              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">API Documentation</a></li>
-              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Community</a></li>
-              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Feature Requests</a></li>
+              <li><Link to="/help" className="text-gray-300 hover:text-white transition-colors">Help Center</Link></li>
+              <li>
+                {user ? (
+                  <Link to="/tool-request" className="text-gray-300 hover:text-white transition-colors">
+                    Tool Request
+                  </Link>
+                ) : (
+                  <Link to="/auth" className="text-gray-400 cursor-not-allowed" title="Sign in to request tools">
+                    Tool Request (Sign in required)
+                  </Link>
+                )}
+              </li>
             </ul>
           </div>
         </div>
