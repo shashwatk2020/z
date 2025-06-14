@@ -1,10 +1,11 @@
+
 import React from 'react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import FeaturedToolCard from '@/components/tools/FeaturedToolCard';
 import ToolGrid from '@/components/tools/ToolGrid';
 import TextToolsContent from '@/components/tools/TextToolsContent';
-import { featuredTools, allTextTools } from '@/data/textToolsData';
+import { featuredTools, conversionTools, generationTools, analysisTools, stylingTools } from '@/data/textToolsData';
 
 const TextTools = () => {
   return (
@@ -47,7 +48,24 @@ const TextTools = () => {
               <p className="mt-4 max-w-3xl mx-auto text-lg text-gray-600">Explore our full suite of text utilities for any task imaginable, from simple conversions to creative text generation.</p>
             </div>
 
-            <ToolGrid tools={allTextTools} />
+            <div className="space-y-16">
+              <div>
+                <h3 className="text-2xl font-bold text-gray-900 mb-8 border-b pb-2">Conversion Tools</h3>
+                <ToolGrid tools={conversionTools} />
+              </div>
+              <div>
+                <h3 className="text-2xl font-bold text-gray-900 mb-8 border-b pb-2">Generation Tools</h3>
+                <ToolGrid tools={generationTools} />
+              </div>
+              <div>
+                <h3 className="text-2xl font-bold text-gray-900 mb-8 border-b pb-2">Analysis Tools</h3>
+                <ToolGrid tools={analysisTools} />
+              </div>
+              <div>
+                <h3 className="text-2xl font-bold text-gray-900 mb-8 border-b pb-2">Styling Tools</h3>
+                <ToolGrid tools={stylingTools} />
+              </div>
+            </div>
             
           </div>
         </div>
