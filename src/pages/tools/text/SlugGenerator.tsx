@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import Layout from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
@@ -122,7 +123,7 @@ const SlugGenerator = () => {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="case">Case Style</Label>
-                  <Select value={caseStyle} onValueChange={setCaseStyle}>
+                  <Select value={caseStyle} onValueChange={(value: 'lowercase' | 'uppercase' | 'camelcase' | 'pascalcase') => setCaseStyle(value)}>
                     <SelectTrigger>
                       <SelectValue />
                     </SelectTrigger>
@@ -208,7 +209,7 @@ const SlugGenerator = () => {
                 <div className="space-y-4">
                   <div className="flex justify-between items-center">
                     <h3 className="text-lg font-semibold">Generated Slug:</h3>
-                    <Button onClick={copyToClipboard} variant="outline" size="sm">
+                    <Button onClick={() => copyToClipboard(slug)} variant="outline" size="sm">
                       <Copy className="mr-2 h-4 w-4" />
                       Copy
                     </Button>
