@@ -1,21 +1,20 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import { Search, Lock } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const tools = [
   // Text Tools - Conversion & Case
-  { name: 'Case Converter (All Cases)', category: 'Text Tools', url: '/tools/case-converter-all', premium: false },
-  { name: 'Sentence Case Converter', category: 'Text Tools', url: '/tools/sentence-case', premium: false },
-  { name: 'Binary ⇄ Text Converter', category: 'Text Tools', url: '/tools/binary-text', premium: false },
-  { name: 'Text to Hex Converter', category: 'Text Tools', url: '/tools/text-to-hex', premium: false },
-  { name: 'Hex to Text Converter', category: 'Text Tools', url: '/tools/hex-to-text', premium: false },
-  { name: 'Text to ASCII', category: 'Text Tools', url: '/tools/text-to-ascii', premium: false },
-  { name: 'ASCII to Text', category: 'Text Tools', url: '/tools/ascii-to-text', premium: false },
-  { name: 'Reverse Text Generator', category: 'Text Tools', url: '/tools/reverse-text', premium: false },
-  { name: 'Text to Speech Converter', category: 'Text Tools', url: '/tools/text-to-speech', premium: false },
-  { name: 'Unicode Character Converter', category: 'Text Tools', url: '/tools/unicode-converter', premium: false },
-  { name: 'Number to Words Converter', category: 'Text Tools', url: '/tools/number-to-words', premium: false },
+  { name: 'Case Converter (All Cases)', category: 'Text Tools', url: '/tools/text/case-converter', premium: false },
+  { name: 'Sentence Case Converter', category: 'Text Tools', url: '/tools/text/sentence-case-converter', premium: false },
+  { name: 'Binary ⇄ Text Converter', category: 'Text Tools', url: '/tools/text/binary-text-converter', premium: false },
+  { name: 'Text to Hex Converter', category: 'Text Tools', url: '/tools/text/text-to-hex-converter', premium: false },
+  { name: 'Hex to Text Converter', category: 'Text Tools', url: '/tools/text/hex-to-text-converter', premium: false },
+  { name: 'Text to ASCII', category: 'Text Tools', url: '/tools/text/text-to-ascii-converter', premium: false },
+  { name: 'ASCII to Text', category: 'Text Tools', url: '/tools/text/ascii-to-text-converter', premium: false },
+  { name: 'Reverse Text Generator', category: 'Text Tools', url: '/tools/text/reverse-text-generator', premium: false },
+  { name: 'Text to Speech Converter', category: 'Text Tools', url: '/tools/text/text-to-speech-converter', premium: false },
+  { name: 'Unicode Character Converter', category: 'Text Tools', url: '/tools/text/unicode-character-converter', premium: false },
+  { name: 'Number to Words Converter', category: 'Text Tools', url: '/tools/text/number-to-words-converter', premium: false },
 
   // Text Tools - Generation
   { name: 'Random Password Generator', category: 'Text Tools', url: '/tools/random-password', premium: false },

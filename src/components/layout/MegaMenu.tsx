@@ -42,17 +42,17 @@ const MegaMenu = ({ activeCategory, onClose }: MegaMenuProps) => {
       icon: Type,
       tools: [
         // Conversion & Case
-        { name: 'Case Converter (All Cases)', url: '/tools/case-converter-all', category: 'Conversion & Case' },
-        { name: 'Sentence Case Converter', url: '/tools/sentence-case', category: 'Conversion & Case' },
-        { name: 'Binary ⇄ Text Converter', url: '/tools/binary-text', category: 'Conversion & Case' },
-        { name: 'Text to Hex Converter', url: '/tools/text-to-hex', category: 'Conversion & Case' },
-        { name: 'Hex to Text Converter', url: '/tools/hex-to-text', category: 'Conversion & Case' },
-        { name: 'Text to ASCII', url: '/tools/text-to-ascii', category: 'Conversion & Case' },
-        { name: 'ASCII to Text', url: '/tools/ascii-to-text', category: 'Conversion & Case' },
-        { name: 'Reverse Text Generator', url: '/tools/reverse-text', category: 'Conversion & Case' },
-        { name: 'Text to Speech Converter', url: '/tools/text-to-speech', category: 'Conversion & Case' },
-        { name: 'Unicode Character Converter', url: '/tools/unicode-converter', category: 'Conversion & Case' },
-        { name: 'Number to Words Converter', url: '/tools/number-to-words', category: 'Conversion & Case' },
+        { name: 'Case Converter (All Cases)', url: '/tools/text/case-converter', category: 'Conversion & Case' },
+        { name: 'Sentence Case Converter', url: '/tools/text/sentence-case-converter', category: 'Conversion & Case' },
+        { name: 'Binary ⇄ Text Converter', url: '/tools/text/binary-text-converter', category: 'Conversion & Case' },
+        { name: 'Text to Hex Converter', url: '/tools/text/text-to-hex-converter', category: 'Conversion & Case' },
+        { name: 'Hex to Text Converter', url: '/tools/text/hex-to-text-converter', category: 'Conversion & Case' },
+        { name: 'Text to ASCII', url: '/tools/text/text-to-ascii-converter', category: 'Conversion & Case' },
+        { name: 'ASCII to Text', url: '/tools/text/ascii-to-text-converter', category: 'Conversion & Case' },
+        { name: 'Reverse Text Generator', url: '/tools/text/reverse-text-generator', category: 'Conversion & Case' },
+        { name: 'Text to Speech Converter', url: '/tools/text/text-to-speech-converter', category: 'Conversion & Case' },
+        { name: 'Unicode Character Converter', url: '/tools/text/unicode-character-converter', category: 'Conversion & Case' },
+        { name: 'Number to Words Converter', url: '/tools/text/number-to-words-converter', category: 'Conversion & Case' },
         
         // Generation
         { name: 'Random Password Generator', url: '/tools/random-password', category: 'Generation' },
