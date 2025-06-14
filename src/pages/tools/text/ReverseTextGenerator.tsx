@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
@@ -7,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Copy, Download, Upload, RotateCcw, RotateCounterClockwise } from 'lucide-react';
+import { Copy, Download, Upload, RotateCcw } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 const ReverseTextGenerator = () => {
@@ -114,7 +113,7 @@ const ReverseTextGenerator = () => {
           <Card className="mb-12">
             <CardHeader>
               <CardTitle className="text-2xl flex items-center gap-2">
-                <RotateCounterClockwise className="h-6 w-6" />
+                <RotateCcw className="h-6 w-6" />
                 Reverse Text Generator
               </CardTitle>
               <CardDescription>

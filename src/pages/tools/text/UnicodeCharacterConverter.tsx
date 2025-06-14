@@ -378,7 +378,7 @@ const UnicodeCharacterConverter = () => {
                     modern and ancient, including technical symbols and emojis.
                   </p>
                   <p>
-                    Each Unicode character has a code point, typically represented as U+xxxx where xxxx is a hexadecimal number. 
+                    Each Unicode character has a code point, typically represented as U+ABCD where ABCD is a hexadecimal number. 
                     Our tool helps you analyze these code points and understand how characters are encoded in different formats.
                   </p>
                 </CardContent>
@@ -411,11 +411,11 @@ const UnicodeCharacterConverter = () => {
                 </CardHeader>
                 <CardContent>
                   <ul className="space-y-2 text-sm">
-                    <li><strong>Unicode Notation:</strong> Standard U+xxxx format</li>
-                    <li><strong>HTML Entity:</strong> Decimal format for HTML (&amp;#xxxx;)</li>
-                    <li><strong>HTML Hex:</strong> Hexadecimal format for HTML (&amp;#xxxxx;)</li>
-                    <li><strong>CSS Code:</strong> Escape sequence for CSS (\\xxxx)</li>
-                    <li><strong>JavaScript:</strong> Unicode escape for JavaScript (\\u{xxxx})</li>
+                    <li><strong>Unicode Notation:</strong> Standard U+ABCD format</li>
+                    <li><strong>HTML Entity:</strong> Decimal format for HTML (&amp;#1234;)</li>
+                    <li><strong>HTML Hex:</strong> Hexadecimal format for HTML (&amp;#xABCD;)</li>
+                    <li><strong>CSS Code:</strong> Escape sequence for CSS (\\ABCD)</li>
+                    <li><strong>JavaScript:</strong> Unicode escape for JavaScript (\\u{ABCD})</li>
                   </ul>
                 </CardContent>
               </Card>
@@ -470,7 +470,7 @@ const UnicodeCharacterConverter = () => {
                   <div>
                     <h4 className="font-semibold">Q: How do I use these codes in my code?</h4>
                     <p className="text-sm text-gray-600">
-                      Use the appropriate format for your language: \\u{xxxx} for JavaScript, \\xxxx for CSS, or &amp;#xxxx; for HTML.
+                      Use the appropriate format for your language: \\u{ABCD} for JavaScript, \\ABCD for CSS, or &amp;#1234; for HTML.
                     </p>
                   </div>
                 </CardContent>
