@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { 
@@ -17,13 +16,26 @@ import {
   Briefcase
 } from 'lucide-react';
 
+interface Tool {
+  name: string;
+  url: string;
+  category: string;
+}
+
+interface ToolCategory {
+  key: string;
+  title: string;
+  icon: any;
+  tools: Tool[];
+}
+
 interface MegaMenuProps {
   activeCategory?: string;
   onClose: () => void;
 }
 
 const MegaMenu = ({ activeCategory, onClose }: MegaMenuProps) => {
-  const toolCategories = [
+  const toolCategories: ToolCategory[] = [
     {
       key: 'text',
       title: 'Text Tools',
@@ -458,15 +470,20 @@ const MegaMenu = ({ activeCategory, onClose }: MegaMenuProps) => {
     ? toolCategories.filter(cat => cat.key === activeCategory)
     : toolCategories;
 
-  // Group tools by category for multi-column layout
-  const groupToolsByCategory = (tools: any[]) => {
+  // Group tools by category and ensure minimum 3 columns
+  const groupToolsByCategory = (tools: Tool[]): Record<string, Tool[]> => {
     const grouped = tools.reduce((acc, tool) => {
       if (!acc[tool.category]) {
         acc[tool.category] = [];
       }
       acc[tool.category].push(tool);
       return acc;
-    }, {} as Record<string, any[]>);
+    }, {} as Record<string, Tool[]>);
+    
+    // Ensure we have at least 3 categories for better distribution
+    const categories = Object.keys(grouped);
+    const targetColumns = Math.max(3, Math.ceil(categories.length / 4));
+    
     return grouped;
   };
 
@@ -481,8 +498,8 @@ const MegaMenu = ({ activeCategory, onClose }: MegaMenuProps) => {
               <span className="text-sm text-gray-500">({category.tools.length} tools)</span>
             </div>
             
-            {/* Multi-column layout grouped by subcategories */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+            {/* Multi-column layout with minimum 3 columns */}
+            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-8">
               {Object.entries(groupToolsByCategory(category.tools)).map(([subcategory, tools]) => (
                 <div key={subcategory} className="space-y-3">
                   <h4 className="font-semibold text-gray-800 text-sm border-b border-gray-200 pb-1">
