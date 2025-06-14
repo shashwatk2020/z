@@ -50,6 +50,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     // Set up auth state listener
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       (event, session) => {
+        console.log('Auth state changed:', event, session);
         setSession(session);
         setUser(session?.user ?? null);
         setLoading(false);
@@ -58,6 +59,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           setTimeout(() => {
             checkSubscription();
           }, 0);
+          
+          // If user just confirmed email, redirect to dashboard
+          if (event === 'SIGNED_IN' && window.location.hash.includes('access_token')) {
+            window.location.href = '/dashboard';
+          }
         } else {
           setSubscriptionTier('free');
           setIsSubscribed(false);
@@ -82,7 +88,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, []);
 
   const signUp = async (email: string, password: string, firstName: string, lastName: string) => {
-    const redirectUrl = `${window.location.origin}/`;
+    // Use the current Lovable app URL for email confirmation redirect
+    const redirectUrl = `${window.location.protocol}//${window.location.host}/dashboard`;
     
     const { error } = await supabase.auth.signUp({
       email,

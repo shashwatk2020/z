@@ -1,5 +1,4 @@
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import Layout from '@/components/layout/Layout';
@@ -25,9 +24,44 @@ const Auth = () => {
     lastName: ''
   });
 
-  const { signIn, signUp } = useAuth();
+  const { signIn, signUp, user } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
+
+  // Redirect to dashboard if user is already authenticated
+  useEffect(() => {
+    if (user) {
+      navigate('/dashboard');
+    }
+  }, [user, navigate]);
+
+  // Handle email confirmation from URL hash
+  useEffect(() => {
+    const handleEmailConfirmation = async () => {
+      const hashParams = new URLSearchParams(window.location.hash.substring(1));
+      const accessToken = hashParams.get('access_token');
+      const type = hashParams.get('type');
+      
+      if (accessToken && type === 'signup') {
+        try {
+          const { data, error } = await supabase.auth.getUser(accessToken);
+          if (!error && data.user) {
+            toast({
+              title: "Email Confirmed!",
+              description: "Your email has been verified successfully. Welcome to ZipConvert!",
+            });
+            // Clear the hash from URL
+            window.history.replaceState(null, '', window.location.pathname);
+            navigate('/dashboard');
+          }
+        } catch (error) {
+          console.error('Error handling email confirmation:', error);
+        }
+      }
+    };
+
+    handleEmailConfirmation();
+  }, [navigate, toast]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -81,7 +115,7 @@ const Auth = () => {
       const { error } = await supabase.auth.signInWithOAuth({
         provider,
         options: {
-          redirectTo: `${window.location.origin}/dashboard`
+          redirectTo: `${window.location.protocol}//${window.location.host}/dashboard`
         }
       });
       
