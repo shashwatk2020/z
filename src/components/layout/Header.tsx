@@ -76,20 +76,26 @@ const Header = () => {
             
             {/* Quick Tool Categories */}
             <div className="hidden lg:flex items-center space-x-6 ml-8">
+              <Link to="/tools/text" className="text-sm text-gray-600 hover:text-blue-600 transition-colors">
+                Text Tools
+              </Link>
+              <Link to="/tools/web" className="text-sm text-gray-600 hover:text-blue-600 transition-colors">
+                Web Tools
+              </Link>
               <Link to="/tools/image" className="text-sm text-gray-600 hover:text-blue-600 transition-colors">
                 Image Tools
               </Link>
-              <Link to="/tools/pdf" className="text-sm text-gray-600 hover:text-blue-600 transition-colors">
-                PDF Tools
+              <Link to="/tools/calculators" className="text-sm text-gray-600 hover:text-blue-600 transition-colors">
+                Calculators
               </Link>
-              <Link to="/tools/video" className="text-sm text-gray-600 hover:text-blue-600 transition-colors">
-                Video Tools
+              <Link to="/tools/productivity" className="text-sm text-gray-600 hover:text-blue-600 transition-colors">
+                Productivity
               </Link>
-              <Link to="/tools/audio" className="text-sm text-gray-600 hover:text-blue-600 transition-colors">
-                Audio Tools
+              <Link to="/tools/archive" className="text-sm text-gray-600 hover:text-blue-600 transition-colors">
+                Archive Tools
               </Link>
-              <Link to="/tools/text" className="text-sm text-gray-600 hover:text-blue-600 transition-colors">
-                Text Tools
+              <Link to="/tools/security" className="text-sm text-gray-600 hover:text-blue-600 transition-colors">
+                Security
               </Link>
             </div>
           </div>
