@@ -104,6 +104,21 @@ const TextTools: React.FC = () => {
                         {cat.name}
                       </Link>
                     ))}
+                  {/* Also internally link to neighboring tools */}
+                  {textTools
+                    .filter((t) => t.slug !== tool.slug)
+                    .slice(0, 2)
+                    .map((related) => (
+                      <span key={related.slug}>
+                        {" | "}
+                        <Link
+                          to={`/text-tools/${related.slug}`}
+                          className="text-blue-400 hover:text-blue-600 underline mx-1"
+                        >
+                          {related.name}
+                        </Link>
+                      </span>
+                    ))}
                 </span>
               </div>
             </li>
@@ -148,10 +163,10 @@ const TextTools: React.FC = () => {
       <section>
         <h2 className="text-2xl font-semibold mb-2">SEO-Friendly Internal Linking</h2>
         <p className="mb-3 text-gray-700">
-          For seamless navigation and <strong>SEO value</strong>, every tool in the list above links to its own detail page. Additionally, this page links to all major tool categories. We recommend you bookmark <Link to="/text-tools" className="text-blue-600 underline hover:text-blue-800">Text Tools</Link> for easy access, or jump between pages like <Link to="/web-tools" className="text-blue-600 underline hover:text-blue-800">Web Tools</Link> and <Link to="/image-tools" className="text-blue-600 underline hover:text-blue-800">Image Tools</Link> as your needs evolve.
+          For seamless navigation and <strong>SEO value</strong>, every tool in the list above links to its own detail page (like <Link to="/text-tools/case-converter" className="text-blue-600 underline hover:text-blue-800">Case Converter</Link> and <Link to="/text-tools/text-analyzer" className="text-blue-600 underline hover:text-blue-800">Text Analyzer</Link>), while this page links across all key tool categories—<Link to="/web-tools" className="text-blue-600 underline hover:text-blue-800">Web Tools</Link>, <Link to="/image-tools" className="text-blue-600 underline hover:text-blue-800">Image Tools</Link>, and more. Direct access to every tool (such as <Link to="/text-tools/word-counter" className="text-blue-600 underline hover:text-blue-800">Word Counter</Link> and <Link to="/text-tools/remove-duplicate-lines" className="text-blue-600 underline hover:text-blue-800">Remove Duplicate Lines</Link>) is always available.
         </p>
         <p className="text-gray-700">
-          Our internal linking strategy gives users and search engines comprehensive access to our broad suite of online utilities.
+          Our internal linking strategy gives users and search engines comprehensive access to our broad suite of online utilities. Jump to <Link to="/text-tools" className="text-blue-600 underline hover:text-blue-800">Text Tools</Link> at any time, or browse to related tools like <Link to="/text-tools/emoji-remover" className="text-blue-600 underline hover:text-blue-800">Emoji Remover</Link> and <Link to="/text-tools/whitespace-cleaner" className="text-blue-600 underline hover:text-blue-800">Whitespace Cleaner</Link> for more specific needs.
         </p>
       </section>
     </div>
@@ -159,3 +174,4 @@ const TextTools: React.FC = () => {
 };
 
 export default TextTools;
+
