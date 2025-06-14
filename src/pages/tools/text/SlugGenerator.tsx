@@ -1,332 +1,256 @@
-
 import React, { useState } from 'react';
-import Header from '@/components/layout/Header';
-import Footer from '@/components/layout/Footer';
-import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
+import Layout from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Checkbox } from '@/components/ui/checkbox';
 import { Textarea } from '@/components/ui/textarea';
-import { toast } from '@/components/ui/use-toast';
-import { Copy, Link2, RefreshCw } from 'lucide-react';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Copy, Link } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
+import slugify from 'slugify';
+import { Checkbox } from "@/components/ui/checkbox"
+
+const stopWords = new Set([
+  'a', 'an', 'the', 'and', 'but', 'or', 'for', 'nor', 'on', 'at', 'to', 'from', 'by', 'of',
+]);
 
 const SlugGenerator = () => {
-  const [inputText, setInputText] = useState('');
+  const [input, setInput] = useState('');
+  const [slug, setSlug] = useState('');
+  const [caseStyle, setCaseStyle] = useState<'lowercase' | 'uppercase' | 'camelcase' | 'pascalcase'>('lowercase');
   const [separator, setSeparator] = useState('-');
-  const [case_type, setCaseType] = useState('lowercase');
-  const [maxLength, setMaxLength] = useState(100);
+  const [maxLength, setMaxLength] = useState(50);
   const [removeStopWords, setRemoveStopWords] = useState(false);
-  const [customReplacements, setCustomReplacements] = useState('');
-  const [generatedSlug, setGeneratedSlug] = useState('');
-  const [slugHistory, setSlugHistory] = useState<Array<{text: string, slug: string}>>([]);
-
-  const stopWords = [
-    'a', 'an', 'and', 'are', 'as', 'at', 'be', 'by', 'for', 'from', 'has', 'he',
-    'in', 'is', 'it', 'its', 'of', 'on', 'that', 'the', 'to', 'was', 'will', 'with'
-  ];
+  const [removeNumbers, setRemoveNumbers] = useState(false);
+  const [transliterate, setTransliterate] = useState(true);
+  const [truncateWords, setTruncateWords] = useState(false);
+  const [variations, setVariations] = useState<string[]>([]);
+  const { toast } = useToast();
 
   const generateSlug = () => {
-    if (!inputText.trim()) {
-      toast({
-        title: "Error",
-        description: "Please enter some text to convert.",
-        variant: "destructive"
-      });
-      return;
+    let baseSlug = input;
+
+    if (removeStopWords) {
+      baseSlug = baseSlug
+        .split(' ')
+        .filter(word => !stopWords.has(word.toLowerCase()))
+        .join(' ');
     }
 
-    let slug = inputText.toLowerCase();
-    
-    // Apply custom replacements
-    if (customReplacements) {
-      const replacements = customReplacements.split('\n').filter(line => line.includes('='));
-      replacements.forEach(replacement => {
-        const [from, to] = replacement.split('=').map(s => s.trim());
-        if (from && to !== undefined) {
-          slug = slug.replace(new RegExp(from, 'g'), to);
-        }
-      });
+    if (removeNumbers) {
+      baseSlug = baseSlug.replace(/\d+/g, '');
     }
-    
-    // Remove stop words if enabled
-    if (removeStopWords) {
-      const words = slug.split(/\s+/);
-      const filteredWords = words.filter(word => !stopWords.includes(word.toLowerCase()));
-      slug = filteredWords.join(' ');
+
+    let generatedSlug = slugify(baseSlug, {
+      replacement: separator,
+      remove: transliterate ? undefined : /[^a-zA-Z0-9\s-]/g,
+      lower: caseStyle === 'lowercase',
+      upper: caseStyle === 'uppercase',
+      trim: true,
+      locale: 'en',
+    });
+
+    if (caseStyle === 'camelcase') {
+      generatedSlug = generatedSlug.replace(/[-_\s](.)?/g, (match, chr) => {
+        return chr ? chr.toUpperCase() : '';
+      }).replace(/^([A-Z])/, (match, chr) => chr.toLowerCase());
+    } else if (caseStyle === 'pascalcase') {
+      generatedSlug = generatedSlug.replace(/[-_\s](.)?/g, (match, chr) => {
+        return chr ? chr.toUpperCase() : '';
+      }).replace(/^([a-z])/, (match, chr) => chr.toUpperCase());
     }
-    
-    // Replace special characters with spaces
-    slug = slug.replace(/[^\w\s-]/g, ' ');
-    
-    // Replace multiple spaces with single space
-    slug = slug.replace(/\s+/g, ' ');
-    
-    // Trim whitespace
-    slug = slug.trim();
-    
-    // Replace spaces with separator
-    slug = slug.replace(/\s/g, separator);
-    
-    // Remove multiple separators
-    const separatorRegex = new RegExp(`\\${separator}+`, 'g');
-    slug = slug.replace(separatorRegex, separator);
-    
-    // Remove leading/trailing separators
-    const trimRegex = new RegExp(`^\\${separator}+|\\${separator}+$`, 'g');
-    slug = slug.replace(trimRegex, '');
-    
-    // Apply case transformation
-    switch (case_type) {
-      case 'uppercase':
-        slug = slug.toUpperCase();
-        break;
-      case 'lowercase':
-        slug = slug.toLowerCase();
-        break;
-      case 'title':
-        slug = slug.split(separator).map(word => 
-          word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
-        ).join(separator);
-        break;
+
+    if (truncateWords) {
+      generatedSlug = generatedSlug.substring(0, maxLength);
+      generatedSlug = generatedSlug.substring(0, generatedSlug.lastIndexOf(separator));
+    } else {
+      generatedSlug = generatedSlug.substring(0, maxLength);
     }
-    
-    // Limit length
-    if (slug.length > maxLength) {
-      slug = slug.substring(0, maxLength);
-      // Remove trailing separator if cut off mid-word
-      slug = slug.replace(new RegExp(`\\${separator}+$`), '');
+
+    setSlug(generatedSlug);
+
+    // Generate variations
+    const altVariations = [];
+    if (separator !== '_') {
+      altVariations.push(slugify(baseSlug, { replacement: '_', remove: /[^a-zA-Z0-9\s-]/g, lower: true, trim: true }).substring(0, maxLength));
     }
-    
-    setGeneratedSlug(slug);
-    setSlugHistory(prev => [{text: inputText, slug}, ...prev.slice(0, 9)]);
+    if (separator !== '.') {
+      altVariations.push(slugify(baseSlug, { replacement: '.', remove: /[^a-zA-Z0-9\s-]/g, lower: true, trim: true }).substring(0, maxLength));
+    }
+    setVariations(altVariations);
   };
 
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text);
     toast({
       title: "Copied!",
-      description: "Slug copied to clipboard.",
+      description: "Slug copied to clipboard",
     });
   };
 
-  const presets = {
-    'url-friendly': { separator: '-', case_type: 'lowercase', removeStopWords: false },
-    'seo-optimized': { separator: '-', case_type: 'lowercase', removeStopWords: true },
-    'underscore': { separator: '_', case_type: 'lowercase', removeStopWords: false },
-    'camelcase': { separator: '', case_type: 'title', removeStopWords: true },
-  };
-
-  const applyPreset = (preset: string) => {
-    const config = presets[preset as keyof typeof presets];
-    if (config) {
-      setSeparator(config.separator);
-      setCaseType(config.case_type);
-      setRemoveStopWords(config.removeStopWords);
-    }
-  };
-
   return (
-    <div className="flex flex-col min-h-screen bg-gray-50">
-      <Header />
-      <main className="flex-1">
-        <div className="py-12">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-12">
-              <h1 className="text-4xl font-extrabold text-gray-900 tracking-tight">
-                Advanced Slug Generator
-              </h1>
-              <p className="mt-4 text-lg text-gray-600">
-                Create SEO-friendly URLs and identifiers from any text with advanced customization options.
-              </p>
-            </div>
+    <Layout>
+      <div className="py-12">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-8">
+            <h1 className="text-4xl font-bold text-gray-900">Advanced Slug Generator</h1>
+            <p className="mt-4 text-lg text-gray-600">
+              Create SEO-friendly URL slugs with advanced customization options
+            </p>
+          </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-              <div className="lg:col-span-2">
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
-                      <Link2 className="h-5 w-5" />
-                      Slug Generator
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-6">
-                    <div>
-                      <Label htmlFor="inputText">Text to Convert</Label>
-                      <Textarea
-                        id="inputText"
-                        value={inputText}
-                        onChange={(e) => setInputText(e.target.value)}
-                        placeholder="Enter your title, heading, or any text..."
-                        className="mt-1 min-h-[100px]"
-                      />
-                    </div>
-
-                    <div className="grid grid-cols-2 gap-4">
-                      <div>
-                        <Label htmlFor="separator">Separator</Label>
-                        <Select value={separator} onValueChange={setSeparator}>
-                          <SelectTrigger>
-                            <SelectValue />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="-">Hyphen (-)</SelectItem>
-                            <SelectItem value="_">Underscore (_)</SelectItem>
-                            <SelectItem value=".">Dot (.)</SelectItem>
-                            <SelectItem value="">None</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-
-                      <div>
-                        <Label htmlFor="case_type">Case Style</Label>
-                        <Select value={case_type} onValueChange={setCaseType}>
-                          <SelectTrigger>
-                            <SelectValue />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="lowercase">lowercase</SelectItem>
-                            <SelectItem value="uppercase">UPPERCASE</SelectItem>
-                            <SelectItem value="title">Title Case</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-                    </div>
-
-                    <div>
-                      <Label htmlFor="maxLength">Maximum Length</Label>
-                      <Input
-                        id="maxLength"
-                        type="number"
-                        min="1"
-                        max="500"
-                        value={maxLength}
-                        onChange={(e) => setMaxLength(parseInt(e.target.value) || 100)}
-                        className="mt-1"
-                      />
-                    </div>
-
-                    <div className="flex items-center space-x-2">
-                      <Checkbox
-                        id="removeStopWords"
-                        checked={removeStopWords}
-                        onCheckedChange={setRemoveStopWords}
-                      />
-                      <Label htmlFor="removeStopWords">Remove stop words (a, an, the, etc.)</Label>
-                    </div>
-
-                    <div>
-                      <Label htmlFor="customReplacements">Custom Replacements (Optional)</Label>
-                      <Textarea
-                        id="customReplacements"
-                        value={customReplacements}
-                        onChange={(e) => setCustomReplacements(e.target.value)}
-                        placeholder="Enter replacements (one per line):&#10;& = and&#10;+ = plus&#10;@ = at"
-                        className="mt-1 min-h-[80px] text-sm"
-                      />
-                      <p className="text-xs text-gray-500 mt-1">Format: original=replacement</p>
-                    </div>
-
-                    <div>
-                      <Label>Quick Presets</Label>
-                      <div className="grid grid-cols-2 gap-2 mt-2">
-                        <Button variant="outline" size="sm" onClick={() => applyPreset('url-friendly')}>
-                          URL Friendly
-                        </Button>
-                        <Button variant="outline" size="sm" onClick={() => applyPreset('seo-optimized')}>
-                          SEO Optimized
-                        </Button>
-                        <Button variant="outline" size="sm" onClick={() => applyPreset('underscore')}>
-                          Underscore Style
-                        </Button>
-                        <Button variant="outline" size="sm" onClick={() => applyPreset('camelcase')}>
-                          Camel Case
-                        </Button>
-                      </div>
-                    </div>
-
-                    <Button onClick={generateSlug} className="w-full" size="lg">
-                      <RefreshCw className="h-4 w-4 mr-2" />
-                      Generate Slug
-                    </Button>
-
-                    {generatedSlug && (
-                      <div>
-                        <Label>Generated Slug</Label>
-                        <div className="flex items-center space-x-2 mt-1">
-                          <Input
-                            value={generatedSlug}
-                            readOnly
-                            className="font-mono"
-                          />
-                          <Button
-                            variant="outline"
-                            size="icon"
-                            onClick={() => copyToClipboard(generatedSlug)}
-                          >
-                            <Copy className="h-4 w-4" />
-                          </Button>
-                        </div>
-                        <p className="text-sm text-gray-500 mt-1">
-                          Length: {generatedSlug.length} characters
-                        </p>
-                      </div>
-                    )}
-                  </CardContent>
-                </Card>
+          <Card className="mb-8">
+            <CardHeader>
+              <CardTitle>Generate URL Slug</CardTitle>
+              <CardDescription>
+                Convert your text into clean, SEO-friendly URL slugs
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              <div className="space-y-2">
+                <Label htmlFor="input">Text to Convert</Label>
+                <Textarea
+                  id="input"
+                  placeholder="Enter your title, headline, or text here..."
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  rows={3}
+                />
               </div>
 
-              <div>
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Recent Slugs</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    {slugHistory.length === 0 ? (
-                      <p className="text-gray-500 text-sm">No slugs generated yet.</p>
-                    ) : (
-                      <div className="space-y-3">
-                        {slugHistory.map((item, index) => (
-                          <div key={index} className="p-3 bg-gray-50 rounded">
-                            <p className="text-xs text-gray-600 mb-1 truncate">{item.text}</p>
-                            <div className="flex items-center justify-between">
-                              <span className="font-mono text-sm truncate flex-1">{item.slug}</span>
-                              <Button
-                                variant="ghost"
-                                size="sm"
-                                onClick={() => copyToClipboard(item.slug)}
-                              >
-                                <Copy className="h-3 w-3" />
-                              </Button>
-                            </div>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="case">Case Style</Label>
+                  <Select value={caseStyle} onValueChange={setCaseStyle}>
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="lowercase">lowercase</SelectItem>
+                      <SelectItem value="uppercase">UPPERCASE</SelectItem>
+                      <SelectItem value="camelcase">camelCase</SelectItem>
+                      <SelectItem value="pascalcase">PascalCase</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="separator">Separator</Label>
+                  <Select value={separator} onValueChange={setSeparator}>
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="-">Hyphen (-)</SelectItem>
+                      <SelectItem value="_">Underscore (_)</SelectItem>
+                      <SelectItem value=".">Dot (.)</SelectItem>
+                      <SelectItem value="">No Separator</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="maxLength">Max Length</Label>
+                  <Input
+                    id="maxLength"
+                    type="number"
+                    min="10"
+                    max="200"
+                    value={maxLength}
+                    onChange={(e) => setMaxLength(parseInt(e.target.value) || 50)}
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-3">
+                <Label className="text-base font-semibold">Options</Label>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div className="flex items-center space-x-2">
+                    <Checkbox
+                      id="removeStopWords"
+                      checked={removeStopWords}
+                      onCheckedChange={(checked) => setRemoveStopWords(checked === true)}
+                    />
+                    <Label htmlFor="removeStopWords">Remove stop words (a, an, the, etc.)</Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Checkbox
+                      id="removeNumbers"
+                      checked={removeNumbers}
+                      onCheckedChange={(checked) => setRemoveNumbers(checked === true)}
+                    />
+                    <Label htmlFor="removeNumbers">Remove numbers</Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Checkbox
+                      id="transliterate"
+                      checked={transliterate}
+                      onCheckedChange={(checked) => setTransliterate(checked === true)}
+                    />
+                    <Label htmlFor="transliterate">Transliterate special characters</Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Checkbox
+                      id="truncateWords"
+                      checked={truncateWords}
+                      onCheckedChange={(checked) => setTruncateWords(checked === true)}
+                    />
+                    <Label htmlFor="truncateWords">Truncate at word boundaries</Label>
+                  </div>
+                </div>
+              </div>
+
+              <Button onClick={generateSlug} className="w-full" size="lg" disabled={!input.trim()}>
+                <Link className="mr-2 h-4 w-4" />
+                Generate Slug
+              </Button>
+
+              {slug && (
+                <div className="space-y-4">
+                  <div className="flex justify-between items-center">
+                    <h3 className="text-lg font-semibold">Generated Slug:</h3>
+                    <Button onClick={copyToClipboard} variant="outline" size="sm">
+                      <Copy className="mr-2 h-4 w-4" />
+                      Copy
+                    </Button>
+                  </div>
+                  <div className="p-4 bg-gray-50 rounded-lg">
+                    <code className="text-lg font-mono break-all">{slug}</code>
+                  </div>
+                  <div className="text-sm text-gray-600 space-y-1">
+                    <p>Length: {slug.length} characters</p>
+                    <p>Preview URL: https://example.com/{slug}</p>
+                    {slug.length > 50 && (
+                      <p className="text-yellow-600">⚠️ Consider shortening for better SEO (recommended: &lt;50 characters)</p>
+                    )}
+                  </div>
+                  
+                  {variations.length > 0 && (
+                    <div className="space-y-2">
+                      <h4 className="font-semibold text-gray-700">Alternative Variations:</h4>
+                      <div className="space-y-2">
+                        {variations.map((variation, index) => (
+                          <div key={index} className="flex items-center justify-between p-2 bg-white border rounded">
+                            <code className="text-sm text-gray-700">{variation}</code>
+                            <Button
+                              onClick={() => copyToClipboard(variation)}
+                              variant="ghost"
+                              size="sm"
+                              className="h-6 w-6 p-0"
+                            >
+                              <Copy className="h-3 w-3" />
+                            </Button>
                           </div>
                         ))}
                       </div>
-                    )}
-                  </CardContent>
-                </Card>
-
-                <Card className="mt-6">
-                  <CardHeader>
-                    <CardTitle>Slug Best Practices</CardTitle>
-                  </CardHeader>
-                  <CardContent className="text-sm space-y-2">
-                    <p>• Use hyphens instead of underscores</p>
-                    <p>• Keep it under 60 characters</p>
-                    <p>• Include target keywords</p>
-                    <p>• Avoid special characters</p>
-                    <p>• Make it readable and descriptive</p>
-                    <p>• Use lowercase for consistency</p>
-                  </CardContent>
-                </Card>
-              </div>
-            </div>
-          </div>
+                    </div>
+                  )}
+                </div>
+              )}
+            </CardContent>
+          </Card>
         </div>
-      </main>
-      <Footer />
-    </div>
+      </div>
+    </Layout>
   );
 };
 
