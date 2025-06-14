@@ -1,17 +1,16 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
-import { Archive, FolderOpen, FileZip, HardDrive, Package, Layers } from 'lucide-react';
+import { Archive, FolderOpen, FileArchive, HardDrive, Package, Layers } from 'lucide-react';
 
 const tools = [
   {
     name: 'ZIP Creator & Extractor',
     description: 'Create ZIP archives from multiple files or extract files from existing ZIP archives. Supports password protection and compression level settings.',
     link: '/tools/archive/zip-creator',
-    icon: <FileZip className="h-8 w-8 text-blue-500" />
+    icon: <FileArchive className="h-8 w-8 text-blue-500" />
   },
   {
     name: 'RAR Extractor',

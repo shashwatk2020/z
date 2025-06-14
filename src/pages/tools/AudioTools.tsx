@@ -1,10 +1,9 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
-import { Music, Headphones, Mic, Volume2, Radio, Waveform } from 'lucide-react';
+import { Music, Headphones, Mic, Volume2, Radio, AudioLines } from 'lucide-react';
 
 const tools = [
   {
@@ -23,7 +22,7 @@ const tools = [
     name: 'Audio Editor',
     description: 'Edit audio files with trimming, cutting, and merging capabilities. Add effects, adjust volume, and enhance your audio with professional editing tools.',
     link: '/tools/audio/audio-editor',
-    icon: <Waveform className="h-8 w-8 text-purple-500" />
+    icon: <AudioLines className="h-8 w-8 text-purple-500" />
   },
   {
     name: 'Voice Recorder',
