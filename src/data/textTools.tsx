@@ -1,4 +1,4 @@
-
+import React from 'react';
 import { Text, FileText, CaseSensitive, Pilcrow, Type, Hash, IterationCcw, Mic } from 'lucide-react';
 
 export const featuredTools = [
