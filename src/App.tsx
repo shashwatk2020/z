@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -20,8 +21,6 @@ import Register from "./pages/Register";
 import Auth from "./pages/Auth";
 import Dashboard from "./pages/Dashboard";
 import NotFound from "./pages/NotFound";
-import TextTools from "./pages/TextTools";
-import CaseConverter from "./pages/text-tools/CaseConverter";
 
 const queryClient = new QueryClient();
 
@@ -60,8 +59,6 @@ const App = () => (
               </ProtectedRoute>
             } />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="/text-tools" element={<TextTools />} />
-            <Route path="/text-tools/case-converter" element={<CaseConverter />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
