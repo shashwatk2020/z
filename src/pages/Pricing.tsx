@@ -2,49 +2,73 @@
 import React from 'react';
 import Layout from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
-import { Check, Star, Zap, Heart } from 'lucide-react';
+import { Check, Star, Zap, Heart, Users, Shield } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const Pricing = () => {
   const plans = [
     {
-      name: 'Free Forever',
+      name: 'Unregistered Users',
       price: '$0',
       period: 'forever',
-      description: 'All 350+ tools completely free with basic storage',
+      description: 'Basic access to all tools with file size limits',
       features: [
         'All 350+ tools included',
         'All features unlocked',
         'Unlimited conversions',
         'No watermarks',
         'Fast processing',
-        'Large file support (up to 100MB)',
-        'Batch processing',
-        'Email support',
-        'No registration required',
-        '1 week file storage'
+        'File size limit: 5MB',
+        'No file backup',
+        'No registration required'
       ],
-      limitations: [],
+      limitations: [
+        'Files not saved after processing',
+        'Limited to 5MB file size'
+      ],
       buttonText: 'Start Using Tools',
       buttonVariant: 'outline' as const,
-      popular: false
+      popular: false,
+      icon: Users
+    },
+    {
+      name: 'Free (Registered)',
+      price: '$0',
+      period: 'forever',
+      description: 'Enhanced limits and backup for registered users',
+      features: [
+        'Everything in Unregistered',
+        'File size limit: 10MB',
+        '12 hours file backup',
+        'Download history',
+        'Basic file management',
+        'Email support',
+        'Tool request submissions'
+      ],
+      buttonText: 'Register Free',
+      buttonVariant: 'default' as const,
+      popular: false,
+      icon: Heart
     },
     {
       name: 'Premium Monthly',
       price: '$4.99',
       period: 'month',
-      description: 'All free features plus extended storage',
+      description: 'Full access with extended storage and priority support',
       features: [
         'Everything in Free',
-        '1 year file storage',
+        'Unlimited file size',
+        '1 month file backup',
         'Priority support',
         'Advanced file management',
-        'Download history',
+        'Feature request submissions',
+        'Priority processing',
         'Extended file retention'
       ],
       buttonText: 'Upgrade to Premium',
       buttonVariant: 'default' as const,
-      popular: false
+      popular: false,
+      icon: Shield
     },
     {
       name: 'Premium Yearly',
@@ -52,19 +76,21 @@ const Pricing = () => {
       period: 'year',
       originalPrice: '$59.88',
       savings: 'Save $30',
-      description: 'Best value with 1 year storage',
+      description: 'Best value with full premium features',
       features: [
         'Everything in Premium Monthly',
-        '1 year file storage',
+        'Unlimited file size',
+        '1 month file backup',
         'Priority support',
         'Advanced file management',
-        'Download history',
-        'Extended file retention',
+        'Feature request submissions',
+        'Priority processing',
         '2 months free!'
       ],
       buttonText: 'Get Best Value',
       buttonVariant: 'default' as const,
-      popular: true
+      popular: true,
+      icon: Star
     }
   ];
 
@@ -79,87 +105,150 @@ const Pricing = () => {
               <span>All Tools Are Free</span>
             </div>
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-              Choose Your Storage Plan
+              Choose Your Plan
             </h1>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              All 350+ tools are completely free. Choose a plan based on how long you want your files stored.
+              All 350+ tools are completely free. Choose a plan based on file size limits and backup duration.
             </p>
           </div>
 
           {/* Pricing Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-            {plans.map((plan, index) => (
-              <div key={index} className={`bg-white rounded-2xl shadow-xl p-8 relative ${plan.popular ? 'ring-2 ring-blue-600 scale-105' : ''}`}>
-                {plan.popular && (
-                  <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                    <div className="bg-blue-600 text-white px-6 py-2 rounded-full text-sm font-medium flex items-center">
-                      <Star className="h-4 w-4 mr-1 fill-current" />
-                      Best Value
-                    </div>
-                  </div>
-                )}
-
-                <div className="text-center mb-8">
-                  <h3 className="text-2xl font-bold text-gray-900 mb-2">{plan.name}</h3>
-                  <div className="mb-4">
-                    <div className="flex items-center justify-center space-x-2">
-                      <span className="text-4xl font-bold text-gray-900">{plan.price}</span>
-                      <div className="text-left">
-                        <span className="text-gray-500">/{plan.period}</span>
-                        {plan.originalPrice && (
-                          <div className="text-sm text-gray-400 line-through">{plan.originalPrice}</div>
-                        )}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+            {plans.map((plan, index) => {
+              const IconComponent = plan.icon;
+              return (
+                <div key={index} className={`bg-white rounded-2xl shadow-xl p-6 relative ${plan.popular ? 'ring-2 ring-blue-600 scale-105' : ''}`}>
+                  {plan.popular && (
+                    <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                      <div className="bg-blue-600 text-white px-6 py-2 rounded-full text-sm font-medium flex items-center">
+                        <Star className="h-4 w-4 mr-1 fill-current" />
+                        Best Value
                       </div>
                     </div>
-                    {plan.savings && (
-                      <div className="text-green-600 font-medium text-sm mt-1">{plan.savings}</div>
-                    )}
-                  </div>
-                  <p className="text-gray-600">{plan.description}</p>
-                </div>
+                  )}
 
-                <div className="space-y-4 mb-8">
-                  {plan.features.map((feature, featureIndex) => (
-                    <div key={featureIndex} className="flex items-center">
-                      <Check className="h-5 w-5 text-green-500 mr-3 flex-shrink-0" />
-                      <span className="text-gray-700">{feature}</span>
+                  <div className="text-center mb-6">
+                    <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <IconComponent className="h-6 w-6 text-blue-600" />
                     </div>
-                  ))}
-                </div>
+                    <h3 className="text-xl font-bold text-gray-900 mb-2">{plan.name}</h3>
+                    <div className="mb-3">
+                      <div className="flex items-center justify-center space-x-2">
+                        <span className="text-3xl font-bold text-gray-900">{plan.price}</span>
+                        <div className="text-left">
+                          <span className="text-gray-500">/{plan.period}</span>
+                          {plan.originalPrice && (
+                            <div className="text-sm text-gray-400 line-through">{plan.originalPrice}</div>
+                          )}
+                        </div>
+                      </div>
+                      {plan.savings && (
+                        <div className="text-green-600 font-medium text-sm mt-1">{plan.savings}</div>
+                      )}
+                    </div>
+                    <p className="text-gray-600 text-sm">{plan.description}</p>
+                  </div>
 
-                <Button
-                  className={`w-full text-lg py-6 ${plan.popular ? 'bg-blue-600 hover:bg-blue-700' : ''}`}
-                  size="lg"
-                  variant={plan.buttonVariant}
-                  asChild
-                >
-                  <Link to={plan.name === 'Free Forever' ? "/" : "/auth"}>
-                    {plan.buttonText}
-                  </Link>
-                </Button>
-              </div>
-            ))}
+                  <div className="space-y-3 mb-6">
+                    {plan.features.map((feature, featureIndex) => (
+                      <div key={featureIndex} className="flex items-start">
+                        <Check className="h-4 w-4 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
+                        <span className="text-gray-700 text-sm">{feature}</span>
+                      </div>
+                    ))}
+                    {plan.limitations && plan.limitations.map((limitation, limitIndex) => (
+                      <div key={limitIndex} className="flex items-start">
+                        <span className="text-red-500 mr-2 text-sm">✗</span>
+                        <span className="text-gray-500 text-sm">{limitation}</span>
+                      </div>
+                    ))}
+                  </div>
+
+                  <Button
+                    className={`w-full text-sm py-4 ${plan.popular ? 'bg-blue-600 hover:bg-blue-700' : ''}`}
+                    size="lg"
+                    variant={plan.buttonVariant}
+                    asChild
+                  >
+                    <Link to={plan.name.includes('Premium') ? "/auth" : (plan.name === 'Free (Registered)' ? "/auth" : "/")}>
+                      {plan.buttonText}
+                    </Link>
+                  </Button>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Features Comparison */}
+          <div className="bg-white rounded-2xl shadow-lg p-8 mb-16">
+            <h2 className="text-2xl font-bold text-gray-900 text-center mb-8">
+              Plan Comparison
+            </h2>
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead>
+                  <tr className="border-b">
+                    <th className="text-left py-3 px-4">Feature</th>
+                    <th className="text-center py-3 px-4">Unregistered</th>
+                    <th className="text-center py-3 px-4">Free (Registered)</th>
+                    <th className="text-center py-3 px-4">Premium</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr className="border-b">
+                    <td className="py-3 px-4 font-medium">File Size Limit</td>
+                    <td className="text-center py-3 px-4">5MB</td>
+                    <td className="text-center py-3 px-4">10MB</td>
+                    <td className="text-center py-3 px-4">Unlimited</td>
+                  </tr>
+                  <tr className="border-b">
+                    <td className="py-3 px-4 font-medium">File Backup</td>
+                    <td className="text-center py-3 px-4">❌</td>
+                    <td className="text-center py-3 px-4">12 hours</td>
+                    <td className="text-center py-3 px-4">1 month</td>
+                  </tr>
+                  <tr className="border-b">
+                    <td className="py-3 px-4 font-medium">Tool Requests</td>
+                    <td className="text-center py-3 px-4">❌</td>
+                    <td className="text-center py-3 px-4">✅</td>
+                    <td className="text-center py-3 px-4">✅</td>
+                  </tr>
+                  <tr className="border-b">
+                    <td className="py-3 px-4 font-medium">Feature Requests</td>
+                    <td className="text-center py-3 px-4">❌</td>
+                    <td className="text-center py-3 px-4">❌</td>
+                    <td className="text-center py-3 px-4">✅</td>
+                  </tr>
+                  <tr>
+                    <td className="py-3 px-4 font-medium">Priority Support</td>
+                    <td className="text-center py-3 px-4">❌</td>
+                    <td className="text-center py-3 px-4">❌</td>
+                    <td className="text-center py-3 px-4">✅</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
 
           {/* Why Different Plans Section */}
           <div className="bg-white rounded-2xl shadow-lg p-8 mb-16">
             <h2 className="text-2xl font-bold text-gray-900 text-center mb-8">
-              Why Choose Premium Storage?
+              Why Upgrade Your Plan?
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <div className="text-center">
                 <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Heart className="h-6 w-6 text-blue-600" />
+                  <Shield className="h-6 w-6 text-blue-600" />
                 </div>
-                <h3 className="font-semibold text-gray-900 mb-2">Extended Storage</h3>
-                <p className="text-gray-600 text-sm">Keep your processed files for a full year instead of just one week.</p>
+                <h3 className="font-semibold text-gray-900 mb-2">File Size & Backup</h3>
+                <p className="text-gray-600 text-sm">Higher file size limits and longer backup retention for your processed files.</p>
               </div>
               <div className="text-center">
                 <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
                   <Zap className="h-6 w-6 text-green-600" />
                 </div>
-                <h3 className="font-semibold text-gray-900 mb-2">File Management</h3>
-                <p className="text-gray-600 text-sm">Advanced dashboard to organize and manage all your converted files.</p>
+                <h3 className="font-semibold text-gray-900 mb-2">Request Features</h3>
+                <p className="text-gray-600 text-sm">Submit requests for new tools and features to shape the platform.</p>
               </div>
               <div className="text-center">
                 <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -179,28 +268,28 @@ const Pricing = () => {
             <div className="space-y-8">
               {[
                 {
-                  question: 'Are the tools really free?',
-                  answer: 'Yes! All 350+ tools are completely free with no hidden fees or limitations. You only pay for extended file storage if you want it.'
+                  question: 'What are the file size limits?',
+                  answer: 'Unregistered users can process files up to 5MB, registered free users up to 10MB, and premium users have unlimited file sizes.'
                 },
                 {
-                  question: 'What happens to my files with the free plan?',
-                  answer: 'With the free plan, your processed files are stored for 1 week, then automatically deleted for privacy and security.'
+                  question: 'How long are files backed up?',
+                  answer: 'Unregistered users have no backup. Free registered users get 12-hour backup, while premium users get 1-month backup retention.'
+                },
+                {
+                  question: 'Can I request new tools?',
+                  answer: 'Free registered users can request new tools, while premium users can request both tools and features. Unregistered users cannot submit requests.'
                 },
                 {
                   question: 'Can I upgrade or downgrade anytime?',
                   answer: 'Yes! You can upgrade to premium anytime or cancel your subscription. Your files will be retained based on your current plan.'
                 },
                 {
-                  question: 'Is the yearly plan really better value?',
-                  answer: 'Absolutely! The yearly plan saves you $30 compared to paying monthly, giving you 2 months free.'
-                },
-                {
                   question: 'What payment methods do you accept?',
                   answer: 'We accept all major credit cards and PayPal through our secure Stripe payment processing.'
                 },
                 {
-                  question: 'Can I access my files from anywhere?',
-                  answer: 'Yes! Your saved files are accessible from any device through your dashboard as long as your subscription is active.'
+                  question: 'Is registration really free?',
+                  answer: 'Yes! Registration is completely free and gives you higher file limits and 12-hour backup compared to unregistered usage.'
                 }
               ].map((faq, index) => (
                 <div key={index} className="bg-white rounded-lg p-6 shadow-md">
