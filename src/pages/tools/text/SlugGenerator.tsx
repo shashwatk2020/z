@@ -47,12 +47,14 @@ const SlugGenerator = () => {
       replacement: separator,
       remove: transliterate ? undefined : /[^a-zA-Z0-9\s-]/g,
       lower: caseStyle === 'lowercase',
-      upper: caseStyle === 'uppercase',
       trim: true,
       locale: 'en',
     });
 
-    if (caseStyle === 'camelcase') {
+    // Handle uppercase manually since slugify doesn't have 'upper' option
+    if (caseStyle === 'uppercase') {
+      generatedSlug = generatedSlug.toUpperCase();
+    } else if (caseStyle === 'camelcase') {
       generatedSlug = generatedSlug.replace(/[-_\s](.)?/g, (match, chr) => {
         return chr ? chr.toUpperCase() : '';
       }).replace(/^([A-Z])/, (match, chr) => chr.toLowerCase());

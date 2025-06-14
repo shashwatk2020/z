@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import Layout from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
@@ -8,8 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Checkbox } from '@/components/ui/checkbox';
 import { Copy, FileText } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
-
-const loremIpsum = require('lorem-ipsum').LoremIpsum;
+import { LoremIpsum } from 'lorem-ipsum';
 
 const LoremIpsumGenerator = () => {
   const [type, setType] = useState('paragraphs');
@@ -20,7 +20,7 @@ const LoremIpsumGenerator = () => {
   const { toast } = useToast();
 
   const generateText = () => {
-    const lipsum = new loremIpsum({
+    const lipsum = new LoremIpsum({
       sentencesPerParagraph: {
         max: 8,
         min: 4
