@@ -121,7 +121,7 @@ const Security = () => {
                     </CardHeader>
                     <CardContent>
                       <CardDescription>{tool.description}</CardDescription>
-                    </Card>
+                    </CardContent>
                   </Card>
                 </Link>
               ))}
@@ -130,67 +130,96 @@ const Security = () => {
         </div>
 
         <div className="py-12 md:py-20 bg-gray-50">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="text-center mb-16">
-                    <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 tracking-tight">All Our Security Tools</h2>
-                    <p className="mt-4 max-w-3xl mx-auto text-lg text-gray-600">Complete security toolkit covering password management, encryption, privacy protection, and comprehensive security auditing for individuals and organizations.</p>
-                </div>
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 tracking-tight">
+                Why Use Professional Security Tools?
+              </h2>
+              <div className="mt-6 max-w-4xl mx-auto text-left">
+                <p className="text-lg text-gray-700 mb-6">
+                  In today's interconnected digital world, cybersecurity threats are evolving at an unprecedented pace. From sophisticated phishing attacks to data breaches affecting millions of users, the need for robust security measures has never been more critical. Our comprehensive suite of security and privacy tools empowers individuals and organizations to take control of their digital security posture.
+                </p>
+                
+                <p className="text-lg text-gray-700 mb-6">
+                  Professional security tools provide multiple layers of protection that go far beyond basic antivirus software. They offer proactive defense mechanisms, helping you identify vulnerabilities before they can be exploited by malicious actors. Whether you're a security professional conducting penetration testing, a business owner protecting sensitive customer data, or an individual concerned about online privacy, our tools provide enterprise-grade security capabilities without the complexity.
+                </p>
 
-                <div className="space-y-16">
-                    <div>
-                        <h2 className="text-2xl font-bold text-gray-800 mb-6">Password Security</h2>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                            {passwordTools.map((tool) => (
-                                <Link to={tool.link} key={tool.name} className="block group">
-                                    <Card className="h-full hover:shadow-lg transition-shadow duration-300 p-4">
-                                        <h3 className="font-semibold text-gray-900 group-hover:text-blue-600">{tool.name}</h3>
-                                        <p className="text-sm text-gray-600 mt-1">{tool.description}</p>
-                                    </Card>
-                                </Link>
-                            ))}
-                        </div>
-                    </div>
-                    <div>
-                        <h2 className="text-2xl font-bold text-gray-800 mb-6">Encryption & Cryptography</h2>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                            {encryptionTools.map((tool) => (
-                                <Link to={tool.link} key={tool.name} className="block group">
-                                    <Card className="h-full hover:shadow-lg transition-shadow duration-300 p-4">
-                                        <h3 className="font-semibold text-gray-900 group-hover:text-blue-600">{tool.name}</h3>
-                                        <p className="text-sm text-gray-600 mt-1">{tool.description}</p>
-                                    </Card>
-                                </Link>
-                            ))}
-                        </div>
-                    </div>
-                    <div>
-                        <h2 className="text-2xl font-bold text-gray-800 mb-6">Privacy Protection</h2>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                            {privacyTools.map((tool) => (
-                                <Link to={tool.link} key={tool.name} className="block group">
-                                    <Card className="h-full hover:shadow-lg transition-shadow duration-300 p-4">
-                                        <h3 className="font-semibold text-gray-900 group-hover:text-blue-600">{tool.name}</h3>
-                                        <p className="text-sm text-gray-600 mt-1">{tool.description}</p>
-                                    </Card>
-                                </Link>
-                            ))}
-                        </div>
-                    </div>
-                    <div>
-                        <h2 className="text-2xl font-bold text-gray-800 mb-6">Security Auditing</h2>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                            {auditTools.map((tool) => (
-                                <Link to={tool.link} key={tool.name} className="block group">
-                                    <Card className="h-full hover:shadow-lg transition-shadow duration-300 p-4">
-                                        <h3 className="font-semibold text-gray-900 group-hover:text-blue-600">{tool.name}</h3>
-                                        <p className="text-sm text-gray-600 mt-1">{tool.description}</p>
-                                    </Card>
-                                </Link>
-                            ))}
-                        </div>
-                    </div>
-                </div>
+                <p className="text-lg text-gray-700 mb-6">
+                  The importance of strong password management cannot be overstated. With the average person maintaining over 100 online accounts, using weak or repeated passwords creates a cascade of security risks. Our password generation and analysis tools help you create and maintain unique, cryptographically strong passwords for every account. Combined with our encryption tools, you can ensure that your sensitive information remains protected both in transit and at rest.
+                </p>
+
+                <p className="text-lg text-gray-700 mb-6">
+                  Privacy protection has become equally important as security. Our privacy scanning and audit tools help you understand what information you're sharing online, identify potential data leaks, and provide actionable recommendations to enhance your digital privacy. From removing metadata from files to testing VPN connections, these tools give you complete visibility and control over your digital footprint.
+                </p>
+
+                <p className="text-lg text-gray-700 mb-6">
+                  Beyond individual security, our tools also address organizational needs. Security auditing capabilities help businesses identify vulnerabilities across their digital infrastructure, while compliance tools ensure adherence to industry standards and regulations. The comprehensive nature of our security toolkit means you can address everything from basic password hygiene to advanced cryptographic operations in one integrated platform.
+                </p>
+
+                <p className="text-lg text-gray-700">
+                  Explore our other professional tool categories: <Link to="/tools/text" className="text-blue-600 hover:underline">Text Processing Tools</Link>, <Link to="/tools/web" className="text-blue-600 hover:underline">Web Development Tools</Link>, <Link to="/tools/image" className="text-blue-600 hover:underline">Image Processing Tools</Link>, <Link to="/tools/calculators" className="text-blue-600 hover:underline">Advanced Calculators</Link>, <Link to="/tools/productivity" className="text-blue-600 hover:underline">Productivity Tools</Link>, <Link to="/tools/archive" className="text-blue-600 hover:underline">Archive Management</Link>, <Link to="/tools/video" className="text-blue-600 hover:underline">Video Processing</Link>, <Link to="/tools/audio" className="text-blue-600 hover:underline">Audio Tools</Link>, and <Link to="/tools/pdf" className="text-blue-600 hover:underline">PDF Management</Link>.
+                </p>
+              </div>
             </div>
+
+            <div className="space-y-16">
+              <div>
+                <h2 className="text-2xl font-bold text-gray-800 mb-6">Password Security</h2>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {passwordTools.map((tool) => (
+                    <Link to={tool.link} key={tool.name} className="block group">
+                      <Card className="h-full hover:shadow-lg transition-shadow duration-300 p-4">
+                        <h3 className="font-semibold text-gray-900 group-hover:text-blue-600">{tool.name}</h3>
+                        <p className="text-sm text-gray-600 mt-1">{tool.description}</p>
+                      </Card>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <h2 className="text-2xl font-bold text-gray-800 mb-6">Encryption & Cryptography</h2>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {encryptionTools.map((tool) => (
+                    <Link to={tool.link} key={tool.name} className="block group">
+                      <Card className="h-full hover:shadow-lg transition-shadow duration-300 p-4">
+                        <h3 className="font-semibold text-gray-900 group-hover:text-blue-600">{tool.name}</h3>
+                        <p className="text-sm text-gray-600 mt-1">{tool.description}</p>
+                      </Card>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <h2 className="text-2xl font-bold text-gray-800 mb-6">Privacy Protection</h2>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {privacyTools.map((tool) => (
+                    <Link to={tool.link} key={tool.name} className="block group">
+                      <Card className="h-full hover:shadow-lg transition-shadow duration-300 p-4">
+                        <h3 className="font-semibold text-gray-900 group-hover:text-blue-600">{tool.name}</h3>
+                        <p className="text-sm text-gray-600 mt-1">{tool.description}</p>
+                      </Card>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <h2 className="text-2xl font-bold text-gray-800 mb-6">Security Auditing</h2>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {auditTools.map((tool) => (
+                    <Link to={tool.link} key={tool.name} className="block group">
+                      <Card className="h-full hover:shadow-lg transition-shadow duration-300 p-4">
+                        <h3 className="font-semibold text-gray-900 group-hover:text-blue-600">{tool.name}</h3>
+                        <p className="text-sm text-gray-600 mt-1">{tool.description}</p>
+                      </Card>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </main>
       <Footer />
