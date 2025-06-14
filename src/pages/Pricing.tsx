@@ -57,7 +57,7 @@ const Pricing = () => {
       description: 'Full access with extended storage and priority support',
       features: [
         'Everything in Free',
-        'Unlimited file size',
+        'File size limit: 100MB',
         '1 month file backup',
         'Priority support',
         'Advanced file management',
@@ -79,7 +79,7 @@ const Pricing = () => {
       description: 'Best value with full premium features',
       features: [
         'Everything in Premium Monthly',
-        'Unlimited file size',
+        'File size limit: 100MB',
         '1 month file backup',
         'Priority support',
         'Advanced file management',
@@ -199,7 +199,7 @@ const Pricing = () => {
                     <td className="py-3 px-4 font-medium">File Size Limit</td>
                     <td className="text-center py-3 px-4">5MB</td>
                     <td className="text-center py-3 px-4">10MB</td>
-                    <td className="text-center py-3 px-4">Unlimited</td>
+                    <td className="text-center py-3 px-4">100MB</td>
                   </tr>
                   <tr className="border-b">
                     <td className="py-3 px-4 font-medium">File Backup</td>
@@ -269,7 +269,7 @@ const Pricing = () => {
               {[
                 {
                   question: 'What are the file size limits?',
-                  answer: 'Unregistered users can process files up to 5MB, registered free users up to 10MB, and premium users have unlimited file sizes.'
+                  answer: 'Unregistered users can process files up to 5MB, registered free users up to 10MB, and premium users up to 100MB.'
                 },
                 {
                   question: 'How long are files backed up?',
