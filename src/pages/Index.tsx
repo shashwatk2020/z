@@ -3,6 +3,7 @@ import React from 'react';
 import Layout from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
+import { useAuth } from '@/contexts/AuthContext';
 import { 
   Star, 
   Shield, 
@@ -14,10 +15,13 @@ import {
   FileText,
   Calculator,
   Type,
-  Globe
+  Globe,
+  Crown
 } from 'lucide-react';
 
 const Index = () => {
+  const { user } = useAuth();
+
   const features = [
     {
       icon: Zap,
@@ -54,14 +58,14 @@ const Index = () => {
       icon: Image,
       tools: [
         { 
-          name: 'JPG to PNG Converter', 
-          description: 'Convert JPG images to PNG format while preserving quality and transparency support.',
-          url: '/tools/jpg-to-png' 
-        },
-        { 
           name: 'PNG to JPG Converter', 
           description: 'Convert PNG images to JPG format for smaller file sizes and better web compatibility.',
           url: '/tools/png-to-jpg' 
+        },
+        { 
+          name: 'JPG to PNG Converter', 
+          description: 'Convert JPG images to PNG format while preserving quality and transparency support.',
+          url: '/tools/jpg-to-png' 
         },
         { 
           name: 'Image Resizer', 
@@ -228,9 +232,18 @@ const Index = () => {
                 Explore Tools <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
             </Button>
-            <Button size="lg" variant="outline" className="text-lg px-8" asChild>
-              <Link to="/pricing">100% Free Forever</Link>
-            </Button>
+            {user ? (
+              <Button size="lg" variant="outline" className="text-lg px-8" asChild>
+                <Link to="/dashboard">
+                  <Crown className="mr-2 h-5 w-5" />
+                  My Dashboard
+                </Link>
+              </Button>
+            ) : (
+              <Button size="lg" variant="outline" className="text-lg px-8" asChild>
+                <Link to="/auth">Sign Up Free</Link>
+              </Button>
+            )}
           </div>
         </div>
       </section>
@@ -331,6 +344,47 @@ const Index = () => {
           </div>
         </div>
       </section>
+
+      {/* Save Your Work Section */}
+      {!user && (
+        <section className="py-20 bg-blue-50">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              Save Your Work for Later
+            </h2>
+            <p className="text-xl text-gray-600 mb-8">
+              Sign up for free to save your processed files for 1 week, or upgrade to Premium for 1-year storage
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+              <div className="bg-white p-6 rounded-lg shadow-lg">
+                <h3 className="text-xl font-semibold mb-4">Free Account</h3>
+                <ul className="text-left space-y-2 text-gray-600">
+                  <li>✓ Save files for 1 week</li>
+                  <li>✓ Access to all tools</li>
+                  <li>✓ Download history</li>
+                </ul>
+              </div>
+              <div className="bg-white p-6 rounded-lg shadow-lg border-2 border-blue-500">
+                <h3 className="text-xl font-semibold mb-4 flex items-center">
+                  <Crown className="h-5 w-5 mr-2 text-blue-600" />
+                  Premium Account
+                </h3>
+                <ul className="text-left space-y-2 text-gray-600">
+                  <li>✓ Save files for 1 year</li>
+                  <li>✓ Unlimited conversions</li>
+                  <li>✓ Priority support</li>
+                  <li>✓ Premium tools access</li>
+                </ul>
+              </div>
+            </div>
+            <Button size="lg" className="text-lg px-8" asChild>
+              <Link to="/auth">
+                Get Started Free
+              </Link>
+            </Button>
+          </div>
+        </section>
+      )}
     </Layout>
   );
 };

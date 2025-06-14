@@ -3,11 +3,13 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Search, User, Menu, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useAuth } from '@/contexts/AuthContext';
 import SearchBar from './SearchBar';
 import MegaMenu from './MegaMenu';
 
 const Header = () => {
   const [activeMegaMenu, setActiveMegaMenu] = useState<string | null>(null);
+  const { user, signOut } = useAuth();
 
   const toolCategories = [
     { name: 'Text Tools', key: 'text' },
@@ -59,12 +61,28 @@ const Header = () => {
 
           {/* Auth Buttons */}
           <div className="flex items-center space-x-3">
-            <Button variant="outline" size="sm" asChild>
-              <Link to="/login">Login</Link>
-            </Button>
-            <Button size="sm" asChild>
-              <Link to="/register">Sign Up</Link>
-            </Button>
+            {user ? (
+              <>
+                <Button variant="outline" size="sm" asChild>
+                  <Link to="/dashboard">
+                    <User className="h-4 w-4 mr-1" />
+                    Dashboard
+                  </Link>
+                </Button>
+                <Button variant="outline" size="sm" onClick={signOut}>
+                  Sign Out
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button variant="outline" size="sm" asChild>
+                  <Link to="/auth">Login</Link>
+                </Button>
+                <Button size="sm" asChild>
+                  <Link to="/auth">Sign Up</Link>
+                </Button>
+              </>
+            )}
           </div>
 
           {/* Mobile Menu Button */}

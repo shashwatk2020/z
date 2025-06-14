@@ -9,7 +9,108 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      profiles: {
+        Row: {
+          created_at: string
+          email: string
+          first_name: string | null
+          id: string
+          last_name: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          first_name?: string | null
+          id: string
+          last_name?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          first_name?: string | null
+          id?: string
+          last_name?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      saved_items: {
+        Row: {
+          created_at: string
+          expires_at: string | null
+          file_size: number | null
+          file_url: string | null
+          id: string
+          original_filename: string
+          processed_filename: string | null
+          processing_status: string | null
+          tool_name: string
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          expires_at?: string | null
+          file_size?: number | null
+          file_url?: string | null
+          id?: string
+          original_filename: string
+          processed_filename?: string | null
+          processing_status?: string | null
+          tool_name: string
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          expires_at?: string | null
+          file_size?: number | null
+          file_url?: string | null
+          id?: string
+          original_filename?: string
+          processed_filename?: string | null
+          processing_status?: string | null
+          tool_name?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      subscribers: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          stripe_customer_id: string | null
+          subscribed: boolean
+          subscription_end: string | null
+          subscription_tier: string | null
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          stripe_customer_id?: string | null
+          subscribed?: boolean
+          subscription_end?: string | null
+          subscription_tier?: string | null
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          stripe_customer_id?: string | null
+          subscribed?: boolean
+          subscription_end?: string | null
+          subscription_tier?: string | null
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
