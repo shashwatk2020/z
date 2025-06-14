@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Header from '@/components/layout/Header';
@@ -40,7 +39,7 @@ const tools = [
   {
     name: 'Text to Speech',
     description: 'Convert written text into natural-sounding audio. Listen to articles, proofread your writing, or create voiceovers for videos. A great accessibility tool for users of all abilities.',
-    link: '/tools/text/text-to-speech',
+    link: '/tools/text/text-to-speech-converter',
     icon: <Mic className="h-8 w-8 text-indigo-500" />
   },
 ];
@@ -51,10 +50,10 @@ const conversionTools = [
     { name: 'Binary ⇄ Text Converter', description: 'Translate binary code to text and vice versa.', link: '/tools/text/binary-text-converter' },
     { name: 'Text to Hex Converter', description: 'Convert plain text into hexadecimal code.', link: '/tools/text/text-to-hex-converter' },
     { name: 'Hex to Text Converter', description: 'Translate hexadecimal code back into plain text.', link: '/tools/text/hex-to-text-converter' },
-    { name: 'Text to ASCII', description: 'Convert text characters to ASCII codes.', link: '/tools/text/text-to-ascii' },
-    { name: 'ASCII to Text', description: 'Translate ASCII codes back to text characters.', link: '/tools/text/ascii-to-text' },
+    { name: 'Text to ASCII', description: 'Convert text characters to ASCII codes.', link: '/tools/text/text-to-ascii-converter' },
+    { name: 'ASCII to Text', description: 'Translate ASCII codes back to text characters.', link: '/tools/text/ascii-to-text-converter' },
     { name: 'Reverse Text Generator', description: 'Flip your text backward instantly.', link: '/tools/text/reverse-text-generator' },
-    { name: 'Text to Speech Converter', description: 'Listen to your text read aloud in a natural voice.', link: '/tools/text/text-to-speech' },
+    { name: 'Text to Speech Converter', description: 'Listen to your text read aloud in a natural voice.', link: '/tools/text/text-to-speech-converter' },
     { name: 'Unicode Character Converter', description: 'Convert text to and from Unicode characters.', link: '/tools/text/unicode-character-converter' },
     { name: 'Number to Words Converter', description: 'Convert numbers into their written word form.', link: '/tools/text/number-to-words-converter' },
 ];
