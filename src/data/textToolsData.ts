@@ -1,4 +1,3 @@
-
 import { Text, FileText, CaseSensitive, Pilcrow, Type, Hash, IterationCcw, Mic } from 'lucide-react';
 
 export const featuredTools = [
@@ -97,3 +96,19 @@ export const stylingTools = [
   { name: 'Text Art Generator', description: 'Create art from text characters.', link: '/tools/text/text-art-generator' },
   { name: 'Upside Down Text Generator', description: 'Flip your text upside down instantly.', link: '/tools/text/upside-down-text-generator' },
 ];
+
+const combinedTools = [
+  ...conversionTools,
+  ...generationTools,
+  ...analysisTools,
+  ...stylingTools,
+];
+
+const uniqueToolsMap = new Map();
+combinedTools.forEach(tool => {
+  if (!uniqueToolsMap.has(tool.link)) {
+    uniqueToolsMap.set(tool.link, tool);
+  }
+});
+
+export const allTextTools = Array.from(uniqueToolsMap.values()).sort((a, b) => a.name.localeCompare(b.name));

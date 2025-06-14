@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { allTextTools } from '@/data/textToolsData';
 
 interface MegaMenuProps {
   activeCategory: string | null;
@@ -12,22 +13,7 @@ const MegaMenu: React.FC<MegaMenuProps> = ({ activeCategory, onClose }) => {
     text: {
       title: 'Text Tools',
       description: 'Transform, analyze, and manipulate text in various ways',
-      tools: [
-        { name: 'Case Converter', description: 'Change text to uppercase, lowercase, title case, etc.', path: '/tools/text/case-converter' },
-        { name: 'Sentence Case Converter', description: 'Format text into proper sentence capitalization.', path: '/tools/text/sentence-case-converter' },
-        { name: 'Binary Text Converter', description: 'Translate binary code to text and vice versa.', path: '/tools/text/binary-text-converter' },
-        { name: 'Text to Hex Converter', description: 'Convert plain text into hexadecimal code.', path: '/tools/text/text-to-hex-converter' },
-        { name: 'Hex to Text Converter', description: 'Translate hexadecimal code back into plain text.', path: '/tools/text/hex-to-text-converter' },
-        { name: 'Text to ASCII', description: 'Convert text characters to ASCII codes.', path: '/tools/text/text-to-ascii-converter' },
-        { name: 'ASCII to Text', description: 'Translate ASCII codes back to text characters.', path: '/tools/text/ascii-to-text-converter' },
-        { name: 'Reverse Text Generator', description: 'Flip your text backward instantly.', path: '/tools/text/reverse-text-generator' },
-        { name: 'Text to Speech Converter', description: 'Listen to your text read aloud in a natural voice.', path: '/tools/text/text-to-speech-converter' },
-        { name: 'Unicode Character Converter', description: 'Convert text to and from Unicode characters.', path: '/tools/text/unicode-character-converter' },
-        { name: 'Number to Words Converter', description: 'Convert numbers into their written word form.', path: '/tools/text/number-to-words-converter' },
-        { name: 'Random Password Generator', description: 'Create strong, secure, and random passwords.', path: '/tools/text/random-password-generator' },
-        { name: 'Lorem Ipsum Generator', description: 'Generate customizable placeholder text.', path: '/tools/text/lorem-ipsum-generator' },
-        { name: 'Slug Generator', description: 'Create SEO-friendly URL slugs from text.', path: '/tools/text/slug-generator' },
-      ]
+      tools: allTextTools.map(tool => ({ name: tool.name, description: tool.description, path: tool.link }))
     },
     web: {
       title: 'Web Tools',
