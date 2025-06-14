@@ -2,144 +2,121 @@
 import React from 'react';
 import Layout from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
-import { Check, Star, Zap, Lock } from 'lucide-react';
+import { Check, Star, Zap, Heart } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const Pricing = () => {
   const plans = [
     {
-      name: 'Free',
+      name: 'Free Forever',
       price: '$0',
       period: 'forever',
-      description: 'All tools available with basic features',
+      description: 'All 350+ tools completely free with no limitations',
       features: [
-        'All 150+ tools included',
-        'Basic conversion features',
-        '5 conversions per day',
-        'Standard processing speed',
-        'Email support'
-      ],
-      limitations: [
-        'Watermark on outputs',
-        'Limited file size (10MB)',
-        'No premium features',
-        'No batch processing'
-      ],
-      buttonText: 'Get Started Free',
-      buttonVariant: 'outline' as const,
-      popular: false
-    },
-    {
-      name: 'Pro',
-      price: '$9.99',
-      period: 'per month',
-      description: 'All tools with premium features unlocked',
-      features: [
-        'All 150+ tools included',
-        'All premium features unlocked',
+        'All 350+ tools included',
+        'All features unlocked',
         'Unlimited conversions',
         'No watermarks',
-        'Priority processing',
-        'Large file support (1GB)',
+        'Fast processing',
+        'Large file support (up to 100MB)',
         'Batch processing',
-        'Priority support',
-        'API access'
+        'Email support',
+        'No registration required',
+        'Privacy focused - files deleted after processing'
       ],
       limitations: [],
-      buttonText: 'Upgrade to Pro',
+      buttonText: 'Start Using Tools',
       buttonVariant: 'default' as const,
       popular: true
-    },
-    {
-      name: 'Enterprise',
-      price: '$49.99',
-      period: 'per month',
-      description: 'For teams and businesses',
-      features: [
-        'Everything in Pro',
-        'Team management',
-        'Custom branding',
-        'Dedicated support',
-        'SLA guarantee',
-        'Custom integrations',
-        'Volume discounts',
-        'White-label options'
-      ],
-      limitations: [],
-      buttonText: 'Contact Sales',
-      buttonVariant: 'outline' as const,
-      popular: false
     }
   ];
 
   return (
     <Layout>
-      <div className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="py-20 bg-gradient-to-br from-blue-50 to-indigo-100">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}
           <div className="text-center mb-16">
+            <div className="inline-flex items-center space-x-2 bg-green-100 text-green-800 px-4 py-2 rounded-full text-sm font-medium mb-4">
+              <Heart className="h-4 w-4 fill-current" />
+              <span>100% Free Forever</span>
+            </div>
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-              Simple, Transparent Pricing
+              All Tools Are Completely Free
             </h1>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              All tools are free to use. Upgrade to unlock premium features and remove limitations.
+              We believe powerful tools should be accessible to everyone. That's why all 350+ tools on ZipConvert are completely free with no hidden costs or limitations.
             </p>
           </div>
 
-          {/* Pricing Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-            {plans.map((plan, index) => (
-              <div
-                key={index}
-                className={`bg-white rounded-2xl shadow-lg p-8 relative ${
-                  plan.popular ? 'ring-2 ring-blue-600 scale-105' : ''
-                }`}
-              >
-                {plan.popular && (
-                  <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                    <div className="bg-blue-600 text-white px-4 py-2 rounded-full text-sm font-medium flex items-center">
-                      <Star className="h-4 w-4 mr-1 fill-current" />
-                      Most Popular
-                    </div>
-                  </div>
-                )}
-
-                <div className="text-center mb-8">
-                  <h3 className="text-2xl font-bold text-gray-900 mb-2">{plan.name}</h3>
-                  <div className="mb-4">
-                    <span className="text-4xl font-bold text-gray-900">{plan.price}</span>
-                    <span className="text-gray-500 ml-2">/{plan.period}</span>
-                  </div>
-                  <p className="text-gray-600">{plan.description}</p>
+          {/* Single Pricing Card */}
+          <div className="flex justify-center mb-16">
+            <div className="bg-white rounded-2xl shadow-xl p-8 relative max-w-md w-full ring-2 ring-blue-600">
+              <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                <div className="bg-blue-600 text-white px-6 py-2 rounded-full text-sm font-medium flex items-center">
+                  <Star className="h-4 w-4 mr-1 fill-current" />
+                  Best Value
                 </div>
-
-                <div className="space-y-4 mb-8">
-                  {plan.features.map((feature, featureIndex) => (
-                    <div key={featureIndex} className="flex items-center">
-                      <Check className="h-5 w-5 text-green-500 mr-3 flex-shrink-0" />
-                      <span className="text-gray-700">{feature}</span>
-                    </div>
-                  ))}
-                  {plan.limitations.map((limitation, limitationIndex) => (
-                    <div key={limitationIndex} className="flex items-center opacity-60">
-                      <Lock className="h-4 w-4 mr-3 flex-shrink-0 text-gray-400" />
-                      <span className="text-gray-500 text-sm">{limitation}</span>
-                    </div>
-                  ))}
-                </div>
-
-                <Button
-                  className={`w-full ${plan.popular ? 'bg-blue-600 hover:bg-blue-700' : ''}`}
-                  variant={plan.buttonVariant}
-                  size="lg"
-                  asChild
-                >
-                  <Link to={plan.name === 'Free' ? '/register' : '/register'}>
-                    {plan.buttonText}
-                  </Link>
-                </Button>
               </div>
-            ))}
+
+              <div className="text-center mb-8">
+                <h3 className="text-3xl font-bold text-gray-900 mb-2">{plans[0].name}</h3>
+                <div className="mb-4">
+                  <span className="text-5xl font-bold text-gray-900">{plans[0].price}</span>
+                  <span className="text-gray-500 ml-2">/{plans[0].period}</span>
+                </div>
+                <p className="text-gray-600">{plans[0].description}</p>
+              </div>
+
+              <div className="space-y-4 mb-8">
+                {plans[0].features.map((feature, featureIndex) => (
+                  <div key={featureIndex} className="flex items-center">
+                    <Check className="h-5 w-5 text-green-500 mr-3 flex-shrink-0" />
+                    <span className="text-gray-700">{feature}</span>
+                  </div>
+                ))}
+              </div>
+
+              <Button
+                className="w-full bg-blue-600 hover:bg-blue-700 text-lg py-6"
+                size="lg"
+                asChild
+              >
+                <Link to="/">
+                  {plans[0].buttonText}
+                </Link>
+              </Button>
+            </div>
+          </div>
+
+          {/* Why Free Section */}
+          <div className="bg-white rounded-2xl shadow-lg p-8 mb-16">
+            <h2 className="text-2xl font-bold text-gray-900 text-center mb-8">
+              Why Are All Tools Free?
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <div className="text-center">
+                <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Heart className="h-6 w-6 text-blue-600" />
+                </div>
+                <h3 className="font-semibold text-gray-900 mb-2">Community First</h3>
+                <p className="text-gray-600 text-sm">We believe in supporting creators, developers, and professionals by providing free access to essential tools.</p>
+              </div>
+              <div className="text-center">
+                <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Zap className="h-6 w-6 text-green-600" />
+                </div>
+                <h3 className="font-semibold text-gray-900 mb-2">No Barriers</h3>
+                <p className="text-gray-600 text-sm">Remove financial barriers that prevent people from accessing the tools they need to be productive.</p>
+              </div>
+              <div className="text-center">
+                <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Star className="h-6 w-6 text-purple-600" />
+                </div>
+                <h3 className="font-semibold text-gray-900 mb-2">Quality Focus</h3>
+                <p className="text-gray-600 text-sm">By keeping tools free, we focus on building the best user experience rather than complex pricing models.</p>
+              </div>
+            </div>
           </div>
 
           {/* FAQ Section */}
@@ -150,23 +127,31 @@ const Pricing = () => {
             <div className="space-y-8">
               {[
                 {
-                  question: 'Can I change my plan at any time?',
-                  answer: 'Yes, you can upgrade or downgrade your plan at any time. Changes take effect immediately and you\'ll be charged or credited on your next billing cycle.'
+                  question: 'Are there really no hidden costs?',
+                  answer: 'Absolutely not! All tools are completely free with no hidden fees, subscriptions, or premium tiers. You get full access to everything.'
+                },
+                {
+                  question: 'Do I need to create an account?',
+                  answer: 'No account required! You can use all tools immediately without signing up. We respect your privacy and don\'t track your usage.'
                 },
                 {
                   question: 'What happens to my files?',
                   answer: 'All files are automatically deleted from our servers after processing for security and privacy. We never store your personal files permanently.'
                 },
                 {
-                  question: 'Is there a free trial for Pro plans?',
-                  answer: 'Yes, we offer a 7-day free trial for all Pro plans. No credit card required to start your trial.'
+                  question: 'Are there any usage limits?',
+                  answer: 'No limits! You can use any tool as many times as you want. Process unlimited files with no restrictions on file size (up to 100MB per file).'
                 },
                 {
-                  question: 'Do you offer refunds?',
-                  answer: 'We offer a 30-day money-back guarantee for all paid plans. If you\'re not satisfied, contact us for a full refund.'
+                  question: 'How do you keep the service running?',
+                  answer: 'We keep costs low through efficient infrastructure and may show non-intrusive ads to cover server costs while keeping all tools free.'
+                },
+                {
+                  question: 'Can I use these tools for commercial projects?',
+                  answer: 'Yes! All tools can be used for personal and commercial projects without any restrictions or attribution requirements.'
                 }
               ].map((faq, index) => (
-                <div key={index} className="bg-white rounded-lg p-6">
+                <div key={index} className="bg-white rounded-lg p-6 shadow-md">
                   <h3 className="text-lg font-semibold text-gray-900 mb-2">
                     {faq.question}
                   </h3>
