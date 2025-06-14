@@ -25,6 +25,8 @@ serve(async (req) => {
     const user = data.user;
     if (!user?.email) throw new Error("User not authenticated or email not available");
 
+    const { plan } = await req.json();
+    
     const stripe = new Stripe(Deno.env.get("STRIPE_SECRET_KEY") || "", { apiVersion: "2023-10-16" });
     const customers = await stripe.customers.list({ email: user.email, limit: 1 });
     let customerId;
@@ -32,17 +34,29 @@ serve(async (req) => {
       customerId = customers.data[0].id;
     }
 
+    let priceData;
+    if (plan === 'yearly') {
+      priceData = {
+        currency: "usd",
+        product_data: { name: "ZipConvert Premium - Yearly" },
+        unit_amount: 2999, // $29.99
+        recurring: { interval: "year" },
+      };
+    } else {
+      priceData = {
+        currency: "usd",
+        product_data: { name: "ZipConvert Premium - Monthly" },
+        unit_amount: 499, // $4.99
+        recurring: { interval: "month" },
+      };
+    }
+
     const session = await stripe.checkout.sessions.create({
       customer: customerId,
       customer_email: customerId ? undefined : user.email,
       line_items: [
         {
-          price_data: {
-            currency: "usd",
-            product_data: { name: "ZipConvert Premium - 1 Year File Storage" },
-            unit_amount: 999, // $9.99
-            recurring: { interval: "month" },
-          },
+          price_data: priceData,
           quantity: 1,
         },
       ],

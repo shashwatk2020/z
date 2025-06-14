@@ -1,55 +1,26 @@
 
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
-import { useNavigate } from 'react-router-dom';
 import Layout from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { supabase } from '@/integrations/supabase/client';
+import { Separator } from '@/components/ui/separator';
+import { Calendar, Download, FileText, Crown, Settings, CreditCard } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
-import { 
-  FileText, 
-  Download, 
-  Trash2, 
-  Crown, 
-  Calendar,
-  User,
-  Settings,
-  CreditCard
-} from 'lucide-react';
-
-interface SavedItem {
-  id: string;
-  tool_name: string;
-  original_filename: string;
-  processed_filename: string;
-  file_url: string;
-  file_size: number;
-  processing_status: string;
-  expires_at: string;
-  created_at: string;
-}
+import { supabase } from '@/integrations/supabase/client';
 
 const Dashboard = () => {
-  const { user, loading, signOut, subscriptionTier, isSubscribed, checkSubscription } = useAuth();
-  const navigate = useNavigate();
+  const { user, signOut, subscriptionTier, isSubscribed, checkSubscription } = useAuth();
   const { toast } = useToast();
-  const [savedItems, setSavedItems] = useState<SavedItem[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [savedItems, setSavedItems] = useState<any[]>([]);
   const [loadingItems, setLoadingItems] = useState(true);
+  const [selectedPlan, setSelectedPlan] = useState<'monthly' | 'yearly'>('monthly');
 
   useEffect(() => {
-    if (!loading && !user) {
-      navigate('/auth');
-    }
-  }, [user, loading, navigate]);
-
-  useEffect(() => {
-    if (user) {
-      fetchSavedItems();
-    }
-  }, [user]);
+    fetchSavedItems();
+  }, []);
 
   const fetchSavedItems = async () => {
     try {
@@ -58,92 +29,54 @@ const Dashboard = () => {
         .select('*')
         .order('created_at', { ascending: false });
 
-      if (error) {
-        console.error('Error fetching saved items:', error);
-        toast({
-          title: "Error",
-          description: "Failed to load saved items",
-          variant: "destructive",
-        });
-      } else {
-        setSavedItems(data || []);
-      }
+      if (error) throw error;
+      setSavedItems(data || []);
     } catch (error) {
-      console.error('Error:', error);
+      console.error('Error fetching saved items:', error);
     } finally {
       setLoadingItems(false);
     }
   };
 
-  const deleteItem = async (id: string) => {
-    try {
-      const { error } = await supabase
-        .from('saved_items')
-        .delete()
-        .eq('id', id);
-
-      if (error) {
-        toast({
-          title: "Error",
-          description: "Failed to delete item",
-          variant: "destructive",
-        });
-      } else {
-        setSavedItems(items => items.filter(item => item.id !== id));
-        toast({
-          title: "Success",
-          description: "Item deleted successfully",
-        });
-      }
-    } catch (error) {
-      console.error('Error deleting item:', error);
-    }
-  };
-
   const handleUpgrade = async () => {
+    setLoading(true);
     try {
-      const { data, error } = await supabase.functions.invoke('create-checkout');
+      const { data, error } = await supabase.functions.invoke('create-checkout', {
+        body: { plan: selectedPlan }
+      });
+
+      if (error) throw error;
       
-      if (error) {
-        toast({
-          title: "Error",
-          description: "Failed to start checkout process",
-          variant: "destructive",
-        });
-        return;
-      }
-      
-      if (data?.url) {
-        window.open(data.url, '_blank');
-      }
+      // Open Stripe checkout in a new tab
+      window.open(data.url, '_blank');
     } catch (error) {
-      console.error('Error starting checkout:', error);
       toast({
         title: "Error",
-        description: "Failed to start checkout process",
+        description: "Failed to create checkout session",
         variant: "destructive",
       });
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleManageSubscription = async () => {
+    setLoading(true);
     try {
       const { data, error } = await supabase.functions.invoke('customer-portal');
+
+      if (error) throw error;
       
-      if (error) {
-        toast({
-          title: "Error",
-          description: "Failed to open customer portal",
-          variant: "destructive",
-        });
-        return;
-      }
-      
-      if (data?.url) {
-        window.open(data.url, '_blank');
-      }
+      // Open customer portal in a new tab
+      window.open(data.url, '_blank');
     } catch (error) {
-      console.error('Error opening customer portal:', error);
+      toast({
+        title: "Error",
+        description: "Failed to open customer portal",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -156,218 +89,210 @@ const Dashboard = () => {
   };
 
   const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString();
+    return new Date(dateString).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
   };
 
-  const getExpiryStatus = (expiresAt: string) => {
-    const now = new Date();
-    const expiry = new Date(expiresAt);
-    const daysLeft = Math.ceil((expiry.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
-    
-    if (daysLeft < 0) return { status: 'expired', text: 'Expired', color: 'bg-red-500' };
-    if (daysLeft <= 1) return { status: 'expiring', text: `${daysLeft} day left`, color: 'bg-orange-500' };
-    if (daysLeft <= 7) return { status: 'warning', text: `${daysLeft} days left`, color: 'bg-yellow-500' };
-    return { status: 'active', text: `${daysLeft} days left`, color: 'bg-green-500' };
-  };
-
-  if (loading || !user) {
-    return (
-      <Layout>
-        <div className="flex items-center justify-center min-h-screen">
-          <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-            <p className="mt-4 text-gray-600">Loading...</p>
-          </div>
-        </div>
-      </Layout>
-    );
-  }
+  const pricingPlans = [
+    {
+      name: 'Monthly',
+      price: '$4.99',
+      period: 'month',
+      value: 'monthly'
+    },
+    {
+      name: 'Yearly',
+      price: '$29.99',
+      period: 'year',
+      savings: 'Save $30',
+      value: 'yearly'
+    }
+  ];
 
   return (
     <Layout>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="mb-8">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
-              <p className="text-gray-600">Welcome back, {user.email}</p>
-            </div>
-            <div className="flex items-center space-x-4">
-              <Badge variant={isSubscribed ? "default" : "secondary"} className="text-sm">
-                {isSubscribed ? (
-                  <>
-                    <Crown className="h-4 w-4 mr-1" />
-                    Premium
-                  </>
-                ) : (
-                  'Free Plan'
-                )}
-              </Badge>
-              <Button variant="outline" onClick={signOut}>
-                Sign Out
-              </Button>
-            </div>
+      <div className="max-w-6xl mx-auto p-6 space-y-8">
+        {/* Header */}
+        <div className="flex justify-between items-center">
+          <div>
+            <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
+            <p className="text-gray-600">Welcome back, {user?.user_metadata?.first_name || user?.email}</p>
           </div>
+          <Button variant="outline" onClick={signOut}>
+            Sign Out
+          </Button>
         </div>
 
-        <Tabs defaultValue="files" className="space-y-6">
-          <TabsList>
-            <TabsTrigger value="files">My Files</TabsTrigger>
-            <TabsTrigger value="subscription">Subscription</TabsTrigger>
-            <TabsTrigger value="profile">Profile</TabsTrigger>
-          </TabsList>
-
-          <TabsContent value="files" className="space-y-6">
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center">
-                  <FileText className="h-5 w-5 mr-2" />
-                  Saved Files ({savedItems.length})
-                </CardTitle>
-                <CardDescription>
-                  Files are saved for {isSubscribed ? '1 year' : '1 week'} based on your subscription plan
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                {loadingItems ? (
-                  <div className="text-center py-8">
-                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto"></div>
-                    <p className="mt-2 text-gray-600">Loading files...</p>
-                  </div>
-                ) : savedItems.length === 0 ? (
-                  <div className="text-center py-8">
-                    <FileText className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                    <p className="text-gray-600">No saved files yet</p>
-                    <p className="text-sm text-gray-500">Start using our tools to save your processed files</p>
-                  </div>
-                ) : (
-                  <div className="space-y-4">
-                    {savedItems.map((item) => {
-                      const expiry = getExpiryStatus(item.expires_at);
-                      return (
-                        <div key={item.id} className="flex items-center justify-between p-4 border rounded-lg">
-                          <div className="flex-1">
-                            <div className="flex items-center space-x-2">
-                              <h3 className="font-medium">{item.original_filename}</h3>
-                              <Badge variant="outline" className="text-xs">
-                                {item.tool_name}
-                              </Badge>
-                              <Badge className={`text-xs text-white ${expiry.color}`}>
-                                {expiry.text}
-                              </Badge>
-                            </div>
-                            <div className="text-sm text-gray-500 mt-1">
-                              {formatFileSize(item.file_size)} • Processed on {formatDate(item.created_at)}
-                            </div>
-                          </div>
-                          <div className="flex items-center space-x-2">
-                            {item.file_url && (
-                              <Button size="sm" variant="outline">
-                                <Download className="h-4 w-4 mr-1" />
-                                Download
-                              </Button>
-                            )}
-                            <Button 
-                              size="sm" 
-                              variant="outline" 
-                              onClick={() => deleteItem(item.id)}
-                            >
-                              <Trash2 className="h-4 w-4" />
-                            </Button>
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
-                )}
-              </CardContent>
-            </Card>
-          </TabsContent>
-
-          <TabsContent value="subscription" className="space-y-6">
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center">
-                  <CreditCard className="h-5 w-5 mr-2" />
-                  Subscription Plan
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
+        {/* Subscription Status */}
+        <Card>
+          <CardHeader>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-2">
+                <Crown className="h-5 w-5 text-yellow-500" />
+                <CardTitle>Subscription Status</CardTitle>
+              </div>
+              <Badge variant={isSubscribed ? "default" : "secondary"}>
+                {subscriptionTier || 'Free'}
+              </Badge>
+            </div>
+          </CardHeader>
+          <CardContent>
+            {isSubscribed ? (
+              <div className="space-y-4">
+                <p className="text-green-600">✅ You have an active premium subscription!</p>
+                <p className="text-sm text-gray-600">
+                  Your files are saved for 1 year with premium storage.
+                </p>
+                <Button onClick={handleManageSubscription} disabled={loading} variant="outline">
+                  <CreditCard className="h-4 w-4 mr-2" />
+                  Manage Subscription
+                </Button>
+              </div>
+            ) : (
+              <div className="space-y-6">
+                <div>
+                  <p className="text-gray-600 mb-2">You're currently on the free plan.</p>
+                  <p className="text-sm text-gray-500">Files are saved for 1 week. Upgrade for 1-year storage!</p>
+                </div>
+                
                 <div className="space-y-4">
-                  <div className="flex items-center justify-between p-4 border rounded-lg">
-                    <div>
-                      <h3 className="font-medium">
-                        {isSubscribed ? 'Premium Plan' : 'Free Plan'}
-                      </h3>
-                      <p className="text-sm text-gray-600">
-                        {isSubscribed 
-                          ? 'Files saved for 1 year • Unlimited conversions • Priority support'
-                          : 'Files saved for 1 week • Basic features'
-                        }
-                      </p>
-                    </div>
-                    <div className="text-right">
-                      <p className="font-medium">
-                        {isSubscribed ? '$9.99/month' : 'Free'}
-                      </p>
-                      {isSubscribed ? (
-                        <Button onClick={handleManageSubscription} variant="outline" size="sm">
-                          Manage Subscription
-                        </Button>
-                      ) : (
-                        <Button onClick={handleUpgrade} size="sm">
-                          Upgrade to Premium
+                  <h3 className="text-lg font-semibold">Choose Your Plan</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {pricingPlans.map((plan) => (
+                      <div
+                        key={plan.value}
+                        className={`border-2 rounded-lg p-4 cursor-pointer transition-all ${
+                          selectedPlan === plan.value
+                            ? 'border-blue-500 bg-blue-50'
+                            : 'border-gray-200 hover:border-gray-300'
+                        }`}
+                        onClick={() => setSelectedPlan(plan.value as 'monthly' | 'yearly')}
+                      >
+                        <div className="flex items-center justify-between mb-2">
+                          <h4 className="font-semibold">{plan.name}</h4>
+                          {plan.savings && (
+                            <Badge variant="secondary" className="text-green-600">
+                              {plan.savings}
+                            </Badge>
+                          )}
+                        </div>
+                        <div className="text-2xl font-bold text-blue-600">
+                          {plan.price}
+                          <span className="text-sm text-gray-500">/{plan.period}</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  
+                  <Button onClick={handleUpgrade} disabled={loading} className="w-full">
+                    <Crown className="h-4 w-4 mr-2" />
+                    {loading ? 'Processing...' : `Upgrade to Premium - ${pricingPlans.find(p => p.value === selectedPlan)?.price}`}
+                  </Button>
+                </div>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+
+        {/* Saved Files */}
+        <Card>
+          <CardHeader>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-2">
+                <FileText className="h-5 w-5 text-blue-500" />
+                <CardTitle>Saved Files</CardTitle>
+              </div>
+              <Button variant="outline" size="sm" onClick={checkSubscription}>
+                <Settings className="h-4 w-4 mr-2" />
+                Refresh
+              </Button>
+            </div>
+            <CardDescription>
+              Files are saved for {isSubscribed ? '1 year' : '1 week'} based on your subscription plan.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            {loadingItems ? (
+              <div className="text-center py-8">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto"></div>
+                <p className="mt-2 text-gray-600">Loading your files...</p>
+              </div>
+            ) : savedItems.length === 0 ? (
+              <div className="text-center py-8">
+                <FileText className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+                <p className="text-gray-600">No saved files yet.</p>
+                <p className="text-sm text-gray-500 mt-1">
+                  Use any tool and save your processed files to see them here.
+                </p>
+              </div>
+            ) : (
+              <div className="space-y-4">
+                {savedItems.map((item) => (
+                  <div key={item.id} className="border rounded-lg p-4 hover:bg-gray-50">
+                    <div className="flex items-center justify-between">
+                      <div className="flex-1">
+                        <h3 className="font-medium text-gray-900">{item.original_filename}</h3>
+                        <div className="flex items-center space-x-4 mt-1 text-sm text-gray-500">
+                          <span>Tool: {item.tool_name}</span>
+                          {item.file_size && <span>Size: {formatFileSize(item.file_size)}</span>}
+                          <div className="flex items-center">
+                            <Calendar className="h-3 w-3 mr-1" />
+                            <span>Created: {formatDate(item.created_at)}</span>
+                          </div>
+                          {item.expires_at && (
+                            <div className="flex items-center">
+                              <span>Expires: {formatDate(item.expires_at)}</span>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                      {item.file_url && (
+                        <Button size="sm" variant="outline" asChild>
+                          <a href={item.file_url} download>
+                            <Download className="h-4 w-4 mr-2" />
+                            Download
+                          </a>
                         </Button>
                       )}
                     </div>
                   </div>
-                  
-                  {!isSubscribed && (
-                    <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
-                      <h4 className="font-medium text-blue-900 mb-2">Upgrade to Premium</h4>
-                      <ul className="text-sm text-blue-800 space-y-1 mb-4">
-                        <li>• Files saved for 1 full year</li>
-                        <li>• Unlimited file conversions</li>
-                        <li>• Priority customer support</li>
-                        <li>• Access to premium tools</li>
-                      </ul>
-                      <Button onClick={handleUpgrade} className="w-full">
-                        Upgrade for $9.99/month
-                      </Button>
-                    </div>
-                  )}
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
+                ))}
+              </div>
+            )}
+          </CardContent>
+        </Card>
 
-          <TabsContent value="profile" className="space-y-6">
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center">
-                  <User className="h-5 w-5 mr-2" />
-                  Profile Information
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  <div>
-                    <label className="text-sm font-medium text-gray-700">Email</label>
-                    <p className="text-gray-900">{user.email}</p>
-                  </div>
-                  <div>
-                    <label className="text-sm font-medium text-gray-700">Member Since</label>
-                    <p className="text-gray-900">{formatDate(user.created_at)}</p>
-                  </div>
-                  <Button variant="outline" className="mt-4">
-                    <Settings className="h-4 w-4 mr-2" />
-                    Edit Profile
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
-        </Tabs>
+        {/* Account Info */}
+        <Card>
+          <CardHeader>
+            <CardTitle>Account Information</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-2">
+              <div className="flex justify-between">
+                <span className="text-gray-600">Email:</span>
+                <span className="font-medium">{user?.email}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-gray-600">Account Type:</span>
+                <Badge variant={isSubscribed ? "default" : "secondary"}>
+                  {subscriptionTier || 'Free'}
+                </Badge>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-gray-600">Member Since:</span>
+                <span className="font-medium">
+                  {user?.created_at ? formatDate(user.created_at) : 'Unknown'}
+                </span>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
       </div>
     </Layout>
   );
