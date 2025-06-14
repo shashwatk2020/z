@@ -20,12 +20,12 @@ const Footer = () => {
               Trusted by millions of users worldwide.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">
+              <Link to="/privacy-policy" className="text-gray-400 hover:text-white transition-colors">
                 Privacy Policy
-              </a>
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">
+              </Link>
+              <Link to="/terms-of-service" className="text-gray-400 hover:text-white transition-colors">
                 Terms of Service
-              </a>
+              </Link>
             </div>
             <div className="mt-4">
               <p className="text-gray-400 text-sm">
@@ -58,6 +58,17 @@ const Footer = () => {
                 ) : (
                   <Link to="/auth" className="text-gray-400 cursor-not-allowed" title="Sign in to request tools">
                     Tool Request (Sign in required)
+                  </Link>
+                )}
+              </li>
+              <li>
+                {user ? (
+                  <Link to="/feature-request" className="text-gray-300 hover:text-white transition-colors">
+                    Feature Request
+                  </Link>
+                ) : (
+                  <Link to="/auth" className="text-gray-400 cursor-not-allowed" title="Sign in to request features">
+                    Feature Request (Sign in required)
                   </Link>
                 )}
               </li>

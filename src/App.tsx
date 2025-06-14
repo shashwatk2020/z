@@ -13,6 +13,9 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Help from "./pages/Help";
 import ToolRequest from "./pages/ToolRequest";
+import FeatureRequest from "./pages/FeatureRequest";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsOfService from "./pages/TermsOfService";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Auth from "./pages/Auth";
@@ -40,6 +43,13 @@ const App = () => (
                 <ToolRequest />
               </ProtectedRoute>
             } />
+            <Route path="/feature-request" element={
+              <ProtectedRoute>
+                <FeatureRequest />
+              </ProtectedRoute>
+            } />
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="/terms-of-service" element={<TermsOfService />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/auth" element={<Auth />} />
