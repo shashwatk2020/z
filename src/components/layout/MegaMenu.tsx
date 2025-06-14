@@ -16,12 +16,14 @@ import {
 } from 'lucide-react';
 
 interface MegaMenuProps {
+  activeCategory?: string;
   onClose: () => void;
 }
 
-const MegaMenu = ({ onClose }: MegaMenuProps) => {
+const MegaMenu = ({ activeCategory, onClose }: MegaMenuProps) => {
   const toolCategories = [
     {
+      key: 'text',
       title: 'Text Tools',
       icon: Type,
       tools: [
@@ -81,6 +83,7 @@ const MegaMenu = ({ onClose }: MegaMenuProps) => {
       ]
     },
     {
+      key: 'web',
       title: 'Web Tools',
       icon: Globe,
       tools: [
@@ -398,18 +401,23 @@ const MegaMenu = ({ onClose }: MegaMenuProps) => {
     }
   ];
 
+  // If activeCategory is specified, only show that category's tools
+  const categoriesToShow = activeCategory 
+    ? toolCategories.filter(cat => cat.key === activeCategory)
+    : toolCategories;
+
   return (
     <div className="bg-white border-t border-gray-200 shadow-lg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-          {toolCategories.map((category, index) => (
+          {categoriesToShow.map((category, index) => (
             <div key={index} className="space-y-4">
               <div className="flex items-center space-x-2">
                 <category.icon className="h-5 w-5 text-blue-600" />
                 <h3 className="font-semibold text-gray-900">{category.title}</h3>
               </div>
               <ul className="space-y-2 max-h-96 overflow-y-auto">
-                {category.tools.map((tool, toolIndex) => (
+                {category.tools.slice(0, activeCategory ? category.tools.length : 12).map((tool, toolIndex) => (
                   <li key={toolIndex}>
                     <Link
                       to={tool.url}
@@ -425,6 +433,16 @@ const MegaMenu = ({ onClose }: MegaMenuProps) => {
                     </Link>
                   </li>
                 ))}
+                {!activeCategory && category.tools.length > 12 && (
+                  <li>
+                    <Link
+                      to={`/tools/${category.key}`}
+                      className="text-sm text-blue-600 hover:text-blue-800 font-medium"
+                    >
+                      View all {category.tools.length} tools →
+                    </Link>
+                  </li>
+                )}
               </ul>
             </div>
           ))}

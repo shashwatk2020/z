@@ -7,7 +7,20 @@ import SearchBar from './SearchBar';
 import MegaMenu from './MegaMenu';
 
 const Header = () => {
-  const [isMegaMenuOpen, setIsMegaMenuOpen] = useState(false);
+  const [activeMegaMenu, setActiveMegaMenu] = useState<string | null>(null);
+
+  const toolCategories = [
+    { name: 'Text Tools', key: 'text' },
+    { name: 'Web Tools', key: 'web' },
+    { name: 'Image Tools', key: 'image' },
+    { name: 'Calculators', key: 'calculators' },
+    { name: 'Productivity', key: 'productivity' },
+    { name: 'Archive Tools', key: 'archive' },
+    { name: 'Security', key: 'security' },
+    { name: 'Video Tools', key: 'video' },
+    { name: 'Audio Tools', key: 'audio' },
+    { name: 'PDF Tools', key: 'pdf' },
+  ];
 
   return (
     <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
@@ -61,49 +74,44 @@ const Header = () => {
         </div>
       </div>
 
-      {/* Mega Menu Bar */}
+      {/* Tool Categories Navigation Bar */}
       <div className="bg-gray-50 border-t border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center h-12">
-            <button
-              onClick={() => setIsMegaMenuOpen(!isMegaMenuOpen)}
-              className="flex items-center space-x-2 text-gray-700 hover:text-blue-600 transition-colors"
-            >
-              <Menu className="h-5 w-5" />
-              <span className="font-medium">All Tools</span>
-              <ChevronDown className={`h-4 w-4 transition-transform ${isMegaMenuOpen ? 'rotate-180' : ''}`} />
-            </button>
-            
-            {/* Quick Tool Categories */}
-            <div className="hidden lg:flex items-center space-x-6 ml-8">
-              <Link to="/tools/text" className="text-sm text-gray-600 hover:text-blue-600 transition-colors">
-                Text Tools
-              </Link>
-              <Link to="/tools/web" className="text-sm text-gray-600 hover:text-blue-600 transition-colors">
-                Web Tools
-              </Link>
-              <Link to="/tools/image" className="text-sm text-gray-600 hover:text-blue-600 transition-colors">
-                Image Tools
-              </Link>
-              <Link to="/tools/calculators" className="text-sm text-gray-600 hover:text-blue-600 transition-colors">
-                Calculators
-              </Link>
-              <Link to="/tools/productivity" className="text-sm text-gray-600 hover:text-blue-600 transition-colors">
-                Productivity
-              </Link>
-              <Link to="/tools/archive" className="text-sm text-gray-600 hover:text-blue-600 transition-colors">
-                Archive Tools
-              </Link>
-              <Link to="/tools/security" className="text-sm text-gray-600 hover:text-blue-600 transition-colors">
-                Security
-              </Link>
+          <div className="flex items-center justify-center h-12 overflow-x-auto">
+            <div className="flex items-center space-x-8">
+              {toolCategories.map((category) => (
+                <div
+                  key={category.key}
+                  className="relative"
+                  onMouseEnter={() => setActiveMegaMenu(category.key)}
+                  onMouseLeave={() => setActiveMegaMenu(null)}
+                >
+                  <Link
+                    to={`/tools/${category.key}`}
+                    className="flex items-center space-x-1 text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors whitespace-nowrap py-3"
+                  >
+                    <span>{category.name}</span>
+                    <ChevronDown className="h-3 w-3" />
+                  </Link>
+                </div>
+              ))}
             </div>
           </div>
         </div>
       </div>
 
       {/* Mega Menu Dropdown */}
-      {isMegaMenuOpen && <MegaMenu onClose={() => setIsMegaMenuOpen(false)} />}
+      {activeMegaMenu && (
+        <div
+          onMouseEnter={() => setActiveMegaMenu(activeMegaMenu)}
+          onMouseLeave={() => setActiveMegaMenu(null)}
+        >
+          <MegaMenu 
+            activeCategory={activeMegaMenu} 
+            onClose={() => setActiveMegaMenu(null)} 
+          />
+        </div>
+      )}
     </header>
   );
 };
