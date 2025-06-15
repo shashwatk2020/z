@@ -66,6 +66,11 @@ import KeywordDensityChecker from "./pages/tools/text/KeywordDensityChecker";
 import LanguageDetector from "./pages/tools/text/LanguageDetector";
 import MetaDescriptionGenerator from "./pages/tools/text/MetaDescriptionGenerator";
 import MorseCodeTranslator from "./pages/tools/text/MorseCodeTranslator";
+import WordCounter from "./pages/tools/text/WordCounter";
+import PlagiarismChecker from "./pages/tools/text/PlagiarismChecker";
+import ReadingTimeCalculator from "./pages/tools/text/ReadingTimeCalculator";
+import TextCompare from "./pages/tools/text/TextCompare";
+import TextArtGenerator from "./pages/tools/text/TextArtGenerator";
 
 const queryClient = new QueryClient();
 
@@ -149,6 +154,11 @@ const App = () => (
             <Route path="/tools/text/language-detector" element={<LanguageDetector />} />
             <Route path="/tools/text/meta-description-generator" element={<MetaDescriptionGenerator />} />
             <Route path="/tools/text/morse-code-translator" element={<MorseCodeTranslator />} />
+            <Route path="/tools/text/word-counter" element={<WordCounter />} />
+            <Route path="/tools/text/plagiarism-checker" element={<PlagiarismChecker />} />
+            <Route path="/tools/text/reading-time-calculator" element={<ReadingTimeCalculator />} />
+            <Route path="/tools/text/text-compare" element={<TextCompare />} />
+            <Route path="/tools/text/text-art-generator" element={<TextArtGenerator />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
