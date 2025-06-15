@@ -2,6 +2,7 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
+import { AuthProvider } from './contexts/AuthContext';
 import Index from './pages/Index';
 import About from './pages/About';
 import Contact from './pages/Contact';
@@ -41,53 +42,55 @@ import { Toaster } from './components/ui/toaster';
 
 function App() {
   return (
-    <BrowserRouter>
-      <div className="App">
-        <Toaster />
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/contact" element={<Contact />} />
+    <AuthProvider>
+      <BrowserRouter>
+        <div className="App">
+          <Toaster />
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
 
-          {/* Calculator Tools */}
-          <Route path="/tools/calculators/age-calculator" element={<AgeCalculator />} />
-          <Route path="/tools/calculators/bmi-calculator" element={<BMICalculator />} />
-          <Route path="/tools/calculators/calorie-calculator" element={<CalorieCalculator />} />
-          <Route path="/tools/calculators/gpa-calculator" element={<GPACalculator />} />
-          <Route path="/tools/calculators/fuel-cost-calculator" element={<FuelCostCalculator />} />
-          <Route path="/tools/calculators/paint-calculator" element={<PaintCalculator />} />
-          <Route path="/tools/calculators/pregnancy-calculator" element={<PregnancyCalculator />} />
-          
-          {/* Productivity Tools */}
-          <Route path="/tools/productivity" element={<Productivity />} />
-          <Route path="/tools/productivity/todo-list" element={<TodoList />} />
-          <Route path="/tools/productivity/kanban-board" element={<KanbanBoard />} />
-          <Route path="/tools/productivity/project-planner" element={<ProjectPlanner />} />
-          <Route path="/tools/productivity/goal-tracker" element={<GoalTracker />} />
-          <Route path="/tools/productivity/habit-tracker" element={<HabitTracker />} />
-          <Route path="/tools/productivity/priority-matrix" element={<PriorityMatrix />} />
-          <Route path="/tools/productivity/milestone-tracker" element={<MilestoneTracker />} />
-          <Route path="/tools/productivity/time-tracker" element={<TimeTracker />} />
-          <Route path="/tools/productivity/pomodoro-timer" element={<PomodoroTimer />} />
-          <Route path="/tools/productivity/work-schedule-planner" element={<WorkSchedulePlanner />} />
-          <Route path="/tools/productivity/time-zone-planner" element={<TimeZonePlanner />} />
-          <Route path="/tools/productivity/deadline-calculator" element={<DeadlineCalculator />} />
-          <Route path="/tools/productivity/time-blocking-tool" element={<TimeBlockingTool />} />
-          <Route path="/tools/productivity/digital-note-system" element={<DigitalNoteSystem />} />
-          <Route path="/tools/productivity/document-organizer" element={<DocumentOrganizer />} />
-          <Route path="/tools/productivity/contact-manager" element={<ContactManager />} />
-          <Route path="/tools/productivity/bookmark-manager" element={<BookmarkManager />} />
-          <Route path="/tools/productivity/password-organizer" element={<PasswordOrganizer />} />
-          <Route path="/tools/productivity/file-naming-system" element={<FileNamingSystem />} />
-          <Route path="/tools/productivity/digital-workspace" element={<DigitalWorkspace />} />
-          <Route path="/tools/productivity/archive-system" element={<ArchiveSystem />} />
-          <Route path="/tools/productivity/meeting-notes-organizer" element={<MeetingNotesOrganizer />} />
-          <Route path="/tools/productivity/project-dashboard" element={<ProjectDashboard />} />
-          
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </div>
-    </BrowserRouter>
+            {/* Calculator Tools */}
+            <Route path="/tools/calculators/age-calculator" element={<AgeCalculator />} />
+            <Route path="/tools/calculators/bmi-calculator" element={<BMICalculator />} />
+            <Route path="/tools/calculators/calorie-calculator" element={<CalorieCalculator />} />
+            <Route path="/tools/calculators/gpa-calculator" element={<GPACalculator />} />
+            <Route path="/tools/calculators/fuel-cost-calculator" element={<FuelCostCalculator />} />
+            <Route path="/tools/calculators/paint-calculator" element={<PaintCalculator />} />
+            <Route path="/tools/calculators/pregnancy-calculator" element={<PregnancyCalculator />} />
+            
+            {/* Productivity Tools */}
+            <Route path="/tools/productivity" element={<Productivity />} />
+            <Route path="/tools/productivity/todo-list" element={<TodoList />} />
+            <Route path="/tools/productivity/kanban-board" element={<KanbanBoard />} />
+            <Route path="/tools/productivity/project-planner" element={<ProjectPlanner />} />
+            <Route path="/tools/productivity/goal-tracker" element={<GoalTracker />} />
+            <Route path="/tools/productivity/habit-tracker" element={<HabitTracker />} />
+            <Route path="/tools/productivity/priority-matrix" element={<PriorityMatrix />} />
+            <Route path="/tools/productivity/milestone-tracker" element={<MilestoneTracker />} />
+            <Route path="/tools/productivity/time-tracker" element={<TimeTracker />} />
+            <Route path="/tools/productivity/pomodoro-timer" element={<PomodoroTimer />} />
+            <Route path="/tools/productivity/work-schedule-planner" element={<WorkSchedulePlanner />} />
+            <Route path="/tools/productivity/time-zone-planner" element={<TimeZonePlanner />} />
+            <Route path="/tools/productivity/deadline-calculator" element={<DeadlineCalculator />} />
+            <Route path="/tools/productivity/time-blocking-tool" element={<TimeBlockingTool />} />
+            <Route path="/tools/productivity/digital-note-system" element={<DigitalNoteSystem />} />
+            <Route path="/tools/productivity/document-organizer" element={<DocumentOrganizer />} />
+            <Route path="/tools/productivity/contact-manager" element={<ContactManager />} />
+            <Route path="/tools/productivity/bookmark-manager" element={<BookmarkManager />} />
+            <Route path="/tools/productivity/password-organizer" element={<PasswordOrganizer />} />
+            <Route path="/tools/productivity/file-naming-system" element={<FileNamingSystem />} />
+            <Route path="/tools/productivity/digital-workspace" element={<DigitalWorkspace />} />
+            <Route path="/tools/productivity/archive-system" element={<ArchiveSystem />} />
+            <Route path="/tools/productivity/meeting-notes-organizer" element={<MeetingNotesOrganizer />} />
+            <Route path="/tools/productivity/project-dashboard" element={<ProjectDashboard />} />
+            
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </div>
+      </BrowserRouter>
+    </AuthProvider>
   );
 }
 
