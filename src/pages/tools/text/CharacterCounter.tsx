@@ -46,7 +46,7 @@ const CharacterCounter = () => {
     };
     
     // Character frequency
-    const charFrequency = {};
+    const charFrequency: Record<string, number> = {};
     for (const char of text.toLowerCase()) {
       if (char.match(/[a-z]/)) {
         charFrequency[char] = (charFrequency[char] || 0) + 1;
@@ -54,7 +54,7 @@ const CharacterCounter = () => {
     }
     
     // Word frequency (top 10)
-    const wordFrequency = {};
+    const wordFrequency: Record<string, number> = {};
     words.forEach(word => {
       const cleanWord = word.toLowerCase().replace(/[^\w]/g, '');
       if (cleanWord.length > 2) { // Only words longer than 2 characters
@@ -62,7 +62,7 @@ const CharacterCounter = () => {
       }
     });
     const topWords = Object.entries(wordFrequency)
-      .sort(([,a], [,b]) => b - a)
+      .sort(([,a], [,b]) => (b as number) - (a as number))
       .slice(0, 10);
 
     return {
@@ -83,7 +83,7 @@ const CharacterCounter = () => {
     };
   }, [inputText]);
 
-  const copyToClipboard = async (text) => {
+  const copyToClipboard = async (text: string) => {
     try {
       await navigator.clipboard.writeText(text);
       toast({
@@ -157,7 +157,7 @@ Generated on: ${new Date().toLocaleString()}
     setInputText('');
   };
 
-  const getSocialMediaStatus = (platform, limit, remaining) => {
+  const getSocialMediaStatus = (platform: string, limit: number, remaining: number) => {
     const percentage = ((limit - remaining) / limit) * 100;
     if (remaining < 0) return 'over';
     if (percentage > 90) return 'warning';
@@ -165,7 +165,7 @@ Generated on: ${new Date().toLocaleString()}
     return 'good';
   };
 
-  const getSocialMediaColor = (status) => {
+  const getSocialMediaColor = (status: string) => {
     switch (status) {
       case 'over': return 'bg-red-500';
       case 'warning': return 'bg-orange-500';
