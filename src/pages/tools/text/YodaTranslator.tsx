@@ -6,11 +6,63 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/com
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
-import { AlertTriangle, Star } from 'lucide-react';
-import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Star, Copy, RotateCcw } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
 
 const YodaTranslator = () => {
   const [text, setText] = useState('');
+  const [yodaText, setYodaText] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const { toast } = useToast();
+
+  const translateToYoda = async () => {
+    if (!text.trim()) {
+      toast({
+        title: "Error",
+        description: "Please enter some text to translate.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('yoda-translate', {
+        body: { text }
+      });
+
+      if (error) throw error;
+
+      setYodaText(data.yodaText);
+      toast({
+        title: "Success",
+        description: "Text translated to Yoda speech!",
+      });
+    } catch (error) {
+      console.error('Error translating text:', error);
+      toast({
+        title: "Error",
+        description: "Failed to translate text. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(yodaText);
+    toast({
+      title: "Copied!",
+      description: "Yoda translation copied to clipboard.",
+    });
+  };
+
+  const clearAll = () => {
+    setText('');
+    setYodaText('');
+  };
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -25,56 +77,110 @@ const YodaTranslator = () => {
               Transform your text to speak like Master Yoda. Use the Force of language patterns, you will.
             </p>
             <div className="flex flex-wrap justify-center gap-2 mt-4">
-              <Badge variant="destructive">Tool Offline</Badge>
-              <Badge variant="secondary">AI Required</Badge>
+              <Badge variant="secondary">AI Powered</Badge>
+              <Badge variant="secondary">Star Wars Style</Badge>
+              <Badge variant="secondary">Instant Translation</Badge>
             </div>
           </div>
 
-          <Alert className="mb-8 border-red-200 bg-red-50">
-            <AlertTriangle className="h-4 w-4 text-red-600" />
-            <AlertDescription className="text-red-800">
-              <strong>Service Currently Offline:</strong> This Yoda translator requires advanced language processing API services (OpenAI, natural language processing APIs) that are not currently available. The tool will be activated once API access is configured.
-            </AlertDescription>
-          </Alert>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Star className="h-5 w-5" />
+                  Normal Text
+                </CardTitle>
+                <CardDescription>
+                  Enter the text you want to translate to Yoda speech
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <Textarea
+                  placeholder="Enter the text you want to translate to Yoda speech..."
+                  value={text}
+                  onChange={(e) => setText(e.target.value)}
+                  className="min-h-[200px] text-base"
+                />
+                
+                <div className="flex gap-2">
+                  <Button 
+                    onClick={translateToYoda} 
+                    disabled={isLoading || !text.trim()}
+                    className="flex-1"
+                  >
+                    <Star className="h-4 w-4 mr-2" />
+                    {isLoading ? 'Translating...' : 'Translate to Yoda Speech'}
+                  </Button>
+                  <Button variant="outline" onClick={clearAll}>
+                    <RotateCcw className="h-4 w-4 mr-2" />
+                    Clear
+                  </Button>
+                </div>
 
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Star className="h-5 w-5" />
-                Yoda Translation
-              </CardTitle>
-              <CardDescription>
-                Enter your text below to translate to Yoda's speech pattern (service currently unavailable)
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <Textarea
-                placeholder="Enter the text you want to translate to Yoda speech..."
-                value={text}
-                onChange={(e) => setText(e.target.value)}
-                className="min-h-[200px] text-base"
-                disabled
-              />
-              
-              <Button disabled className="w-full">
-                <Star className="h-4 w-4 mr-2" />
-                Translate to Yoda Speech (Offline)
-              </Button>
+                {text && (
+                  <div className="text-sm text-gray-600">
+                    Characters: {text.length}
+                  </div>
+                )}
+              </CardContent>
+            </Card>
 
-              <div className="bg-gray-100 p-6 rounded-lg">
-                <h3 className="font-semibold mb-4">What this tool will provide when available:</h3>
+            <Card>
+              <CardHeader>
+                <div className="flex justify-between items-center">
+                  <div>
+                    <CardTitle>Yoda Translation</CardTitle>
+                    <CardDescription>
+                      Your text transformed to Yoda's speech pattern
+                    </CardDescription>
+                  </div>
+                  {yodaText && (
+                    <Button variant="outline" size="sm" onClick={copyToClipboard}>
+                      <Copy className="h-4 w-4 mr-2" />
+                      Copy
+                    </Button>
+                  )}
+                </div>
+              </CardHeader>
+              <CardContent>
+                <Textarea
+                  value={yodaText}
+                  readOnly
+                  placeholder="Yoda translation will appear here..."
+                  className="min-h-[200px] text-base bg-green-50 font-mono"
+                />
+                {yodaText && (
+                  <div className="mt-4 text-sm text-gray-600">
+                    Translated characters: {yodaText.length}
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
+            <Card>
+              <CardHeader>
+                <CardTitle>How Yoda Speaks</CardTitle>
+                <CardDescription>Understanding Yoda's speech patterns</CardDescription>
+              </CardHeader>
+              <CardContent>
                 <ul className="space-y-2 text-sm text-gray-600">
                   <li>• Object-Subject-Verb sentence restructuring</li>
-                  <li>• Yoda's characteristic speech patterns</li>
-                  <li>• Proper word inversions and arrangements</li>
                   <li>• Wisdom-like phrasing transformations</li>
+                  <li>• Proper word inversions and arrangements</li>
                   <li>• Context-aware sentence modifications</li>
                   <li>• Preservation of original meaning</li>
                 </ul>
-              </div>
+              </CardContent>
+            </Card>
 
-              <div className="bg-green-50 p-6 rounded-lg border border-green-200">
-                <h3 className="font-semibold mb-4 text-green-800">Example Transformations:</h3>
+            <Card>
+              <CardHeader>
+                <CardTitle>Example Transformations</CardTitle>
+                <CardDescription>See how normal text becomes Yoda speech</CardDescription>
+              </CardHeader>
+              <CardContent>
                 <div className="space-y-3 text-sm">
                   <div>
                     <p className="text-gray-600">Normal: "You will learn the ways of the Force"</p>
@@ -89,9 +195,9 @@ const YodaTranslator = () => {
                     <p className="text-green-700 font-medium">Yoda: "Difficult, the path is"</p>
                   </div>
                 </div>
-              </div>
-            </CardContent>
-          </Card>
+              </CardContent>
+            </Card>
+          </div>
         </div>
       </main>
       <Footer />
