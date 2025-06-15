@@ -61,6 +61,11 @@ import DuplicateLineRemover from "./pages/tools/text/DuplicateLineRemover";
 import EmojiTextGenerator from "./pages/tools/text/EmojiTextGenerator";
 import FancyTextGenerator from "./pages/tools/text/FancyTextGenerator";
 import FindAndReplaceText from "./pages/tools/text/FindAndReplaceText";
+import ItalicTextGenerator from "./pages/tools/text/ItalicTextGenerator";
+import KeywordDensityChecker from "./pages/tools/text/KeywordDensityChecker";
+import LanguageDetector from "./pages/tools/text/LanguageDetector";
+import MetaDescriptionGenerator from "./pages/tools/text/MetaDescriptionGenerator";
+import MorseCodeTranslator from "./pages/tools/text/MorseCodeTranslator";
 
 const queryClient = new QueryClient();
 
@@ -139,6 +144,11 @@ const App = () => (
             <Route path="/tools/text/emoji-text-generator" element={<EmojiTextGenerator />} />
             <Route path="/tools/text/fancy-text-generator" element={<FancyTextGenerator />} />
             <Route path="/tools/text/find-and-replace" element={<FindAndReplaceText />} />
+            <Route path="/tools/text/italic-text-generator" element={<ItalicTextGenerator />} />
+            <Route path="/tools/text/keyword-density-checker" element={<KeywordDensityChecker />} />
+            <Route path="/tools/text/language-detector" element={<LanguageDetector />} />
+            <Route path="/tools/text/meta-description-generator" element={<MetaDescriptionGenerator />} />
+            <Route path="/tools/text/morse-code-translator" element={<MorseCodeTranslator />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
