@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -130,12 +131,12 @@ const MegaMenu: React.FC<MegaMenuProps> = ({ activeCategory, onClose }) => {
             <CardTitle className="text-2xl font-bold">{category.title}</CardTitle>
             <CardDescription>{category.description}</CardDescription>
           </CardHeader>
-          <CardContent className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+          <CardContent className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {category.tools.map((tool) => (
-              <Link key={tool.name} to={tool.path} className="block">
-                <div className="p-4 rounded-md hover:bg-gray-50 transition-colors duration-200">
-                  <h3 className="text-lg font-semibold text-gray-900">{tool.name}</h3>
-                  <p className="text-sm text-gray-600">{tool.description}</p>
+              <Link key={tool.name} to={tool.path} className="block" onClick={onClose}>
+                <div className="p-3 rounded-md hover:bg-gray-50 transition-colors duration-200 border border-gray-100 hover:border-gray-200">
+                  <h3 className="text-sm font-semibold text-gray-900 mb-1">{tool.name}</h3>
+                  <p className="text-xs text-gray-600 line-clamp-2">{tool.description}</p>
                 </div>
               </Link>
             ))}
