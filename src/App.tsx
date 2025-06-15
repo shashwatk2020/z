@@ -177,6 +177,8 @@ import AlgebraCalculator from './pages/tools/calculators/AlgebraCalculator';
 import BinaryCalculator from './pages/tools/calculators/BinaryCalculator';
 import MatrixCalculator from './pages/tools/calculators/MatrixCalculator';
 import LoanCalculator from './pages/tools/calculators/LoanCalculator';
+import MortgageCalculator from './pages/tools/calculators/MortgageCalculator';
+import InvestmentCalculator from './pages/tools/calculators/InvestmentCalculator';
 
 const queryClient = new QueryClient();
 
@@ -224,6 +226,8 @@ const App = () => {
               <Route path="/tools/calculators/binary-calculator" element={<BinaryCalculator />} />
               <Route path="/tools/calculators/matrix-calculator" element={<MatrixCalculator />} />
               <Route path="/tools/calculators/loan-calculator" element={<LoanCalculator />} />
+              <Route path="/tools/calculators/mortgage-calculator" element={<MortgageCalculator />} />
+              <Route path="/tools/calculators/investment-calculator" element={<InvestmentCalculator />} />
 
               {/* Image Tools */}
               <Route path="/tools/image/jpeg-to-png-converter" element={<JpegToPngConverter />} />
