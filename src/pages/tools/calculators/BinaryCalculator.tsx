@@ -446,8 +446,8 @@ const BinaryCalculator = () => {
                           <SelectItem value="and">Bitwise AND (&)</SelectItem>
                           <SelectItem value="or">Bitwise OR (|)</SelectItem>
                           <SelectItem value="xor">Bitwise XOR (^)</SelectItem>
-                          <SelectItem value="leftShift">Left Shift (<<)</SelectItem>
-                          <SelectItem value="rightShift">Right Shift (>>)</SelectItem>
+                          <SelectItem value="leftShift">Left Shift (&lt;&lt;)</SelectItem>
+                          <SelectItem value="rightShift">Right Shift (&gt;&gt;)</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
