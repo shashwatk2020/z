@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -54,6 +53,7 @@ import StrongPasswordGenerator from "./pages/tools/text/StrongPasswordGenerator"
 import WhitespaceRemover from "./pages/tools/text/WhitespaceRemover";
 import ArticleTitleGenerator from "./pages/tools/text/ArticleTitleGenerator";
 import AsciiArtGenerator from "./pages/tools/text/AsciiArtGenerator";
+import BigTextGenerator from "./pages/tools/text/BigTextGenerator";
 
 const queryClient = new QueryClient();
 
@@ -124,6 +124,7 @@ const App = () => (
             <Route path="/tools/text/whitespace-remover" element={<WhitespaceRemover />} />
             <Route path="/tools/text/article-title-generator" element={<ArticleTitleGenerator />} />
             <Route path="/tools/text/ascii-art-generator" element={<AsciiArtGenerator />} />
+            <Route path="/tools/text/big-text-generator" element={<BigTextGenerator />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
