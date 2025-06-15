@@ -60,6 +60,7 @@ import CharacterCounter from "./pages/tools/text/CharacterCounter";
 import DuplicateLineRemover from "./pages/tools/text/DuplicateLineRemover";
 import EmojiTextGenerator from "./pages/tools/text/EmojiTextGenerator";
 import FancyTextGenerator from "./pages/tools/text/FancyTextGenerator";
+import FindAndReplaceText from "./pages/tools/text/FindAndReplaceText";
 
 const queryClient = new QueryClient();
 
@@ -137,6 +138,7 @@ const App = () => (
             <Route path="/tools/text/duplicate-line-remover" element={<DuplicateLineRemover />} />
             <Route path="/tools/text/emoji-text-generator" element={<EmojiTextGenerator />} />
             <Route path="/tools/text/fancy-text-generator" element={<FancyTextGenerator />} />
+            <Route path="/tools/text/find-and-replace" element={<FindAndReplaceText />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
