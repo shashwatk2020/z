@@ -57,6 +57,7 @@ import AsciiArtGenerator from "./pages/tools/text/AsciiArtGenerator";
 import BigTextGenerator from "./pages/tools/text/BigTextGenerator";
 import BoldTextGenerator from "./pages/tools/text/BoldTextGenerator";
 import BusinessNameGenerator from "./pages/tools/text/BusinessNameGenerator";
+import CharacterCounter from "./pages/tools/text/CharacterCounter";
 
 const queryClient = new QueryClient();
 
@@ -130,6 +131,7 @@ const App = () => (
             <Route path="/tools/text/big-text-generator" element={<BigTextGenerator />} />
             <Route path="/tools/text/bold-text-generator" element={<BoldTextGenerator />} />
             <Route path="/tools/text/business-name-generator" element={<BusinessNameGenerator />} />
+            <Route path="/tools/text/character-counter" element={<CharacterCounter />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
