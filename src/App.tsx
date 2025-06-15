@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -58,6 +59,7 @@ import BoldTextGenerator from "./pages/tools/text/BoldTextGenerator";
 import BusinessNameGenerator from "./pages/tools/text/BusinessNameGenerator";
 import CharacterCounter from "./pages/tools/text/CharacterCounter";
 import DuplicateLineRemover from "./pages/tools/text/DuplicateLineRemover";
+import EmojiTextGenerator from "./pages/tools/text/EmojiTextGenerator";
 
 const queryClient = new QueryClient();
 
@@ -133,6 +135,7 @@ const App = () => (
             <Route path="/tools/text/business-name-generator" element={<BusinessNameGenerator />} />
             <Route path="/tools/text/character-counter" element={<CharacterCounter />} />
             <Route path="/tools/text/duplicate-line-remover" element={<DuplicateLineRemover />} />
+            <Route path="/tools/text/emoji-text-generator" element={<EmojiTextGenerator />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
