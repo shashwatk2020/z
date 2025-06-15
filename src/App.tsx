@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -71,9 +72,7 @@ import PlagiarismChecker from "./pages/tools/text/PlagiarismChecker";
 import ReadingTimeCalculator from "./pages/tools/text/ReadingTimeCalculator";
 import TextCompare from "./pages/tools/text/TextCompare";
 import TextArtGenerator from "./pages/tools/text/TextArtGenerator";
-import TextRepeater from "./pages/tools/text/TextRepeater";
 import TextSummarizer from "./pages/tools/text/TextSummarizer";
-import UnicodeCharacterConverter from "./pages/tools/text/UnicodeCharacterConverter";
 import UpsideDownTextGenerator from "./pages/tools/text/UpsideDownTextGenerator";
 import UsernameGenerator from "./pages/tools/text/UsernameGenerator";
 import YodaTranslator from "./pages/tools/text/YodaTranslator";
@@ -166,9 +165,7 @@ const App = () => (
             <Route path="/tools/text/reading-time-calculator" element={<ReadingTimeCalculator />} />
             <Route path="/tools/text/text-compare" element={<TextCompare />} />
             <Route path="/tools/text/text-art-generator" element={<TextArtGenerator />} />
-            <Route path="/tools/text/text-repeater" element={<TextRepeater />} />
             <Route path="/tools/text/text-summarizer" element={<TextSummarizer />} />
-            <Route path="/tools/text/unicode-character-converter" element={<UnicodeCharacterConverter />} />
             <Route path="/tools/text/upside-down-text-generator" element={<UpsideDownTextGenerator />} />
             <Route path="/tools/text/username-generator" element={<UsernameGenerator />} />
             <Route path="/tools/text/yoda-translator" element={<YodaTranslator />} />

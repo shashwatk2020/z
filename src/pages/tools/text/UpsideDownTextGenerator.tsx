@@ -1,12 +1,12 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
-import { Copy, RotateCcw, RotateUpsideDown } from 'lucide-react';
+import { Copy, RotateCcw, FlipVertical } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 const UpsideDownTextGenerator = () => {
@@ -14,25 +14,24 @@ const UpsideDownTextGenerator = () => {
   const [output, setOutput] = useState('');
   const { toast } = useToast();
 
-  // Unicode character map for upside down text
+  // Character mapping for upside down text
   const upsideDownMap: { [key: string]: string } = {
     'a': 'ɐ', 'b': 'q', 'c': 'ɔ', 'd': 'p', 'e': 'ǝ', 'f': 'ɟ', 'g': 'ƃ', 'h': 'ɥ',
     'i': 'ᴉ', 'j': 'ɾ', 'k': 'ʞ', 'l': 'l', 'm': 'ɯ', 'n': 'u', 'o': 'o', 'p': 'd',
     'q': 'b', 'r': 'ɹ', 's': 's', 't': 'ʇ', 'u': 'n', 'v': 'ʌ', 'w': 'ʍ', 'x': 'x',
     'y': 'ʎ', 'z': 'z',
-    'A': '∀', 'B': 'ᗺ', 'C': 'Ɔ', 'D': 'ᗡ', 'E': 'Ǝ', 'F': 'Ⅎ', 'G': 'פ', 'H': 'H',
+    'A': '∀', 'B': 'ᗺ', 'C': 'Ɔ', 'D': 'ᗡ', 'E': 'Ǝ', 'F': 'ᖴ', 'G': 'פ', 'H': 'H',
     'I': 'I', 'J': 'ſ', 'K': 'ʞ', 'L': '˥', 'M': 'W', 'N': 'N', 'O': 'O', 'P': 'Ԁ',
     'Q': 'Q', 'R': 'ᴿ', 'S': 'S', 'T': '┴', 'U': '∩', 'V': 'Λ', 'W': 'M', 'X': 'X',
     'Y': '⅄', 'Z': 'Z',
     '0': '0', '1': 'Ɩ', '2': 'ᄅ', '3': 'Ɛ', '4': 'ㄣ', '5': 'ϛ', '6': '9', '7': 'ㄥ',
     '8': '8', '9': '6',
-    '!': '¡', '?': '¿', '.': '˙', ',': "'", "'": ',', '"': '„', '(': ')', ')': '(',
+    '.': '˙', ',': "'", '?': '¿', '!': '¡', '"': '„', "'": ',', '(': ')', ')': '(',
     '[': ']', ']': '[', '{': '}', '}': '{', '<': '>', '>': '<', '&': '⅋',
-    '_': '‾', '-': '-', '+': '+', '=': '=', '*': '✱', '/': '/', '\\': '\\',
-    '|': '|', ';': '؛', ':': ':', ' ': ' '
+    ' ': ' '
   };
 
-  const convertToUpsideDown = () => {
+  const generateUpsideDownText = () => {
     if (!inputText) {
       toast({
         title: "Error",
@@ -42,22 +41,14 @@ const UpsideDownTextGenerator = () => {
       return;
     }
 
-    const converted = inputText
+    const upsideDown = inputText
       .split('')
       .map(char => upsideDownMap[char] || char)
       .reverse()
       .join('');
     
-    setOutput(converted);
+    setOutput(upsideDown);
   };
-
-  useEffect(() => {
-    if (inputText) {
-      convertToUpsideDown();
-    } else {
-      setOutput('');
-    }
-  }, [inputText]);
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(output);
@@ -72,13 +63,6 @@ const UpsideDownTextGenerator = () => {
     setOutput('');
   };
 
-  const sampleTexts = [
-    "Hello World!",
-    "This is upside down text",
-    "Amazing transformation",
-    "Cool Unicode magic"
-  ];
-
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
@@ -89,12 +73,12 @@ const UpsideDownTextGenerator = () => {
               Upside Down Text Generator
             </h1>
             <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-              Transform your text into upside down characters using Unicode symbols. Perfect for social media, messaging, and creative content.
+              Flip your text upside down for fun social media posts, unique messages, and creative text effects.
             </p>
             <div className="flex flex-wrap justify-center gap-2 mt-4">
-              <Badge variant="secondary">Real-time Conversion</Badge>
-              <Badge variant="secondary">Unicode Magic</Badge>
-              <Badge variant="secondary">Instant Copy</Badge>
+              <Badge variant="secondary">Instant Generation</Badge>
+              <Badge variant="secondary">Unicode Characters</Badge>
+              <Badge variant="secondary">Copy Function</Badge>
             </div>
           </div>
 
@@ -102,11 +86,11 @@ const UpsideDownTextGenerator = () => {
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <RotateUpsideDown className="h-5 w-5" />
-                  Normal Text Input
+                  <FlipVertical className="h-5 w-5" />
+                  Normal Text
                 </CardTitle>
                 <CardDescription>
-                  Enter your text to convert to upside down format
+                  Enter the text you want to flip upside down
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
@@ -118,31 +102,14 @@ const UpsideDownTextGenerator = () => {
                 />
                 
                 <div className="flex gap-2">
-                  <Button onClick={convertToUpsideDown} className="flex-1">
-                    <RotateUpsideDown className="h-4 w-4 mr-2" />
-                    Flip Text
+                  <Button onClick={generateUpsideDownText} className="flex-1">
+                    <FlipVertical className="h-4 w-4 mr-2" />
+                    Generate Upside Down Text
                   </Button>
                   <Button variant="outline" onClick={clearAll}>
                     <RotateCcw className="h-4 w-4 mr-2" />
                     Clear
                   </Button>
-                </div>
-
-                <div>
-                  <h4 className="font-medium mb-2">Try these examples:</h4>
-                  <div className="grid grid-cols-2 gap-2">
-                    {sampleTexts.map((text, index) => (
-                      <Button
-                        key={index}
-                        variant="outline"
-                        size="sm"
-                        onClick={() => setInputText(text)}
-                        className="text-xs"
-                      >
-                        {text}
-                      </Button>
-                    ))}
-                  </div>
                 </div>
               </CardContent>
             </Card>
@@ -151,9 +118,9 @@ const UpsideDownTextGenerator = () => {
               <CardHeader>
                 <div className="flex justify-between items-center">
                   <div>
-                    <CardTitle>Upside Down Output</CardTitle>
+                    <CardTitle>Upside Down Text</CardTitle>
                     <CardDescription>
-                      Your flipped text appears here
+                      Your flipped text result
                     </CardDescription>
                   </div>
                   {output && (
@@ -169,12 +136,11 @@ const UpsideDownTextGenerator = () => {
                   value={output}
                   readOnly
                   placeholder="Upside down text will appear here..."
-                  className="min-h-[200px] text-lg"
+                  className="min-h-[200px] text-lg font-mono"
                 />
                 {output && (
                   <div className="mt-4 text-sm text-gray-600">
-                    <p>Original length: {inputText.length} characters</p>
-                    <p>Flipped length: {output.length} characters</p>
+                    <p>Characters: {output.length}</p>
                   </div>
                 )}
               </CardContent>
@@ -183,28 +149,29 @@ const UpsideDownTextGenerator = () => {
 
           <Card className="mt-8">
             <CardHeader>
-              <CardTitle>How Upside Down Text Works</CardTitle>
-              <CardDescription>Understanding the Unicode magic behind flipped text</CardDescription>
+              <CardTitle>How It Works</CardTitle>
+              <CardDescription>Understanding upside down text generation</CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <h4 className="font-semibold mb-3">Character Mapping</h4>
-                  <p className="mb-2">Each regular character is mapped to a visually similar Unicode character that appears upside down:</p>
-                  <div className="bg-gray-100 p-3 rounded font-mono text-xs">
-                    <p>a → ɐ (U+0250)</p>
-                    <p>b → q (Regular q)</p>
-                    <p>e → ǝ (U+01DD)</p>
-                    <p>! → ¡ (U+00A1)</p>
+                  <h4 className="font-semibold mb-2">Character Mapping</h4>
+                  <p className="text-sm text-gray-600 mb-2">
+                    Uses Unicode characters that visually appear as upside down versions of regular letters.
+                  </p>
+                  <div className="text-sm space-y-1">
+                    <p>a → ɐ, b → q, e → ǝ</p>
+                    <p>A → ∀, B → ᗺ, E → Ǝ</p>
+                    <p>! → ¡, ? → ¿</p>
                   </div>
                 </div>
                 <div>
-                  <h4 className="font-semibold mb-3">Text Reversal</h4>
-                  <p className="mb-2">After character substitution, the entire string is reversed to complete the upside down effect:</p>
-                  <div className="bg-gray-100 p-3 rounded text-xs">
-                    <p>1. "Hello" → "Hǝllo"</p>
-                    <p>2. Reverse → "ollǝH"</p>
-                    <p>3. Final → "ollǝH"</p>
+                  <h4 className="font-semibold mb-2">Text Reversal</h4>
+                  <p className="text-sm text-gray-600">
+                    After character conversion, the entire string is reversed to create the upside down effect.
+                  </p>
+                  <div className="mt-2 p-3 bg-gray-100 rounded text-sm">
+                    <p>Example: "Hello" → "ollǝH" → "Hǝllo"</p>
                   </div>
                 </div>
               </div>
