@@ -441,7 +441,7 @@ const TaxCalculator = () => {
                           </SelectTrigger>
                           <SelectContent>
                             <SelectItem value="short">Short-term (≤1 year)</SelectItem>
-                            <SelectItem value="long">Long-term (>1 year)</SelectItem>
+                            <SelectItem value="long">Long-term (&gt;1 year)</SelectItem>
                           </SelectContent>
                         </Select>
                       </div>
@@ -480,7 +480,7 @@ const TaxCalculator = () => {
                       <div className="text-sm space-y-1">
                         <div>• Long-term: 0%, 15%, or 20% (based on income)</div>
                         <div>• Short-term: Taxed as ordinary income</div>
-                        <div>• Hold >1 year for long-term rates</div>
+                        <div>• Hold &gt;1 year for long-term rates</div>
                         <div>• Consider tax-loss harvesting</div>
                       </div>
                     </div>
