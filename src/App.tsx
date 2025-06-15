@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -179,6 +180,13 @@ import MatrixCalculator from './pages/tools/calculators/MatrixCalculator';
 import LoanCalculator from './pages/tools/calculators/LoanCalculator';
 import MortgageCalculator from './pages/tools/calculators/MortgageCalculator';
 import InvestmentCalculator from './pages/tools/calculators/InvestmentCalculator';
+import TipCalculator from './pages/tools/calculators/TipCalculator';
+import RetirementCalculator from './pages/tools/calculators/RetirementCalculator';
+import TaxCalculator from './pages/tools/calculators/TaxCalculator';
+import SalaryCalculator from './pages/tools/calculators/SalaryCalculator';
+import BudgetCalculator from './pages/tools/calculators/BudgetCalculator';
+import ROICalculator from './pages/tools/calculators/ROICalculator';
+import CurrencyConverter from './pages/tools/calculators/CurrencyConverter';
 
 const queryClient = new QueryClient();
 
@@ -228,6 +236,13 @@ const App = () => {
               <Route path="/tools/calculators/loan-calculator" element={<LoanCalculator />} />
               <Route path="/tools/calculators/mortgage-calculator" element={<MortgageCalculator />} />
               <Route path="/tools/calculators/investment-calculator" element={<InvestmentCalculator />} />
+              <Route path="/tools/calculators/tip-calculator" element={<TipCalculator />} />
+              <Route path="/tools/calculators/retirement-calculator" element={<RetirementCalculator />} />
+              <Route path="/tools/calculators/tax-calculator" element={<TaxCalculator />} />
+              <Route path="/tools/calculators/salary-calculator" element={<SalaryCalculator />} />
+              <Route path="/tools/calculators/budget-calculator" element={<BudgetCalculator />} />
+              <Route path="/tools/calculators/roi-calculator" element={<ROICalculator />} />
+              <Route path="/tools/calculators/currency-converter" element={<CurrencyConverter />} />
 
               {/* Image Tools */}
               <Route path="/tools/image/jpeg-to-png-converter" element={<JpegToPngConverter />} />
