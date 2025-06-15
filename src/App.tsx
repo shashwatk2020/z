@@ -105,6 +105,12 @@ import GradientGenerator from "./pages/tools/web/GradientGenerator";
 import BoxShadowGenerator from "./pages/tools/web/BoxShadowGenerator";
 import BorderRadiusGenerator from "./pages/tools/web/BorderRadiusGenerator";
 import CssGridGenerator from "./pages/tools/web/CssGridGenerator";
+import FlexboxGenerator from "./pages/tools/web/FlexboxGenerator";
+import FontPairingTool from "./pages/tools/web/FontPairingTool";
+import FaviconGenerator from "./pages/tools/web/FaviconGenerator";
+import CssAnimationGenerator from "./pages/tools/web/CssAnimationGenerator";
+import QrCodeGenerator from "./pages/tools/web/QrCodeGenerator";
+import SslCertificateChecker from "./pages/tools/web/SslCertificateChecker";
 
 const queryClient = new QueryClient();
 
@@ -228,6 +234,12 @@ const App = () => (
             <Route path="/tools/web/box-shadow-generator" element={<BoxShadowGenerator />} />
             <Route path="/tools/web/border-radius-generator" element={<BorderRadiusGenerator />} />
             <Route path="/tools/web/css-grid-generator" element={<CssGridGenerator />} />
+            <Route path="/tools/web/flexbox-generator" element={<FlexboxGenerator />} />
+            <Route path="/tools/web/font-pairing-tool" element={<FontPairingTool />} />
+            <Route path="/tools/web/favicon-generator" element={<FaviconGenerator />} />
+            <Route path="/tools/web/css-animation-generator" element={<CssAnimationGenerator />} />
+            <Route path="/tools/web/qr-code-generator" element={<QrCodeGenerator />} />
+            <Route path="/tools/web/ssl-certificate-checker" element={<SslCertificateChecker />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
