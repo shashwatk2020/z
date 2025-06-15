@@ -90,7 +90,7 @@ export const stylingTools = [
   { name: 'Fancy Text Generator', description: 'Create cool and stylish text with symbols.', link: '/tools/text/fancy-text-generator' },
   { name: 'Zalgo Glitch Text', description: 'Generate creepy, corrupted-looking Zalgo text.', link: '/tools/text/zalgo-glitch-text-generator' },
   { name: 'Big Text (ASCII) Generator', description: 'Create large letters out of ASCII characters.', link: '/tools/text/big-text-generator' },
-  { name: 'ASCII Art Generator', description: 'Convert images and text into ASCII art.', link: '/tools/text/ascii-art-generator' },
+  { name: 'Advanced ASCII Art Generator', description: 'Convert images to text art with customizable width, character sets, and more.', link: '/tools/text/ascii-art-generator' },
   { name: 'Yoda Translator', description: 'Translate your text into the speech style of Yoda.', link: '/tools/text/yoda-translator' },
   { name: 'Morse Code Translator', description: 'Translate text to Morse code and back.', link: '/tools/text/morse-code-translator' },
   { name: 'Emoji Text Generator', description: 'Convert text into a sequence of emojis.', link: '/tools/text/emoji-text-generator' },
