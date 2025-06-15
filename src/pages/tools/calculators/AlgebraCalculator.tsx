@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import Layout from '@/components/layout/Layout';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
@@ -6,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Calculator, History, Function } from 'lucide-react';
+import { Calculator, History, Baseline } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 const AlgebraCalculator = () => {
@@ -207,7 +206,7 @@ const AlgebraCalculator = () => {
                 <Card>
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2">
-                      <Function className="h-6 w-6" />
+                      <Baseline className="h-6 w-6" />
                       Linear Equation Solver
                     </CardTitle>
                     <CardDescription>Solve equations of the form ax + b = 0</CardDescription>
@@ -259,7 +258,7 @@ const AlgebraCalculator = () => {
                 <Card>
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2">
-                      <Function className="h-6 w-6" />
+                      <Baseline className="h-6 w-6" />
                       Quadratic Equation Solver
                     </CardTitle>
                     <CardDescription>Solve equations of the form ax² + bx + c = 0</CardDescription>
@@ -445,7 +444,7 @@ const AlgebraCalculator = () => {
                 <Card>
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2">
-                      <Function className="h-6 w-6" />
+                      <Baseline className="h-6 w-6" />
                       Expression Evaluator
                     </CardTitle>
                     <CardDescription>Evaluate algebraic expressions for given values</CardDescription>
