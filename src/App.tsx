@@ -51,6 +51,7 @@ import TextRepeater from "./pages/tools/text/TextRepeater";
 import HashtagGenerator from "./pages/tools/text/HashtagGenerator";
 import BlogTitleGenerator from "./pages/tools/text/BlogTitleGenerator";
 import StrongPasswordGenerator from "./pages/tools/text/StrongPasswordGenerator";
+import WhitespaceRemover from "./pages/tools/text/WhitespaceRemover";
 
 const queryClient = new QueryClient();
 
@@ -118,6 +119,7 @@ const App = () => (
             <Route path="/tools/text/hashtag-generator" element={<HashtagGenerator />} />
             <Route path="/tools/text/blog-title-generator" element={<BlogTitleGenerator />} />
             <Route path="/tools/text/strong-password-generator" element={<StrongPasswordGenerator />} />
+            <Route path="/tools/text/whitespace-remover" element={<WhitespaceRemover />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
