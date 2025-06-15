@@ -13,6 +13,16 @@ serve(async (req) => {
   }
 
   try {
+    const openRouterApiKey = Deno.env.get('OPEN_ROUTER_API_KEY');
+
+    if (!openRouterApiKey) {
+      console.error('OPEN_ROUTER_API_KEY not set in Supabase secrets');
+      return new Response(
+        JSON.stringify({ error: 'API key is not configured. Please set OPEN_ROUTER_API_KEY in Supabase secrets.' }),
+        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
     const { topic, keywords, audience, tone, titleType } = await req.json();
 
     if (!topic) {
@@ -66,11 +76,10 @@ Title Types and Formulas:
     
     userPrompt += `\n\nReturn exactly 8 titles as a JSON array with no additional text or formatting.`;
 
-    // Using Open Router's free API with DeepSeek model
     const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer sk-or-v1-free`,
+        'Authorization': `Bearer ${openRouterApiKey}`,
         'Content-Type': 'application/json',
         'HTTP-Referer': 'https://lovableproject.com',
         'X-Title': 'Article Title Generator'
@@ -87,8 +96,9 @@ Title Types and Formulas:
     });
 
     if (!response.ok) {
-      console.error('Open Router API error:', response.status, await response.text());
-      throw new Error(`Open Router API error: ${response.status}`);
+      const errorBody = await response.text();
+      console.error('Open Router API error:', response.status, errorBody);
+      throw new Error(`Open Router API error: ${response.status} - ${errorBody}`);
     }
 
     const data = await response.json();
