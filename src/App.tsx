@@ -129,6 +129,15 @@ import HeicToJpegConverter from "./pages/tools/image/HeicToJpegConverter";
 import RawImageConverter from "./pages/tools/image/RawImageConverter";
 import BatchImageConverter from "./pages/tools/image/BatchImageConverter";
 import IcoToPngConverter from "./pages/tools/image/IcoToPngConverter";
+import TiffToPdfConverter from "./pages/tools/image/TiffToPdfConverter";
+import ImageResizer from "./pages/tools/image/ImageResizer";
+import ImageCropper from "./pages/tools/image/ImageCropper";
+import ImageRotator from "./pages/tools/image/ImageRotator";
+import BackgroundRemover from "./pages/tools/image/BackgroundRemover";
+import ImageFilters from "./pages/tools/image/ImageFilters";
+import BrightnessAdjuster from "./pages/tools/image/BrightnessAdjuster";
+import ColorAdjuster from "./pages/tools/image/ColorAdjuster";
+import ImageBlurTool from "./pages/tools/image/ImageBlurTool";
 
 const queryClient = new QueryClient();
 
@@ -276,6 +285,15 @@ const App = () => (
             <Route path="/tools/image/raw-image-converter" element={<RawImageConverter />} />
             <Route path="/tools/image/batch-image-converter" element={<BatchImageConverter />} />
             <Route path="/tools/image/ico-to-png-converter" element={<IcoToPngConverter />} />
+            <Route path="/tools/image/tiff-to-pdf-converter" element={<TiffToPdfConverter />} />
+            <Route path="/tools/image/image-resizer" element={<ImageResizer />} />
+            <Route path="/tools/image/image-cropper" element={<ImageCropper />} />
+            <Route path="/tools/image/image-rotator" element={<ImageRotator />} />
+            <Route path="/tools/image/background-remover" element={<BackgroundRemover />} />
+            <Route path="/tools/image/image-filters" element={<ImageFilters />} />
+            <Route path="/tools/image/brightness-adjuster" element={<BrightnessAdjuster />} />
+            <Route path="/tools/image/color-adjuster" element={<ColorAdjuster />} />
+            <Route path="/tools/image/image-blur-tool" element={<ImageBlurTool />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
