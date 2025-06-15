@@ -337,7 +337,7 @@ const GPACalculator = () => {
                               <div className="text-lg font-bold text-gray-700">{target}</div>
                               <div className="text-sm text-gray-600">Target GPA</div>
                               <div className="text-sm mt-2">
-                                {credits > 0 ? `${credits} more A credits needed` : 'Already achieved!'}
+                                {Number(credits) > 0 ? `${credits} more A credits needed` : 'Already achieved!'}
                               </div>
                             </div>
                           ))}

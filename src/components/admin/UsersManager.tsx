@@ -54,8 +54,8 @@ const UsersManager = () => {
         first_name: user.first_name || '',
         last_name: user.last_name || '',
         created_at: user.created_at,
-        subscription_tier: user.subscribers?.[0]?.subscription_tier || 'free',
-        subscribed: user.subscribers?.[0]?.subscribed || false
+        subscription_tier: (user.subscribers as any)?.[0]?.subscription_tier || 'free',
+        subscribed: (user.subscribers as any)?.[0]?.subscribed || false
       })) || [];
 
       setUsers(formattedUsers);
