@@ -84,6 +84,11 @@ import CssValidator from "./pages/tools/web/CssValidator";
 import JavaScriptMinifier from "./pages/tools/web/JavaScriptMinifier";
 import CssMinifier from "./pages/tools/web/CssMinifier";
 import HtmlMinifier from "./pages/tools/web/HtmlMinifier";
+import JsonFormatter from "./pages/tools/web/JsonFormatter";
+import XmlFormatter from "./pages/tools/web/XmlFormatter";
+import Base64EncoderDecoder from "./pages/tools/web/Base64EncoderDecoder";
+import UrlEncoderDecoder from "./pages/tools/web/UrlEncoderDecoder";
+import HtmlEntityEncoder from "./pages/tools/web/HtmlEntityEncoder";
 
 const queryClient = new QueryClient();
 
@@ -186,6 +191,11 @@ const App = () => (
             <Route path="/tools/web/javascript-minifier" element={<JavaScriptMinifier />} />
             <Route path="/tools/web/css-minifier" element={<CssMinifier />} />
             <Route path="/tools/web/html-minifier" element={<HtmlMinifier />} />
+            <Route path="/tools/web/json-formatter" element={<JsonFormatter />} />
+            <Route path="/tools/web/xml-formatter" element={<XmlFormatter />} />
+            <Route path="/tools/web/base64-encoder-decoder" element={<Base64EncoderDecoder />} />
+            <Route path="/tools/web/url-encoder-decoder" element={<UrlEncoderDecoder />} />
+            <Route path="/tools/web/html-entity-encoder" element={<HtmlEntityEncoder />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
