@@ -6,29 +6,34 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { GraduationCap, Plus, Trash2, History } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 interface Course {
-  id: string;
+  id: number;
   name: string;
   grade: string;
   credits: number;
 }
 
+interface GradeScale {
+  [key: string]: number;
+}
+
+interface GradeScales {
+  [key: string]: GradeScale;
+}
+
 const GPACalculator = () => {
   const [courses, setCourses] = useState<Course[]>([
-    { id: '1', name: 'Mathematics', grade: 'A', credits: 3 }
+    { id: 1, name: '', grade: '', credits: 3 }
   ]);
-  const [currentGPA, setCurrentGPA] = useState(0);
-  const [currentCredits, setCurrentCredits] = useState(0);
   const [scale, setScale] = useState('4.0');
   const [result, setResult] = useState<any>(null);
   const [history, setHistory] = useState<string[]>([]);
   const { toast } = useToast();
 
-  const gradePoints = {
+  const gradeScales: GradeScales = {
     '4.0': {
       'A+': 4.0, 'A': 4.0, 'A-': 3.7,
       'B+': 3.3, 'B': 3.0, 'B-': 2.7,
@@ -37,10 +42,10 @@ const GPACalculator = () => {
       'F': 0.0
     },
     '5.0': {
-      'A+': 5.0, 'A': 4.7, 'A-': 4.3,
-      'B+': 4.0, 'B': 3.7, 'B-': 3.3,
-      'C+': 3.0, 'C': 2.7, 'C-': 2.3,
-      'D+': 2.0, 'D': 1.7, 'D-': 1.3,
+      'A+': 5.0, 'A': 4.8, 'A-': 4.5,
+      'B+': 4.2, 'B': 3.8, 'B-': 3.5,
+      'C+': 3.2, 'C': 2.8, 'C-': 2.5,
+      'D+': 2.2, 'D': 1.8, 'D-': 1.5,
       'F': 0.0
     }
   };
@@ -50,118 +55,134 @@ const GPACalculator = () => {
   };
 
   const addCourse = () => {
-    const newCourse: Course = {
-      id: Date.now().toString(),
-      name: `Course ${courses.length + 1}`,
-      grade: 'A',
-      credits: 3
-    };
-    setCourses([...courses, newCourse]);
+    const newId = Math.max(...courses.map(c => c.id), 0) + 1;
+    setCourses([...courses, { id: newId, name: '', grade: '', credits: 3 }]);
   };
 
-  const removeCourse = (id: string) => {
-    setCourses(courses.filter(course => course.id !== id));
+  const removeCourse = (id: number) => {
+    if (courses.length > 1) {
+      setCourses(courses.filter(c => c.id !== id));
+    }
   };
 
-  const updateCourse = (id: string, field: keyof Course, value: string | number) => {
+  const updateCourse = (id: number, field: keyof Course, value: string | number) => {
     setCourses(courses.map(course => 
       course.id === id ? { ...course, [field]: value } : course
     ));
   };
 
   const calculateGPA = () => {
-    if (courses.length === 0) {
+    const validCourses = courses.filter(course => 
+      course.name.trim() && course.grade && course.credits > 0
+    );
+
+    if (validCourses.length === 0) {
       toast({
         title: "Error",
-        description: "Please add at least one course",
+        description: "Please add at least one valid course",
         variant: "destructive"
       });
       return;
     }
 
-    const gradeScale = gradePoints[scale as keyof typeof gradePoints];
+    const currentScale = gradeScales[scale] as GradeScale;
     let totalPoints = 0;
     let totalCredits = 0;
+    const courseDetails = [];
 
-    courses.forEach(course => {
-      if (course.grade && course.credits > 0) {
-        const points = gradeScale[course.grade as keyof typeof gradeScale] || 0;
-        totalPoints += points * course.credits;
+    for (const course of validCourses) {
+      const gradePoint = currentScale[course.grade];
+      if (gradePoint !== undefined) {
+        const points = gradePoint * course.credits;
+        totalPoints += points;
         totalCredits += course.credits;
+        courseDetails.push({
+          ...course,
+          gradePoint,
+          points
+        });
       }
-    });
+    }
 
     if (totalCredits === 0) {
       toast({
         title: "Error",
-        description: "Please enter valid credits for your courses",
+        description: "No valid courses found",
         variant: "destructive"
       });
       return;
     }
 
-    const semesterGPA = totalPoints / totalCredits;
-
-    // Calculate cumulative GPA if current GPA is provided
-    let cumulativeGPA = semesterGPA;
-    let totalCumulativeCredits = totalCredits;
-
-    if (currentGPA > 0 && currentCredits > 0) {
-      const currentTotalPoints = currentGPA * currentCredits;
-      const newTotalPoints = currentTotalPoints + totalPoints;
-      totalCumulativeCredits = currentCredits + totalCredits;
-      cumulativeGPA = newTotalPoints / totalCumulativeCredits;
-    }
-
-    // Calculate what's needed for target GPA
-    const getCreditsForTarget = (targetGPA: number) => {
-      if (currentCredits === 0) return 0;
-      const requiredTotalPoints = targetGPA * (currentCredits + totalCredits);
-      const currentTotalPoints = currentGPA * currentCredits + totalPoints;
-      const additionalPointsNeeded = requiredTotalPoints - currentTotalPoints;
-      const maxGradePoints = parseFloat(scale);
-      return additionalPointsNeeded > 0 ? Math.ceil(additionalPointsNeeded / maxGradePoints) : 0;
-    };
+    const gpa = totalPoints / totalCredits;
+    const gpaCategory = getGPACategory(gpa, scale);
 
     const gpaResult = {
-      semesterGPA: parseFloat(semesterGPA.toFixed(3)),
-      cumulativeGPA: parseFloat(cumulativeGPA.toFixed(3)),
+      gpa: parseFloat(gpa.toFixed(3)),
       totalCredits,
-      totalCumulativeCredits,
       totalPoints: parseFloat(totalPoints.toFixed(2)),
-      creditsForTargets: {
-        3.0: getCreditsForTarget(3.0),
-        3.5: getCreditsForTarget(3.5),
-        3.8: getCreditsForTarget(3.8),
-        4.0: getCreditsForTarget(4.0)
-      },
-      gradeDistribution: calculateGradeDistribution()
+      courseDetails,
+      category: gpaCategory,
+      scale,
+      averageGrade: getAverageGradeLetter(gpa, scale)
     };
 
     setResult(gpaResult);
-    addToHistory(`GPA: ${semesterGPA.toFixed(3)} (${totalCredits} credits)`);
+    addToHistory(`GPA: ${gpa.toFixed(3)} (${totalCredits} credits, ${scale} scale)`);
     
     toast({
       title: "GPA Calculated",
-      description: `Your semester GPA is ${semesterGPA.toFixed(3)}`
+      description: `Your GPA is ${gpa.toFixed(3)} on a ${scale} scale`
     });
   };
 
-  const calculateGradeDistribution = () => {
-    const distribution: { [key: string]: number } = {};
-    courses.forEach(course => {
-      distribution[course.grade] = (distribution[course.grade] || 0) + 1;
-    });
-    return distribution;
+  const getGPACategory = (gpa: number, scaleType: string) => {
+    const maxScale = parseFloat(scaleType);
+    const percentage = (gpa / maxScale) * 100;
+    
+    if (percentage >= 90) return { category: 'Excellent', color: 'text-green-600', bg: 'bg-green-50' };
+    if (percentage >= 80) return { category: 'Good', color: 'text-blue-600', bg: 'bg-blue-50' };
+    if (percentage >= 70) return { category: 'Satisfactory', color: 'text-yellow-600', bg: 'bg-yellow-50' };
+    if (percentage >= 60) return { category: 'Below Average', color: 'text-orange-600', bg: 'bg-orange-50' };
+    return { category: 'Poor', color: 'text-red-600', bg: 'bg-red-50' };
   };
 
-  const getGPACategory = (gpa: number) => {
-    if (gpa >= 3.9) return { category: 'Summa Cum Laude', color: 'text-green-600', bg: 'bg-green-50' };
-    if (gpa >= 3.7) return { category: 'Magna Cum Laude', color: 'text-blue-600', bg: 'bg-blue-50' };
-    if (gpa >= 3.5) return { category: 'Cum Laude', color: 'text-purple-600', bg: 'bg-purple-50' };
-    if (gpa >= 3.0) return { category: 'Good Standing', color: 'text-yellow-600', bg: 'bg-yellow-50' };
-    if (gpa >= 2.0) return { category: 'Satisfactory', color: 'text-orange-600', bg: 'bg-orange-50' };
-    return { category: 'Below Standard', color: 'text-red-600', bg: 'bg-red-50' };
+  const getAverageGradeLetter = (gpa: number, scaleType: string) => {
+    const currentScale = gradeScales[scaleType] as GradeScale;
+    
+    for (const [grade, value] of Object.entries(currentScale)) {
+      if (gpa >= value) {
+        return grade;
+      }
+    }
+    return 'F';
+  };
+
+  const getImprovementSuggestions = (gpa: number) => {
+    const suggestions = [];
+    
+    if (gpa < 2.0) {
+      suggestions.push("Consider meeting with academic advisors");
+      suggestions.push("Form study groups with classmates");
+      suggestions.push("Utilize tutoring services");
+      suggestions.push("Reduce course load to focus on quality");
+    } else if (gpa < 3.0) {
+      suggestions.push("Improve time management skills");
+      suggestions.push("Seek help from professors during office hours");
+      suggestions.push("Review and improve study techniques");
+      suggestions.push("Consider study skills workshops");
+    } else if (gpa < 3.5) {
+      suggestions.push("Set specific grade goals for each course");
+      suggestions.push("Participate actively in class discussions");
+      suggestions.push("Form study partnerships");
+      suggestions.push("Seek challenging coursework to grow");
+    } else {
+      suggestions.push("Maintain excellent study habits");
+      suggestions.push("Consider honor courses or research opportunities");
+      suggestions.push("Help other students through tutoring");
+      suggestions.push("Explore leadership opportunities");
+    }
+    
+    return suggestions;
   };
 
   return (
@@ -172,7 +193,7 @@ const GPACalculator = () => {
             GPA Calculator
           </h1>
           <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-            Calculate your Grade Point Average with detailed analysis and academic standing information.
+            Calculate your Grade Point Average with detailed course analysis and improvement recommendations.
           </p>
         </div>
         
@@ -184,110 +205,82 @@ const GPACalculator = () => {
                   <GraduationCap className="h-6 w-6" />
                   GPA Calculator
                 </CardTitle>
-                <CardDescription>Add your courses and grades to calculate your GPA</CardDescription>
+                <CardDescription>Enter your courses and grades to calculate your GPA</CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <div>
-                    <Label>GPA Scale</Label>
-                    <Select value={scale} onValueChange={setScale}>
-                      <SelectTrigger>
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="4.0">4.0 Scale</SelectItem>
-                        <SelectItem value="5.0">5.0 Scale</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div>
-                    <Label>Current GPA (optional)</Label>
-                    <Input
-                      type="number"
-                      step="0.01"
-                      value={currentGPA}
-                      onChange={(e) => setCurrentGPA(parseFloat(e.target.value) || 0)}
-                      placeholder="Enter current GPA"
-                    />
-                  </div>
-                  <div>
-                    <Label>Current Credits (optional)</Label>
-                    <Input
-                      type="number"
-                      value={currentCredits}
-                      onChange={(e) => setCurrentCredits(parseInt(e.target.value) || 0)}
-                      placeholder="Enter current credits"
-                    />
-                  </div>
+                <div>
+                  <Label>Grading Scale</Label>
+                  <Select value={scale} onValueChange={setScale}>
+                    <SelectTrigger className="w-full">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="4.0">4.0 Scale (Standard)</SelectItem>
+                      <SelectItem value="5.0">5.0 Scale (Weighted)</SelectItem>
+                    </SelectContent>
+                  </Select>
                 </div>
 
-                <div>
-                  <div className="flex justify-between items-center mb-4">
-                    <Label className="text-lg font-semibold">Courses</Label>
-                    <Button onClick={addCourse} variant="outline" size="sm">
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <h3 className="text-lg font-semibold">Courses</h3>
+                    <Button onClick={addCourse} size="sm">
                       <Plus className="h-4 w-4 mr-2" />
                       Add Course
                     </Button>
                   </div>
 
-                  <div className="space-y-3">
-                    {courses.map((course, index) => (
-                      <div key={course.id} className="grid grid-cols-1 md:grid-cols-5 gap-3 p-4 border rounded-lg">
-                        <div>
-                          <Label className="text-sm">Course Name</Label>
-                          <Input
-                            value={course.name}
-                            onChange={(e) => updateCourse(course.id, 'name', e.target.value)}
-                            placeholder="Course name"
-                          />
-                        </div>
-                        <div>
-                          <Label className="text-sm">Grade</Label>
-                          <Select 
-                            value={course.grade} 
-                            onValueChange={(value) => updateCourse(course.id, 'grade', value)}
-                          >
-                            <SelectTrigger>
-                              <SelectValue />
-                            </SelectTrigger>
-                            <SelectContent>
-                              {Object.keys(gradePoints[scale as keyof typeof gradePoints]).map(grade => (
-                                <SelectItem key={grade} value={grade}>{grade}</SelectItem>
-                              ))}
-                            </SelectContent>
-                          </Select>
-                        </div>
-                        <div>
-                          <Label className="text-sm">Credits</Label>
-                          <Input
-                            type="number"
-                            min="0"
-                            max="10"
-                            value={course.credits}
-                            onChange={(e) => updateCourse(course.id, 'credits', parseInt(e.target.value) || 0)}
-                            placeholder="Credits"
-                          />
-                        </div>
-                        <div>
-                          <Label className="text-sm">Points</Label>
-                          <div className="h-10 flex items-center px-3 bg-gray-50 rounded text-sm">
-                            {((gradePoints[scale as keyof typeof gradePoints][course.grade as keyof typeof gradePoints[typeof scale]] || 0) * course.credits).toFixed(2)}
-                          </div>
-                        </div>
-                        <div className="flex items-end">
-                          <Button 
-                            onClick={() => removeCourse(course.id)} 
-                            variant="outline" 
-                            size="sm"
-                            className="w-full"
-                            disabled={courses.length === 1}
-                          >
-                            <Trash2 className="h-4 w-4" />
-                          </Button>
-                        </div>
+                  {courses.map((course) => (
+                    <div key={course.id} className="grid grid-cols-1 md:grid-cols-4 gap-4 p-4 border rounded-lg">
+                      <div>
+                        <Label>Course Name</Label>
+                        <Input
+                          placeholder="Course name"
+                          value={course.name}
+                          onChange={(e) => updateCourse(course.id, 'name', e.target.value)}
+                        />
                       </div>
-                    ))}
-                  </div>
+                      <div>
+                        <Label>Grade</Label>
+                        <Select 
+                          value={course.grade} 
+                          onValueChange={(value) => updateCourse(course.id, 'grade', value)}
+                        >
+                          <SelectTrigger>
+                            <SelectValue placeholder="Select grade" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {Object.keys(gradeScales[scale] as GradeScale).map(grade => (
+                              <SelectItem key={grade} value={grade}>
+                                {grade} ({gradeScales[scale][grade]})
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      <div>
+                        <Label>Credit Hours</Label>
+                        <Input
+                          type="number"
+                          min="0"
+                          max="6"
+                          step="0.5"
+                          value={course.credits}
+                          onChange={(e) => updateCourse(course.id, 'credits', parseFloat(e.target.value) || 0)}
+                        />
+                      </div>
+                      <div className="flex items-end">
+                        <Button 
+                          onClick={() => removeCourse(course.id)}
+                          variant="outline"
+                          size="sm"
+                          disabled={courses.length === 1}
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </Button>
+                      </div>
+                    </div>
+                  ))}
                 </div>
 
                 <Button onClick={calculateGPA} className="w-full" size="lg">
@@ -296,76 +289,62 @@ const GPACalculator = () => {
 
                 {result && (
                   <div className="space-y-6">
-                    <div className={`${getGPACategory(result.semesterGPA).bg} p-6 rounded-lg text-center`}>
-                      <div className={`text-4xl font-bold ${getGPACategory(result.semesterGPA).color} mb-2`}>
-                        {result.semesterGPA}
+                    <div className={`${result.category.bg} p-6 rounded-lg text-center`}>
+                      <div className={`text-4xl font-bold ${result.category.color} mb-2`}>
+                        {result.gpa}
                       </div>
-                      <div className={`text-xl font-semibold ${getGPACategory(result.semesterGPA).color} mb-2`}>
-                        Semester GPA
+                      <div className={`text-xl font-semibold ${result.category.color} mb-2`}>
+                        {result.category.category}
                       </div>
                       <div className="text-gray-600">
-                        {getGPACategory(result.semesterGPA).category}
+                        GPA on {result.scale} scale ({result.averageGrade} average)
                       </div>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      {currentGPA > 0 && (
-                        <div className="bg-blue-50 p-4 rounded-lg">
-                          <h4 className="font-semibold text-blue-600 mb-2">Cumulative GPA</h4>
-                          <div className="text-2xl font-bold text-blue-600">{result.cumulativeGPA}</div>
-                          <div className="text-sm text-gray-600">{result.totalCumulativeCredits} total credits</div>
-                        </div>
-                      )}
-                      <div className="bg-green-50 p-4 rounded-lg">
-                        <h4 className="font-semibold text-green-600 mb-2">Quality Points</h4>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                      <div className="bg-blue-50 p-4 rounded-lg text-center">
+                        <div className="text-2xl font-bold text-blue-600">{result.totalCredits}</div>
+                        <div className="text-sm text-gray-600">Total Credit Hours</div>
+                      </div>
+                      <div className="bg-green-50 p-4 rounded-lg text-center">
                         <div className="text-2xl font-bold text-green-600">{result.totalPoints}</div>
-                        <div className="text-sm text-gray-600">{result.totalCredits} credits this semester</div>
+                        <div className="text-sm text-gray-600">Total Grade Points</div>
+                      </div>
+                      <div className="bg-purple-50 p-4 rounded-lg text-center">
+                        <div className="text-2xl font-bold text-purple-600">{result.courseDetails.length}</div>
+                        <div className="text-sm text-gray-600">Courses Calculated</div>
                       </div>
                     </div>
 
-                    <Tabs defaultValue="targets" className="space-y-4">
-                      <TabsList className="grid w-full grid-cols-3">
-                        <TabsTrigger value="targets">Target GPA</TabsTrigger>
-                        <TabsTrigger value="distribution">Grade Distribution</TabsTrigger>
-                        <TabsTrigger value="scale">Grade Scale</TabsTrigger>
-                      </TabsList>
-
-                      <TabsContent value="targets">
-                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                          {Object.entries(result.creditsForTargets).map(([target, credits]) => (
-                            <div key={target} className="bg-gray-50 p-4 rounded-lg text-center">
-                              <div className="text-lg font-bold text-gray-700">{target}</div>
-                              <div className="text-sm text-gray-600">Target GPA</div>
-                              <div className="text-sm mt-2">
-                                {credits > 0 ? `${credits} more A credits needed` : 'Already achieved!'}
-                              </div>
+                    <div className="bg-gray-50 p-4 rounded-lg">
+                      <h4 className="font-semibold mb-3">Course Breakdown</h4>
+                      <div className="space-y-2">
+                        {result.courseDetails.map((course: any, index: number) => (
+                          <div key={index} className="flex justify-between items-center p-2 bg-white rounded">
+                            <div>
+                              <span className="font-medium">{course.name}</span>
+                              <span className="text-gray-500 ml-2">({course.credits} credits)</span>
                             </div>
-                          ))}
-                        </div>
-                      </TabsContent>
-
-                      <TabsContent value="distribution">
-                        <div className="grid grid-cols-3 md:grid-cols-6 gap-4">
-                          {Object.entries(result.gradeDistribution).map(([grade, count]) => (
-                            <div key={grade} className="bg-gray-50 p-4 rounded-lg text-center">
-                              <div className="text-2xl font-bold text-gray-700">{count}</div>
-                              <div className="text-sm text-gray-600">Grade {grade}</div>
+                            <div className="text-right">
+                              <div className="font-semibold">{course.grade}</div>
+                              <div className="text-sm text-gray-500">{course.points.toFixed(2)} pts</div>
                             </div>
-                          ))}
-                        </div>
-                      </TabsContent>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
 
-                      <TabsContent value="scale">
-                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                          {Object.entries(gradePoints[scale as keyof typeof gradePoints]).map(([grade, points]) => (
-                            <div key={grade} className="bg-gray-50 p-3 rounded-lg text-center">
-                              <div className="font-bold">{grade}</div>
-                              <div className="text-sm text-gray-600">{points} points</div>
-                            </div>
-                          ))}
-                        </div>
-                      </TabsContent>
-                    </Tabs>
+                    <div className="bg-gray-50 p-4 rounded-lg">
+                      <h4 className="font-semibold mb-3">Improvement Suggestions</h4>
+                      <ul className="space-y-2">
+                        {getImprovementSuggestions(result.gpa).map((suggestion, index) => (
+                          <li key={index} className="flex items-start gap-2 text-sm">
+                            <span className="text-green-500 mt-1">•</span>
+                            <span>{suggestion}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
                   </div>
                 )}
               </CardContent>
@@ -408,30 +387,17 @@ const GPACalculator = () => {
 
             <Card className="mt-6">
               <CardHeader>
-                <CardTitle>Academic Standing</CardTitle>
+                <CardTitle>Grade Scale Reference</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-2 text-sm">
-                  <div className="flex justify-between">
-                    <span>Summa Cum Laude:</span>
-                    <span>3.9+</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Magna Cum Laude:</span>
-                    <span>3.7+</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Cum Laude:</span>
-                    <span>3.5+</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Good Standing:</span>
-                    <span>3.0+</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Probation:</span>
-                    <span>&lt; 2.0</span>
-                  </div>
+                  <div className="font-semibold">{scale} Scale:</div>
+                  {Object.entries(gradeScales[scale] as GradeScale).map(([grade, value]) => (
+                    <div key={grade} className="flex justify-between">
+                      <span>{grade}:</span>
+                      <span>{value}</span>
+                    </div>
+                  ))}
                 </div>
               </CardContent>
             </Card>
