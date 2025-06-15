@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -60,6 +59,7 @@ import BusinessNameGenerator from "./pages/tools/text/BusinessNameGenerator";
 import CharacterCounter from "./pages/tools/text/CharacterCounter";
 import DuplicateLineRemover from "./pages/tools/text/DuplicateLineRemover";
 import EmojiTextGenerator from "./pages/tools/text/EmojiTextGenerator";
+import FancyTextGenerator from "./pages/tools/text/FancyTextGenerator";
 
 const queryClient = new QueryClient();
 
