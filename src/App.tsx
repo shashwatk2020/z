@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -89,6 +90,10 @@ import XmlFormatter from "./pages/tools/web/XmlFormatter";
 import Base64EncoderDecoder from "./pages/tools/web/Base64EncoderDecoder";
 import UrlEncoderDecoder from "./pages/tools/web/UrlEncoderDecoder";
 import HtmlEntityEncoder from "./pages/tools/web/HtmlEntityEncoder";
+import RegexTester from "./pages/tools/web/RegexTester";
+import SeoMetaTagGenerator from "./pages/tools/web/SeoMetaTagGenerator";
+import OpenGraphGenerator from "./pages/tools/web/OpenGraphGenerator";
+import TwitterCardGenerator from "./pages/tools/web/TwitterCardGenerator";
 
 const queryClient = new QueryClient();
 
@@ -196,6 +201,10 @@ const App = () => (
             <Route path="/tools/web/base64-encoder-decoder" element={<Base64EncoderDecoder />} />
             <Route path="/tools/web/url-encoder-decoder" element={<UrlEncoderDecoder />} />
             <Route path="/tools/web/html-entity-encoder" element={<HtmlEntityEncoder />} />
+            <Route path="/tools/web/regex-tester" element={<RegexTester />} />
+            <Route path="/tools/web/seo-meta-tag-generator" element={<SeoMetaTagGenerator />} />
+            <Route path="/tools/web/open-graph-generator" element={<OpenGraphGenerator />} />
+            <Route path="/tools/web/twitter-card-generator" element={<TwitterCardGenerator />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
