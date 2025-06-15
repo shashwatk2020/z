@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -120,6 +119,16 @@ import IpAddressLookup from "./pages/tools/web/IpAddressLookup";
 import PortScanner from "./pages/tools/web/PortScanner";
 import WebsiteUptimeMonitor from "./pages/tools/web/WebsiteUptimeMonitor";
 import PingTestTool from "./pages/tools/web/PingTestTool";
+// Image Tools
+import JpegToPngConverter from "./pages/tools/image/JpegToPngConverter";
+import PngToJpegConverter from "./pages/tools/image/PngToJpegConverter";
+import WebpConverter from "./pages/tools/image/WebpConverter";
+import GifToMp4Converter from "./pages/tools/image/GifToMp4Converter";
+import SvgToPngConverter from "./pages/tools/image/SvgToPngConverter";
+import HeicToJpegConverter from "./pages/tools/image/HeicToJpegConverter";
+import RawImageConverter from "./pages/tools/image/RawImageConverter";
+import BatchImageConverter from "./pages/tools/image/BatchImageConverter";
+import IcoToPngConverter from "./pages/tools/image/IcoToPngConverter";
 
 const queryClient = new QueryClient();
 
@@ -257,6 +266,16 @@ const App = () => (
             <Route path="/tools/web/port-scanner" element={<PortScanner />} />
             <Route path="/tools/web/website-uptime-monitor" element={<WebsiteUptimeMonitor />} />
             <Route path="/tools/web/ping-test-tool" element={<PingTestTool />} />
+            {/* Image Tools */}
+            <Route path="/tools/image/jpeg-to-png-converter" element={<JpegToPngConverter />} />
+            <Route path="/tools/image/png-to-jpeg-converter" element={<PngToJpegConverter />} />
+            <Route path="/tools/image/webp-converter" element={<WebpConverter />} />
+            <Route path="/tools/image/gif-to-mp4-converter" element={<GifToMp4Converter />} />
+            <Route path="/tools/image/svg-to-png-converter" element={<SvgToPngConverter />} />
+            <Route path="/tools/image/heic-to-jpeg-converter" element={<HeicToJpegConverter />} />
+            <Route path="/tools/image/raw-image-converter" element={<RawImageConverter />} />
+            <Route path="/tools/image/batch-image-converter" element={<BatchImageConverter />} />
+            <Route path="/tools/image/ico-to-png-converter" element={<IcoToPngConverter />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
