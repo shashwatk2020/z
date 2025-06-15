@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import Layout from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
@@ -15,6 +14,10 @@ import { Checkbox } from "@/components/ui/checkbox"
 const stopWords = new Set([
   'a', 'an', 'the', 'and', 'but', 'or', 'for', 'nor', 'on', 'at', 'to', 'from', 'by', 'of',
 ]);
+
+function escapeRegExp(string: string) {
+  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
+}
 
 const SlugGenerator = () => {
   const [input, setInput] = useState('');
@@ -42,9 +45,11 @@ const SlugGenerator = () => {
     if (removeNumbers) {
       baseSlug = baseSlug.replace(/\d+/g, '');
     }
+    
+    const actualSeparator = separator === 'no-separator' ? '' : separator;
 
     let generatedSlug = slugify(baseSlug, {
-      replacement: separator,
+      replacement: actualSeparator,
       remove: transliterate ? undefined : /[^a-zA-Z0-9\s-]/g,
       lower: caseStyle === 'lowercase',
       trim: true,
@@ -54,19 +59,25 @@ const SlugGenerator = () => {
     // Handle uppercase manually since slugify doesn't have 'upper' option
     if (caseStyle === 'uppercase') {
       generatedSlug = generatedSlug.toUpperCase();
-    } else if (caseStyle === 'camelcase') {
-      generatedSlug = generatedSlug.replace(/[-_\s](.)?/g, (match, chr) => {
-        return chr ? chr.toUpperCase() : '';
-      }).replace(/^([A-Z])/, (match, chr) => chr.toLowerCase());
-    } else if (caseStyle === 'pascalcase') {
-      generatedSlug = generatedSlug.replace(/[-_\s](.)?/g, (match, chr) => {
-        return chr ? chr.toUpperCase() : '';
-      }).replace(/^([a-z])/, (match, chr) => chr.toUpperCase());
+    } else if (caseStyle === 'camelcase' || caseStyle === 'pascalcase') {
+      if (actualSeparator) {
+        const pattern = new RegExp(escapeRegExp(actualSeparator) + '(.)?', 'g');
+        generatedSlug = generatedSlug.replace(pattern, (match, chr) => chr ? chr.toUpperCase() : '');
+      }
+
+      if (caseStyle === 'camelcase') {
+        generatedSlug = generatedSlug.replace(/^([A-Z])/, (match, chr) => chr.toLowerCase());
+      } else if (caseStyle === 'pascalcase') {
+        generatedSlug = generatedSlug.replace(/^([a-z])/, (match, chr) => chr.toUpperCase());
+      }
     }
+
 
     if (truncateWords) {
       generatedSlug = generatedSlug.substring(0, maxLength);
-      generatedSlug = generatedSlug.substring(0, generatedSlug.lastIndexOf(separator));
+      if (actualSeparator) {
+        generatedSlug = generatedSlug.substring(0, generatedSlug.lastIndexOf(actualSeparator));
+      }
     } else {
       generatedSlug = generatedSlug.substring(0, maxLength);
     }
@@ -75,10 +86,10 @@ const SlugGenerator = () => {
 
     // Generate variations
     const altVariations = [];
-    if (separator !== '_') {
+    if (actualSeparator !== '_') {
       altVariations.push(slugify(baseSlug, { replacement: '_', remove: /[^a-zA-Z0-9\s-]/g, lower: true, trim: true }).substring(0, maxLength));
     }
-    if (separator !== '.') {
+    if (actualSeparator !== '.') {
       altVariations.push(slugify(baseSlug, { replacement: '.', remove: /[^a-zA-Z0-9\s-]/g, lower: true, trim: true }).substring(0, maxLength));
     }
     setVariations(altVariations);
@@ -147,7 +158,7 @@ const SlugGenerator = () => {
                       <SelectItem value="-">Hyphen (-)</SelectItem>
                       <SelectItem value="_">Underscore (_)</SelectItem>
                       <SelectItem value=".">Dot (.)</SelectItem>
-                      <SelectItem value="">No Separator</SelectItem>
+                      <SelectItem value="no-separator">No Separator</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>

@@ -28,7 +28,13 @@ const TextRepeater = () => {
       return;
     }
 
-    const actualSeparator = separator === 'custom' ? customSeparator : separator;
+    let actualSeparator = separator;
+    if (separator === 'custom') {
+        actualSeparator = customSeparator;
+    } else if (separator === 'no-separator') {
+        actualSeparator = '';
+    }
+    
     const repeatedText = Array(repetitions).fill(text).join(actualSeparator);
     setResult(repeatedText);
   };
@@ -46,6 +52,7 @@ const TextRepeater = () => {
       case ' ': return 'Space';
       case '\n': return 'New Line';
       case ', ': return 'Comma + Space';
+      case 'no-separator': return 'No Separator';
       case '': return 'No Separator';
       case 'custom': return 'Custom';
       default: return value;
@@ -104,7 +111,7 @@ const TextRepeater = () => {
                       <SelectItem value=" ">Space</SelectItem>
                       <SelectItem value={"\n"}>New Line</SelectItem>
                       <SelectItem value=", ">Comma + Space</SelectItem>
-                      <SelectItem value="">No Separator</SelectItem>
+                      <SelectItem value="no-separator">No Separator</SelectItem>
                       <SelectItem value="custom">Custom</SelectItem>
                     </SelectContent>
                   </Select>
