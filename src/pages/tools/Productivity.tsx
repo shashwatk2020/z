@@ -1,357 +1,200 @@
 
 import React from 'react';
-import Layout from '@/components/layout/Layout';
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { 
-  CheckSquare, 
-  Calendar, 
-  Target, 
-  Users, 
-  Timer, 
-  Clock,
-  FileText,
-  FolderOpen,
-  Bookmark,
-  Shield,
-  Archive,
-  MessageSquare
-} from 'lucide-react';
 import { Link } from 'react-router-dom';
+import Header from '@/components/layout/Header';
+import Footer from '@/components/layout/Footer';
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
+import { Clock, CheckSquare, Calendar, FileText, Zap, Users } from 'lucide-react';
+
+const tools = [
+  {
+    name: 'Todo List Manager',
+    description: 'Organize tasks, set priorities, and track progress with a powerful todo list system. Features deadlines, categories, and collaboration tools for team productivity.',
+    link: '/tools/productivity/todo-list',
+    icon: <CheckSquare className="h-8 w-8 text-blue-500" />
+  },
+  {
+    name: 'Time Tracker',
+    description: 'Track time spent on projects and tasks with detailed reporting. Perfect for freelancers, consultants, and teams who need accurate time logging for billing and analysis.',
+    link: '/tools/productivity/time-tracker',
+    icon: <Clock className="h-8 w-8 text-green-500" />
+  },
+  {
+    name: 'Note Taking System',
+    description: 'Create, organize, and search through notes with rich formatting, tagging, and collaboration features. Your digital notebook for ideas, meetings, and projects.',
+    link: '/tools/productivity/notes',
+    icon: <FileText className="h-8 w-8 text-purple-500" />
+  },
+  {
+    name: 'Calendar Scheduler',
+    description: 'Schedule meetings, set reminders, and manage your calendar with smart scheduling features. Integrates with popular calendar systems for seamless workflow.',
+    link: '/tools/productivity/calendar',
+    icon: <Calendar className="h-8 w-8 text-orange-500" />
+  },
+  {
+    name: 'Project Manager',
+    description: 'Plan, track, and manage projects with Gantt charts, milestone tracking, and team collaboration. Keep projects on time and within budget.',
+    link: '/tools/productivity/project-manager',
+    icon: <Users className="h-8 w-8 text-red-500" />
+  },
+  {
+    name: 'Workflow Automation',
+    description: 'Automate repetitive tasks and create efficient workflows. Connect different tools and services to streamline your daily operations.',
+    link: '/tools/productivity/automation',
+    icon: <Zap className="h-8 w-8 text-indigo-500" />
+  },
+];
+
+const taskManagementTools = [
+    { name: 'Advanced Todo List', description: 'Feature-rich task management with priorities and deadlines.', link: '/tools/productivity/todo-list' },
+    { name: 'Kanban Board', description: 'Visual task management with drag-and-drop workflow.', link: '/tools/productivity/kanban-board' },
+    { name: 'Project Planner', description: 'Plan projects with timelines, milestones, and dependencies.', link: '/tools/productivity/project-planner' },
+    { name: 'Team Task Manager', description: 'Assign and track tasks across team members.', link: '/tools/productivity/team-tasks' },
+    { name: 'Goal Tracker', description: 'Set and track personal and professional goals.', link: '/tools/productivity/goal-tracker' },
+    { name: 'Habit Tracker', description: 'Build positive habits with daily tracking and streaks.', link: '/tools/productivity/habit-tracker' },
+    { name: 'Priority Matrix', description: 'Organize tasks using Eisenhower priority matrix.', link: '/tools/productivity/priority-matrix' },
+    { name: 'Milestone Tracker', description: 'Track important project and personal milestones.', link: '/tools/productivity/milestone-tracker' },
+];
+
+const timeManagementTools = [
+    { name: 'Time Tracker', description: 'Track time spent on projects with detailed reporting.', link: '/tools/productivity/time-tracker' },
+    { name: 'Pomodoro Timer', description: 'Boost focus with the Pomodoro Technique timer.', link: '/tools/productivity/pomodoro-timer' },
+    { name: 'Work Schedule Planner', description: 'Plan and optimize your work schedule and shifts.', link: '/tools/productivity/schedule-planner' },
+    { name: 'Meeting Scheduler', description: 'Schedule meetings across time zones with availability.', link: '/tools/productivity/meeting-scheduler' },
+    { name: 'Time Zone Planner', description: 'Plan activities across multiple time zones.', link: '/tools/productivity/timezone-planner' },
+    { name: 'Calendar Sync Tool', description: 'Synchronize calendars from multiple platforms.', link: '/tools/productivity/calendar-sync' },
+    { name: 'Deadline Calculator', description: 'Calculate and track project deadlines and milestones.', link: '/tools/productivity/deadline-calculator' },
+    { name: 'Time Blocking Tool', description: 'Block time for focused work and deep work sessions.', link: '/tools/productivity/time-blocking' },
+];
+
+const organizationTools = [
+    { name: 'Digital Note System', description: 'Organize notes with tags, categories, and search.', link: '/tools/productivity/notes' },
+    { name: 'Document Organizer', description: 'Organize and categorize documents and files.', link: '/tools/productivity/document-organizer' },
+    { name: 'Contact Manager', description: 'Manage contacts with detailed information and groups.', link: '/tools/productivity/contact-manager' },
+    { name: 'Bookmark Manager', description: 'Organize and sync bookmarks across devices.', link: '/tools/productivity/bookmark-manager' },
+    { name: 'Password Organizer', description: 'Securely organize and manage passwords.', link: '/tools/productivity/password-organizer' },
+    { name: 'File Naming System', description: 'Generate consistent file naming conventions.', link: '/tools/productivity/file-naming' },
+    { name: 'Digital Workspace', description: 'Create organized digital workspaces for projects.', link: '/tools/productivity/workspace' },
+    { name: 'Archive System', description: 'Archive and organize completed projects and files.', link: '/tools/productivity/archive-system' },
+];
+
+const collaborationTools = [
+    { name: 'Team Collaboration Hub', description: 'Central hub for team communication and collaboration.', link: '/tools/productivity/collaboration-hub' },
+    { name: 'Shared Workspace', description: 'Create shared workspaces for team projects.', link: '/tools/productivity/shared-workspace' },
+    { name: 'Meeting Notes Organizer', description: 'Organize and share meeting notes with action items.', link: '/tools/productivity/meeting-notes' },
+    { name: 'Team Calendar', description: 'Shared calendar for team events and deadlines.', link: '/tools/productivity/team-calendar' },
+    { name: 'Project Dashboard', description: 'Visual dashboard for project status and metrics.', link: '/tools/productivity/dashboard' },
+    { name: 'Resource Sharing Tool', description: 'Share files and resources with team members.', link: '/tools/productivity/resource-sharing' },
+    { name: 'Feedback Collection', description: 'Collect and organize feedback from team and clients.', link: '/tools/productivity/feedback-collection' },
+    { name: 'Team Communication', description: 'Streamlined communication tools for teams.', link: '/tools/productivity/team-communication' },
+];
 
 const Productivity = () => {
-  const productivityTools = [
-    {
-      category: "Task Management",
-      tools: [
-        {
-          title: "Advanced Todo List",
-          description: "Create and manage tasks with priorities, due dates, and categories",
-          icon: CheckSquare,
-          href: "/tools/productivity/todo-list",
-          status: "ready"
-        },
-        {
-          title: "Kanban Board",
-          description: "Visual project management with drag-and-drop task boards",
-          icon: Calendar,
-          href: "/tools/productivity/kanban-board", 
-          status: "ready"
-        },
-        {
-          title: "Project Planner",
-          description: "Plan and track complex projects with milestones and dependencies",
-          icon: Target,
-          href: "/tools/productivity/project-planner",
-          status: "ready"
-        },
-        {
-          title: "Team Task Manager",
-          description: "Assign and track tasks across team members",
-          icon: Users,
-          href: "/tools/productivity/team-task-manager",
-          status: "api-required"
-        }
-      ]
-    },
-    {
-      category: "Goal & Habit Tracking",
-      tools: [
-        {
-          title: "Goal Tracker",
-          description: "Set, track, and achieve your personal and professional goals",
-          icon: Target,
-          href: "/tools/productivity/goal-tracker",
-          status: "ready"
-        },
-        {
-          title: "Habit Tracker",
-          description: "Build and maintain positive habits with daily tracking",
-          icon: CheckSquare,
-          href: "/tools/productivity/habit-tracker",
-          status: "ready"
-        },
-        {
-          title: "Priority Matrix",
-          description: "Organize tasks using the Eisenhower Priority Matrix",
-          icon: Target,
-          href: "/tools/productivity/priority-matrix",
-          status: "ready"
-        },
-        {
-          title: "Milestone Tracker",
-          description: "Track important milestones and achievements",
-          icon: Target,
-          href: "/tools/productivity/milestone-tracker",
-          status: "ready"
-        }
-      ]
-    },
-    {
-      category: "Time Management",
-      tools: [
-        {
-          title: "Time Tracker",
-          description: "Track time spent on projects and tasks",
-          icon: Timer,
-          href: "/tools/productivity/time-tracker",
-          status: "ready"
-        },
-        {
-          title: "Pomodoro Timer",
-          description: "Boost productivity with the Pomodoro Technique",
-          icon: Clock,
-          href: "/tools/productivity/pomodoro-timer",
-          status: "ready"
-        },
-        {
-          title: "Work Schedule Planner",
-          description: "Plan and organize your work schedule",
-          icon: Calendar,
-          href: "/tools/productivity/work-schedule-planner",
-          status: "ready"
-        },
-        {
-          title: "Meeting Scheduler",
-          description: "Schedule and manage meetings efficiently",
-          icon: Calendar,
-          href: "/tools/productivity/meeting-scheduler",
-          status: "api-required"
-        }
-      ]
-    },
-    {
-      category: "Planning & Organization",
-      tools: [
-        {
-          title: "Time Zone Planner",
-          description: "Plan meetings across different time zones",
-          icon: Clock,
-          href: "/tools/productivity/time-zone-planner",
-          status: "ready"
-        },
-        {
-          title: "Calendar Sync Tool",
-          description: "Synchronize calendars across platforms",
-          icon: Calendar,
-          href: "/tools/productivity/calendar-sync-tool",
-          status: "api-required"
-        },
-        {
-          title: "Deadline Calculator",
-          description: "Calculate project deadlines and milestones",
-          icon: Calendar,
-          href: "/tools/productivity/deadline-calculator",
-          status: "ready"
-        },
-        {
-          title: "Time Blocking Tool",
-          description: "Organize your day with time blocking techniques",
-          icon: Clock,
-          href: "/tools/productivity/time-blocking-tool",
-          status: "ready"
-        }
-      ]
-    },
-    {
-      category: "Organization & Storage",
-      tools: [
-        {
-          title: "Digital Note System",
-          description: "Create, organize, and search through digital notes",
-          icon: FileText,
-          href: "/tools/productivity/digital-note-system",
-          status: "ready"
-        },
-        {
-          title: "Document Organizer",
-          description: "Organize and categorize digital documents",
-          icon: FolderOpen,
-          href: "/tools/productivity/document-organizer",
-          status: "ready"
-        },
-        {
-          title: "Contact Manager",
-          description: "Manage personal and professional contacts",
-          icon: Users,
-          href: "/tools/productivity/contact-manager",
-          status: "ready"
-        },
-        {
-          title: "Bookmark Manager",
-          description: "Organize and manage web bookmarks",
-          icon: Bookmark,
-          href: "/tools/productivity/bookmark-manager",
-          status: "ready"
-        }
-      ]
-    },
-    {
-      category: "Security & System",
-      tools: [
-        {
-          title: "Password Organizer",
-          description: "Securely organize and manage passwords",
-          icon: Shield,
-          href: "/tools/productivity/password-organizer",
-          status: "ready"
-        },
-        {
-          title: "File Naming System",
-          description: "Create consistent file naming conventions",
-          icon: FileText,
-          href: "/tools/productivity/file-naming-system",
-          status: "ready"
-        },
-        {
-          title: "Digital Workspace",
-          description: "Create and manage digital workspaces",
-          icon: FolderOpen,
-          href: "/tools/productivity/digital-workspace",
-          status: "ready"
-        },
-        {
-          title: "Archive System",
-          description: "Archive and organize old files and projects",
-          icon: Archive,
-          href: "/tools/productivity/archive-system",
-          status: "ready"
-        }
-      ]
-    },
-    {
-      category: "Team Collaboration",
-      tools: [
-        {
-          title: "Team Collaboration Hub",
-          description: "Central hub for team collaboration and communication",
-          icon: Users,
-          href: "/tools/productivity/team-collaboration-hub",
-          status: "api-required"
-        },
-        {
-          title: "Shared Workspace",
-          description: "Create shared workspaces for team projects",
-          icon: FolderOpen,
-          href: "/tools/productivity/shared-workspace",
-          status: "api-required"
-        },
-        {
-          title: "Meeting Notes Organizer",
-          description: "Organize and share meeting notes",
-          icon: FileText,
-          href: "/tools/productivity/meeting-notes-organizer",
-          status: "ready"
-        },
-        {
-          title: "Team Calendar",
-          description: "Shared calendar for team scheduling",
-          icon: Calendar,
-          href: "/tools/productivity/team-calendar",
-          status: "api-required"
-        },
-        {
-          title: "Project Dashboard",
-          description: "Overview dashboard for project management",
-          icon: Target,
-          href: "/tools/productivity/project-dashboard",
-          status: "ready"
-        },
-        {
-          title: "Resource Sharing Tool",
-          description: "Share resources and files with team members",
-          icon: FolderOpen,
-          href: "/tools/productivity/resource-sharing-tool",
-          status: "api-required"
-        },
-        {
-          title: "Feedback Collection",
-          description: "Collect and organize team feedback",
-          icon: MessageSquare,
-          href: "/tools/productivity/feedback-collection",
-          status: "api-required"
-        },
-        {
-          title: "Team Communication",
-          description: "Enhanced team communication tools",
-          icon: MessageSquare,
-          href: "/tools/productivity/team-communication",
-          status: "api-required"
-        }
-      ]
-    }
-  ];
-
-  const getStatusBadge = (status: string) => {
-    switch (status) {
-      case "ready":
-        return <Badge variant="default" className="bg-green-100 text-green-800">Ready</Badge>;
-      case "api-required":
-        return <Badge variant="secondary">API Required</Badge>;
-      default:
-        return null;
-    }
-  };
-
   return (
-    <Layout>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">
-            Productivity Tools
-          </h1>
-          <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-            Comprehensive productivity tools to help you manage tasks, track goals, organize information, and collaborate effectively.
-          </p>
+    <div className="flex flex-col min-h-screen bg-gray-50">
+      <Header />
+      <main className="flex-1">
+        <div className="py-12 md:py-20">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center">
+              <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 tracking-tight">
+                Professional Productivity Tools
+              </h1>
+              <p className="mt-4 max-w-3xl mx-auto text-lg md:text-xl text-gray-600">
+                Streamline your workflow, organize your tasks, and boost your efficiency with our comprehensive suite of productivity tools designed for professionals, teams, and individuals.
+              </p>
+            </div>
+          </div>
         </div>
 
-        <div className="space-y-12">
-          {productivityTools.map((category) => (
-            <div key={category.category}>
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">
-                {category.category}
-              </h2>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                {category.tools.map((tool) => (
-                  <Card key={tool.title} className="hover:shadow-lg transition-shadow duration-300">
-                    <CardHeader className="pb-3">
-                      <div className="flex items-start justify-between">
-                        <tool.icon className="h-8 w-8 text-blue-600 mb-2" />
-                        {getStatusBadge(tool.status)}
+        <div className="bg-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+              {tools.map((tool) => (
+                <Link to={tool.link} key={tool.name} className="block group">
+                  <Card className="h-full hover:shadow-lg hover:border-blue-500 transition-all duration-300">
+                    <CardHeader className="flex flex-row items-center space-x-4">
+                      <div>{tool.icon}</div>
+                      <div>
+                        <CardTitle className="text-lg font-semibold text-gray-900 group-hover:text-blue-600">{tool.name}</CardTitle>
                       </div>
-                      <CardTitle className="text-lg">{tool.title}</CardTitle>
-                      <CardDescription className="text-sm">
-                        {tool.description}
-                      </CardDescription>
                     </CardHeader>
-                    <CardContent className="pt-0">
-                      {tool.status === "api-required" ? (
-                        <div className="text-center p-4 bg-yellow-50 rounded-lg">
-                          <p className="text-sm text-yellow-800 font-medium">
-                            Tool not working - API integration required
-                          </p>
-                          <p className="text-xs text-yellow-600 mt-1">
-                            Will be available after API setup
-                          </p>
-                        </div>
-                      ) : (
-                        <Link 
-                          to={tool.href}
-                          className="inline-flex items-center justify-center w-full px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 transition-colors duration-200"
-                        >
-                          Use Tool
-                        </Link>
-                      )}
+                    <CardContent>
+                      <CardDescription>{tool.description}</CardDescription>
                     </CardContent>
                   </Card>
-                ))}
-              </div>
+                </Link>
+              ))}
             </div>
-          ))}
+          </div>
         </div>
-      </div>
-    </Layout>
+
+        <div className="py-12 md:py-20 bg-gray-50">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="text-center mb-16">
+                    <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 tracking-tight">All Our Productivity Tools</h2>
+                    <p className="mt-4 max-w-3xl mx-auto text-lg text-gray-600">Comprehensive tools to organize, plan, track, and optimize every aspect of your personal and professional productivity.</p>
+                </div>
+
+                <div className="space-y-16">
+                    <div>
+                        <h2 className="text-2xl font-bold text-gray-800 mb-6">Task Management</h2>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                            {taskManagementTools.map((tool) => (
+                                <Link to={tool.link} key={tool.name} className="block group">
+                                    <Card className="h-full hover:shadow-lg transition-shadow duration-300 p-4">
+                                        <h3 className="font-semibold text-gray-900 group-hover:text-blue-600">{tool.name}</h3>
+                                        <p className="text-sm text-gray-600 mt-1">{tool.description}</p>
+                                    </Card>
+                                </Link>
+                            ))}
+                        </div>
+                    </div>
+                    <div>
+                        <h2 className="text-2xl font-bold text-gray-800 mb-6">Time Management</h2>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                            {timeManagementTools.map((tool) => (
+                                <Link to={tool.link} key={tool.name} className="block group">
+                                    <Card className="h-full hover:shadow-lg transition-shadow duration-300 p-4">
+                                        <h3 className="font-semibold text-gray-900 group-hover:text-blue-600">{tool.name}</h3>
+                                        <p className="text-sm text-gray-600 mt-1">{tool.description}</p>
+                                    </Card>
+                                </Link>
+                            ))}
+                        </div>
+                    </div>
+                    <div>
+                        <h2 className="text-2xl font-bold text-gray-800 mb-6">Organization & Planning</h2>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                            {organizationTools.map((tool) => (
+                                <Link to={tool.link} key={tool.name} className="block group">
+                                    <Card className="h-full hover:shadow-lg transition-shadow duration-300 p-4">
+                                        <h3 className="font-semibold text-gray-900 group-hover:text-blue-600">{tool.name}</h3>
+                                        <p className="text-sm text-gray-600 mt-1">{tool.description}</p>
+                                    </Card>
+                                </Link>
+                            ))}
+                        </div>
+                    </div>
+                    <div>
+                        <h2 className="text-2xl font-bold text-gray-800 mb-6">Collaboration & Teams</h2>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                            {collaborationTools.map((tool) => (
+                                <Link to={tool.link} key={tool.name} className="block group">
+                                    <Card className="h-full hover:shadow-lg transition-shadow duration-300 p-4">
+                                        <h3 className="font-semibold text-gray-900 group-hover:text-blue-600">{tool.name}</h3>
+                                        <p className="text-sm text-gray-600 mt-1">{tool.description}</p>
+                                    </Card>
+                                </Link>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </main>
+      <Footer />
+    </div>
   );
 };
 
