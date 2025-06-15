@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -111,6 +112,14 @@ import FaviconGenerator from "./pages/tools/web/FaviconGenerator";
 import CssAnimationGenerator from "./pages/tools/web/CssAnimationGenerator";
 import QrCodeGenerator from "./pages/tools/web/QrCodeGenerator";
 import SslCertificateChecker from "./pages/tools/web/SslCertificateChecker";
+import WebsiteSecurityScanner from "./pages/tools/web/WebsiteSecurityScanner";
+import HttpHeaderChecker from "./pages/tools/web/HttpHeaderChecker";
+import WhoisLookup from "./pages/tools/web/WhoisLookup";
+import DnsLookupTool from "./pages/tools/web/DnsLookupTool";
+import IpAddressLookup from "./pages/tools/web/IpAddressLookup";
+import PortScanner from "./pages/tools/web/PortScanner";
+import WebsiteUptimeMonitor from "./pages/tools/web/WebsiteUptimeMonitor";
+import PingTestTool from "./pages/tools/web/PingTestTool";
 
 const queryClient = new QueryClient();
 
@@ -240,6 +249,14 @@ const App = () => (
             <Route path="/tools/web/css-animation-generator" element={<CssAnimationGenerator />} />
             <Route path="/tools/web/qr-code-generator" element={<QrCodeGenerator />} />
             <Route path="/tools/web/ssl-certificate-checker" element={<SslCertificateChecker />} />
+            <Route path="/tools/web/website-security-scanner" element={<WebsiteSecurityScanner />} />
+            <Route path="/tools/web/http-header-checker" element={<HttpHeaderChecker />} />
+            <Route path="/tools/web/whois-lookup" element={<WhoisLookup />} />
+            <Route path="/tools/web/dns-lookup-tool" element={<DnsLookupTool />} />
+            <Route path="/tools/web/ip-address-lookup" element={<IpAddressLookup />} />
+            <Route path="/tools/web/port-scanner" element={<PortScanner />} />
+            <Route path="/tools/web/website-uptime-monitor" element={<WebsiteUptimeMonitor />} />
+            <Route path="/tools/web/ping-test-tool" element={<PingTestTool />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
