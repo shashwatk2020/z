@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -10,6 +9,7 @@ import { Badge } from '@/components/ui/badge';
 import { Copy, RefreshCw, Sparkles, Target, TrendingUp } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import Layout from '@/components/layout/Layout';
+import { supabase } from '@/integrations/supabase/client';
 
 const ArticleTitleGenerator = () => {
   const [topic, setTopic] = useState('');
@@ -33,35 +33,39 @@ const ArticleTitleGenerator = () => {
 
     setIsLoading(true);
     try {
-      const response = await fetch('/supabase/functions/v1/generate-article-titles', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
+      console.log('Calling generate-article-titles function...');
+      
+      const { data, error } = await supabase.functions.invoke('generate-article-titles', {
+        body: {
           topic: topic.trim(),
           keywords: keywords.trim(),
           audience: audience.trim(),
           tone,
           titleType,
-        }),
+        },
       });
 
-      if (!response.ok) {
-        throw new Error('Failed to generate titles');
+      if (error) {
+        console.error('Supabase function error:', error);
+        throw new Error(error.message || 'Failed to generate titles');
       }
 
-      const data = await response.json();
-      setGeneratedTitles(data.titles);
-      toast({
-        title: "Success",
-        description: `Generated ${data.titles.length} article titles!`,
-      });
+      console.log('Function response:', data);
+
+      if (data && data.titles && Array.isArray(data.titles)) {
+        setGeneratedTitles(data.titles);
+        toast({
+          title: "Success",
+          description: `Generated ${data.titles.length} article titles!`,
+        });
+      } else {
+        throw new Error('Invalid response format from API');
+      }
     } catch (error) {
       console.error('Error generating titles:', error);
       toast({
         title: "Error",
-        description: "Failed to generate titles. Please try again.",
+        description: error instanceof Error ? error.message : "Failed to generate titles. Please try again.",
         variant: "destructive",
       });
     } finally {
