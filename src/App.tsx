@@ -1,7 +1,8 @@
+
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
-import Home from './pages/Home';
+import Index from './pages/Index';
 import About from './pages/About';
 import Contact from './pages/Contact';
 import NotFound from './pages/NotFound';
@@ -9,6 +10,9 @@ import AgeCalculator from './pages/tools/calculators/AgeCalculator';
 import BMICalculator from './pages/tools/calculators/BMICalculator';
 import CalorieCalculator from './pages/tools/calculators/CalorieCalculator';
 import GPACalculator from './pages/tools/calculators/GPACalculator';
+import FuelCostCalculator from './pages/tools/calculators/FuelCostCalculator';
+import PaintCalculator from './pages/tools/calculators/PaintCalculator';
+import PregnancyCalculator from './pages/tools/calculators/PregnancyCalculator';
 import Productivity from './pages/tools/Productivity';
 import TodoList from './pages/tools/productivity/TodoList';
 import KanbanBoard from './pages/tools/productivity/KanbanBoard';
@@ -41,7 +45,7 @@ function App() {
       <div className="App">
         <Toaster />
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Index />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
 
@@ -50,6 +54,9 @@ function App() {
           <Route path="/tools/calculators/bmi-calculator" element={<BMICalculator />} />
           <Route path="/tools/calculators/calorie-calculator" element={<CalorieCalculator />} />
           <Route path="/tools/calculators/gpa-calculator" element={<GPACalculator />} />
+          <Route path="/tools/calculators/fuel-cost-calculator" element={<FuelCostCalculator />} />
+          <Route path="/tools/calculators/paint-calculator" element={<PaintCalculator />} />
+          <Route path="/tools/calculators/pregnancy-calculator" element={<PregnancyCalculator />} />
           
           {/* Productivity Tools */}
           <Route path="/tools/productivity" element={<Productivity />} />
