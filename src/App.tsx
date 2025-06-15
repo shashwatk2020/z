@@ -94,6 +94,11 @@ import RegexTester from "./pages/tools/web/RegexTester";
 import SeoMetaTagGenerator from "./pages/tools/web/SeoMetaTagGenerator";
 import OpenGraphGenerator from "./pages/tools/web/OpenGraphGenerator";
 import TwitterCardGenerator from "./pages/tools/web/TwitterCardGenerator";
+import RobotsTxtGenerator from "./pages/tools/web/RobotsTxtGenerator";
+import SitemapGenerator from "./pages/tools/web/SitemapGenerator";
+import SchemaMarkupGenerator from "./pages/tools/web/SchemaMarkupGenerator";
+import KeywordDensityAnalyzer from "./pages/tools/web/KeywordDensityAnalyzer";
+import SerpPreviewTool from "./pages/tools/web/SerpPreviewTool";
 
 const queryClient = new QueryClient();
 
@@ -205,6 +210,11 @@ const App = () => (
             <Route path="/tools/web/seo-meta-tag-generator" element={<SeoMetaTagGenerator />} />
             <Route path="/tools/web/open-graph-generator" element={<OpenGraphGenerator />} />
             <Route path="/tools/web/twitter-card-generator" element={<TwitterCardGenerator />} />
+            <Route path="/tools/web/robots-txt-generator" element={<RobotsTxtGenerator />} />
+            <Route path="/tools/web/sitemap-generator" element={<SitemapGenerator />} />
+            <Route path="/tools/web/schema-markup-generator" element={<SchemaMarkupGenerator />} />
+            <Route path="/tools/web/keyword-density-analyzer" element={<KeywordDensityAnalyzer />} />
+            <Route path="/tools/web/serp-preview-tool" element={<SerpPreviewTool />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
