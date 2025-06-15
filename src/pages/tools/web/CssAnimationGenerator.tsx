@@ -1,4 +1,3 @@
-
 import React, { useState, useCallback } from 'react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
@@ -289,7 +288,7 @@ const CssAnimationGenerator = () => {
         </div>
       </main>
       
-      <style jsx>{`
+      <style>{`
         @keyframes fadeIn {
           from { opacity: 0; }
           to { opacity: 1; }
