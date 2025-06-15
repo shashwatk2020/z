@@ -1,4 +1,3 @@
-
 import React, { useState, useRef } from 'react';
 import Layout from '@/components/layout/Layout';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
@@ -6,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Slider } from '@/components/ui/slider';
 import { Switch } from '@/components/ui/switch';
-import { Upload, Download, Image as ImageIcon, X, Compress } from 'lucide-react';
+import { Upload, Download, Image as ImageIcon, X, Minimize2 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 const ImageCompressor = () => {
@@ -270,7 +269,7 @@ const ImageCompressor = () => {
                     disabled={isProcessing}
                     className="w-full"
                   >
-                    <Compress className="h-4 w-4 mr-2" />
+                    <Minimize2 className="h-4 w-4 mr-2" />
                     {isProcessing ? 'Compressing...' : `Compress ${selectedFiles.length} Images`}
                   </Button>
                 </div>
