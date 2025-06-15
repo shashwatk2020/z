@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -67,6 +66,17 @@ import ImageMetadataRemover from './pages/tools/image/ImageMetadataRemover';
 import BatchCompressor from './pages/tools/image/BatchCompressor';
 import ProgressiveJpegCreator from './pages/tools/image/ProgressiveJpegCreator';
 
+// Image Tools - Generators & Analyzers
+import ImageSizeAnalyzer from './pages/tools/image/ImageSizeAnalyzer';
+import PlaceholderImageGenerator from './pages/tools/image/PlaceholderImageGenerator';
+import QrCodeToImage from './pages/tools/image/QrCodeToImage';
+import GradientImageGenerator from './pages/tools/image/GradientImageGenerator';
+import ColorPaletteExtractor from './pages/tools/image/ColorPaletteExtractor';
+import NoisePatternGenerator from './pages/tools/image/NoisePatternGenerator';
+import AvatarGenerator from './pages/tools/image/AvatarGenerator';
+import FaviconGenerator from './pages/tools/image/FaviconGenerator';
+import SocialMediaImageGenerator from './pages/tools/image/SocialMediaImageGenerator';
+
 // Web Tools
 import Base64EncoderDecoder from './pages/tools/web/Base64EncoderDecoder';
 import BorderRadiusGenerator from './pages/tools/web/BorderRadiusGenerator';
@@ -78,7 +88,6 @@ import CssGridGenerator from './pages/tools/web/CssGridGenerator';
 import CssMinifier from './pages/tools/web/CssMinifier';
 import CssValidator from './pages/tools/web/CssValidator';
 import DnsLookupTool from './pages/tools/web/DnsLookupTool';
-import FaviconGenerator from './pages/tools/web/FaviconGenerator';
 import FlexboxGenerator from './pages/tools/web/FlexboxGenerator';
 import FontPairingTool from './pages/tools/web/FontPairingTool';
 import GradientGenerator from './pages/tools/web/GradientGenerator';
@@ -222,6 +231,15 @@ const App = () => {
               <Route path="/tools/image/image-metadata-remover" element={<ImageMetadataRemover />} />
               <Route path="/tools/image/batch-compressor" element={<BatchCompressor />} />
               <Route path="/tools/image/progressive-jpeg-creator" element={<ProgressiveJpegCreator />} />
+              <Route path="/tools/image/image-size-analyzer" element={<ImageSizeAnalyzer />} />
+              <Route path="/tools/image/placeholder-image-generator" element={<PlaceholderImageGenerator />} />
+              <Route path="/tools/image/qr-code-to-image" element={<QrCodeToImage />} />
+              <Route path="/tools/image/gradient-image-generator" element={<GradientImageGenerator />} />
+              <Route path="/tools/image/color-palette-extractor" element={<ColorPaletteExtractor />} />
+              <Route path="/tools/image/noise-pattern-generator" element={<NoisePatternGenerator />} />
+              <Route path="/tools/image/avatar-generator" element={<AvatarGenerator />} />
+              <Route path="/tools/image/favicon-generator" element={<FaviconGenerator />} />
+              <Route path="/tools/image/social-media-image-generator" element={<SocialMediaImageGenerator />} />
 
               {/* Web Tools */}
               <Route path="/tools/web/base64-encoder-decoder" element={<Base64EncoderDecoder />} />
