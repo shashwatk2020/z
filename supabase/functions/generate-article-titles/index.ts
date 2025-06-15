@@ -66,7 +66,7 @@ Title Types and Formulas:
     
     userPrompt += `\n\nReturn exactly 8 titles as a JSON array with no additional text or formatting.`;
 
-    // Using Open Router's free API with a free model
+    // Using Open Router's free API with DeepSeek model
     const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
       method: 'POST',
       headers: {
@@ -76,7 +76,7 @@ Title Types and Formulas:
         'X-Title': 'Article Title Generator'
       },
       body: JSON.stringify({
-        model: 'google/gemma-2-9b-it:free',
+        model: 'deepseek/deepseek-chat-v3-0324:free',
         messages: [
           { role: 'system', content: systemPrompt },
           { role: 'user', content: userPrompt }
