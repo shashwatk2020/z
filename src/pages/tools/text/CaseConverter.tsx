@@ -1,4 +1,3 @@
-
 import React, { useState, useCallback } from 'react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
@@ -237,11 +236,11 @@ const CaseConverter = () => {
                       key={conversion.id}
                       onClick={() => handleConversion(conversion.id)}
                       variant={activeCase === conversion.id ? "default" : "outline"}
-                      className="h-auto p-3 flex flex-col items-start text-left"
+                      className="h-auto min-h-[80px] p-3 flex flex-col items-start justify-start text-left whitespace-normal"
                       title={conversion.description}
                     >
-                      <span className="font-medium text-sm">{conversion.name}</span>
-                      <span className="text-xs text-gray-500 mt-1">{conversion.description}</span>
+                      <span className="font-medium text-sm mb-1 leading-tight">{conversion.name}</span>
+                      <span className="text-xs text-gray-500 leading-relaxed break-words">{conversion.description}</span>
                     </Button>
                   ))}
                 </div>
