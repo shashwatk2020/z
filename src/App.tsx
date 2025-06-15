@@ -267,7 +267,7 @@ const App = () => (
             <Route path="/tools/calculators/volume-converter" element={<VolumeConverter />} />
             <Route path="/tools/calculators/area-calculator" element={<AreaCalculator />} />
             <Route path="/tools/calculators/speed-converter" element={<SpeedConverter />} />
-            <Route path="/tools/calculators/timezone-converter" element={<TimeZoneConverter />} />
+            <Route path="/tools/calculators/time-zone-converter" element={<TimeZoneConverter />} />
             <Route path="/tools/calculators/date-calculator" element={<DateCalculator />} />
 
             {/* Text tools */}
