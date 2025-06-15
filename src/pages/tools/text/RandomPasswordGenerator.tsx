@@ -247,7 +247,7 @@ const RandomPasswordGenerator = () => {
                         <Checkbox
                           id="uppercase"
                           checked={includeUppercase}
-                          onCheckedChange={setIncludeUppercase}
+                          onCheckedChange={(checked) => setIncludeUppercase(checked === true)}
                         />
                         <Label htmlFor="uppercase">Uppercase letters (A-Z)</Label>
                       </div>
@@ -255,7 +255,7 @@ const RandomPasswordGenerator = () => {
                         <Checkbox
                           id="lowercase"
                           checked={includeLowercase}
-                          onCheckedChange={setIncludeLowercase}
+                          onCheckedChange={(checked) => setIncludeLowercase(checked === true)}
                         />
                         <Label htmlFor="lowercase">Lowercase letters (a-z)</Label>
                       </div>
@@ -263,7 +263,7 @@ const RandomPasswordGenerator = () => {
                         <Checkbox
                           id="numbers"
                           checked={includeNumbers}
-                          onCheckedChange={setIncludeNumbers}
+                          onCheckedChange={(checked) => setIncludeNumbers(checked === true)}
                         />
                         <Label htmlFor="numbers">Numbers (0-9)</Label>
                       </div>
@@ -271,7 +271,7 @@ const RandomPasswordGenerator = () => {
                         <Checkbox
                           id="symbols"
                           checked={includeSymbols}
-                          onCheckedChange={setIncludeSymbols}
+                          onCheckedChange={(checked) => setIncludeSymbols(checked === true)}
                         />
                         <Label htmlFor="symbols">Symbols (!@#$%^&*)</Label>
                       </div>
@@ -285,7 +285,7 @@ const RandomPasswordGenerator = () => {
                         <Checkbox
                           id="excludeSimilar"
                           checked={excludeSimilar}
-                          onCheckedChange={setExcludeSimilar}
+                          onCheckedChange={(checked) => setExcludeSimilar(checked === true)}
                         />
                         <Label htmlFor="excludeSimilar">Exclude similar characters (i, l, 1, L, o, 0, O)</Label>
                       </div>
@@ -293,7 +293,7 @@ const RandomPasswordGenerator = () => {
                         <Checkbox
                           id="excludeAmbiguous"
                           checked={excludeAmbiguous}
-                          onCheckedChange={setExcludeAmbiguous}
+                          onCheckedChange={(checked) => setExcludeAmbiguous(checked === true)}
                         />
                         <Label htmlFor="excludeAmbiguous">Exclude ambiguous characters ( {`{ } [ ] ( ) / \\ ' " \` ~`} )</Label>
                       </div>
