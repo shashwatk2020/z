@@ -74,7 +74,7 @@ import GradientImageGenerator from './pages/tools/image/GradientImageGenerator';
 import ColorPaletteExtractor from './pages/tools/image/ColorPaletteExtractor';
 import NoisePatternGenerator from './pages/tools/image/NoisePatternGenerator';
 import AvatarGenerator from './pages/tools/image/AvatarGenerator';
-import FaviconGenerator from './pages/tools/image/FaviconGenerator';
+import FaviconGenerator from './pages/tools/web/FaviconGenerator';
 import SocialMediaImageGenerator from './pages/tools/image/SocialMediaImageGenerator';
 
 // Web Tools
@@ -167,6 +167,17 @@ import WordCounter from './pages/tools/text/WordCounter';
 import YodaTranslator from './pages/tools/text/YodaTranslator';
 import ZalgoGlitchText from './pages/tools/text/ZalgoGlitchText';
 
+// Calculator Tools
+import BasicCalculator from './pages/tools/calculators/BasicCalculator';
+import ScientificCalculator from './pages/tools/calculators/ScientificCalculator';
+import FractionCalculator from './pages/tools/calculators/FractionCalculator';
+import PercentageCalculator from './pages/tools/calculators/PercentageCalculator';
+import SquareRootCalculator from './pages/tools/calculators/SquareRootCalculator';
+import AlgebraCalculator from './pages/tools/calculators/AlgebraCalculator';
+import BinaryCalculator from './pages/tools/calculators/BinaryCalculator';
+import MatrixCalculator from './pages/tools/calculators/MatrixCalculator';
+import LoanCalculator from './pages/tools/calculators/LoanCalculator';
+
 const queryClient = new QueryClient();
 
 const App = () => {
@@ -202,6 +213,17 @@ const App = () => {
               <Route path="/tools/security" element={<Security />} />
               <Route path="/tools/productivity" element={<Productivity />} />
               <Route path="/tools/archive" element={<ArchiveTools />} />
+
+              {/* Calculator Tools */}
+              <Route path="/tools/calculators/basic-calculator" element={<BasicCalculator />} />
+              <Route path="/tools/calculators/scientific-calculator" element={<ScientificCalculator />} />
+              <Route path="/tools/calculators/fraction-calculator" element={<FractionCalculator />} />
+              <Route path="/tools/calculators/percentage-calculator" element={<PercentageCalculator />} />
+              <Route path="/tools/calculators/square-root-calculator" element={<SquareRootCalculator />} />
+              <Route path="/tools/calculators/algebra-calculator" element={<AlgebraCalculator />} />
+              <Route path="/tools/calculators/binary-calculator" element={<BinaryCalculator />} />
+              <Route path="/tools/calculators/matrix-calculator" element={<MatrixCalculator />} />
+              <Route path="/tools/calculators/loan-calculator" element={<LoanCalculator />} />
 
               {/* Image Tools */}
               <Route path="/tools/image/jpeg-to-png-converter" element={<JpegToPngConverter />} />
@@ -252,7 +274,6 @@ const App = () => {
               <Route path="/tools/web/css-minifier" element={<CssMinifier />} />
               <Route path="/tools/web/css-validator" element={<CssValidator />} />
               <Route path="/tools/web/dns-lookup-tool" element={<DnsLookupTool />} />
-              <Route path="/tools/web/favicon-generator" element={<FaviconGenerator />} />
               <Route path="/tools/web/flexbox-generator" element={<FlexboxGenerator />} />
               <Route path="/tools/web/font-pairing-tool" element={<FontPairingTool />} />
               <Route path="/tools/web/gradient-generator" element={<GradientGenerator />} />
