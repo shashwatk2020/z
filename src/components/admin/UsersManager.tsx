@@ -60,6 +60,7 @@ const UsersManager = () => {
 
       setUsers(formattedUsers);
     } catch (error) {
+      console.error('Error fetching users:', error);
       toast({
         title: "Error",
         description: "Failed to fetch users",
@@ -71,6 +72,19 @@ const UsersManager = () => {
   };
 
   const updateUserSubscription = async (userId: string, tier: string) => {
+    console.log('Updating user subscription:', { userId, tier });
+    
+    // Validate tier value before proceeding
+    if (!tier || tier.trim() === '') {
+      console.error('Invalid tier value:', tier);
+      toast({
+        title: "Error",
+        description: "Invalid subscription tier",
+        variant: "destructive"
+      });
+      return;
+    }
+
     try {
       const { error } = await supabase
         .from('subscribers')
@@ -84,6 +98,7 @@ const UsersManager = () => {
       toast({ title: "Success", description: "User subscription updated" });
       fetchUsers();
     } catch (error) {
+      console.error('Error updating subscription:', error);
       toast({
         title: "Error",
         description: "Failed to update user subscription",
@@ -136,51 +151,64 @@ const UsersManager = () => {
       </div>
 
       <div className="grid gap-4">
-        {filteredUsers.map((user) => (
-          <Card key={user.id}>
-            <CardContent className="p-4">
-              <div className="flex justify-between items-start">
-                <div className="flex-1">
-                  <div className="flex items-center gap-2 mb-2">
-                    <h3 className="font-semibold text-lg">
-                      {user.first_name} {user.last_name}
-                    </h3>
-                    {user.subscribed && (
-                      <CheckCircle className="h-4 w-4 text-green-500" />
-                    )}
+        {filteredUsers.map((user) => {
+          // Add validation for subscription tier to prevent empty values
+          const userTier = user.subscription_tier || 'free';
+          console.log('Rendering user with tier:', userTier, 'for user:', user.email);
+          
+          return (
+            <Card key={user.id}>
+              <CardContent className="p-4">
+                <div className="flex justify-between items-start">
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2 mb-2">
+                      <h3 className="font-semibold text-lg">
+                        {user.first_name} {user.last_name}
+                      </h3>
+                      {user.subscribed && (
+                        <CheckCircle className="h-4 w-4 text-green-500" />
+                      )}
+                    </div>
+                    <p className="text-gray-600 text-sm mb-2">{user.email}</p>
+                    <div className="flex flex-wrap gap-2 text-xs">
+                      <span className={`px-2 py-1 rounded ${
+                        userTier === 'premium' 
+                          ? 'bg-purple-100 text-purple-800' 
+                          : 'bg-gray-100 text-gray-800'
+                      }`}>
+                        {userTier}
+                      </span>
+                      <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded">
+                        Joined {new Date(user.created_at).toLocaleDateString()}
+                      </span>
+                    </div>
                   </div>
-                  <p className="text-gray-600 text-sm mb-2">{user.email}</p>
-                  <div className="flex flex-wrap gap-2 text-xs">
-                    <span className={`px-2 py-1 rounded ${
-                      user.subscription_tier === 'premium' 
-                        ? 'bg-purple-100 text-purple-800' 
-                        : 'bg-gray-100 text-gray-800'
-                    }`}>
-                      {user.subscription_tier}
-                    </span>
-                    <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded">
-                      Joined {new Date(user.created_at).toLocaleDateString()}
-                    </span>
+                  <div className="flex flex-col gap-2">
+                    <Select 
+                      value={userTier} 
+                      onValueChange={(value) => {
+                        console.log('Select value changed:', value, 'for user:', user.email);
+                        if (value && value.trim() !== '') {
+                          updateUserSubscription(user.id, value);
+                        } else {
+                          console.error('Attempted to set empty or invalid value:', value);
+                        }
+                      }}
+                    >
+                      <SelectTrigger className="w-32">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="free">Free</SelectItem>
+                        <SelectItem value="premium">Premium</SelectItem>
+                      </SelectContent>
+                    </Select>
                   </div>
                 </div>
-                <div className="flex flex-col gap-2">
-                  <Select 
-                    value={user.subscription_tier} 
-                    onValueChange={(value) => updateUserSubscription(user.id, value)}
-                  >
-                    <SelectTrigger className="w-32">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="free">Free</SelectItem>
-                      <SelectItem value="premium">Premium</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        ))}
+              </CardContent>
+            </Card>
+          );
+        })}
       </div>
 
       {filteredUsers.length === 0 && (
