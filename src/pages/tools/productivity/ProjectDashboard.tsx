@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import Layout from '@/components/layout/Layout';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
@@ -32,7 +33,11 @@ const ProjectDashboard = () => {
   useEffect(() => {
     const savedProjects = localStorage.getItem('projectDashboard');
     if (savedProjects) {
-      setProjects(JSON.parse(savedProjects));
+      try {
+        setProjects(JSON.parse(savedProjects));
+      } catch (error) {
+        console.log('Error loading projects:', error);
+      }
     }
   }, []);
 
@@ -79,10 +84,6 @@ const ProjectDashboard = () => {
       title: "Success",
       description: "Project deleted successfully"
     });
-  };
-
-  const getProjectHealth = (project: Project) => {
-    return project.health;
   };
 
   return (
@@ -151,7 +152,7 @@ const ProjectDashboard = () => {
                     </div>
                   ) : (
                     projects.map((project) => {
-                      const health = getProjectHealth(project);
+                      const health = project.health;
                       const HealthIcon = health === 'critical' ? AlertTriangle : 
                                         health === 'warning' ? AlertTriangle : Target;
                       const healthColor = health === 'critical' ? 'text-red-500' : 

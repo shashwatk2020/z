@@ -38,7 +38,11 @@ const GoalTracker = () => {
   useEffect(() => {
     const savedGoals = localStorage.getItem('goalTracker');
     if (savedGoals) {
-      setGoals(JSON.parse(savedGoals));
+      try {
+        setGoals(JSON.parse(savedGoals));
+      } catch (error) {
+        console.log('Error loading goals:', error);
+      }
     }
   }, []);
 
