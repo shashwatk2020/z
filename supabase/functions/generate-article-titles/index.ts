@@ -2,8 +2,6 @@
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 
-const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
-
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
@@ -68,14 +66,17 @@ Title Types and Formulas:
     
     userPrompt += `\n\nReturn exactly 8 titles as a JSON array with no additional text or formatting.`;
 
-    const response = await fetch('https://api.openai.com/v1/chat/completions', {
+    // Using Open Router's free API with a free model
+    const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${openAIApiKey}`,
+        'Authorization': `Bearer sk-or-v1-free`,
         'Content-Type': 'application/json',
+        'HTTP-Referer': 'https://lovableproject.com',
+        'X-Title': 'Article Title Generator'
       },
       body: JSON.stringify({
-        model: 'gpt-4o-mini',
+        model: 'google/gemma-2-9b-it:free',
         messages: [
           { role: 'system', content: systemPrompt },
           { role: 'user', content: userPrompt }
@@ -86,7 +87,8 @@ Title Types and Formulas:
     });
 
     if (!response.ok) {
-      throw new Error(`OpenAI API error: ${response.status}`);
+      console.error('Open Router API error:', response.status, await response.text());
+      throw new Error(`Open Router API error: ${response.status}`);
     }
 
     const data = await response.json();

@@ -33,7 +33,7 @@ const ArticleTitleGenerator = () => {
 
     setIsLoading(true);
     try {
-      const response = await fetch('/api/generate-article-titles', {
+      const response = await fetch('/supabase/functions/v1/generate-article-titles', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
