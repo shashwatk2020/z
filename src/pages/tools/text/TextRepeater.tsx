@@ -1,163 +1,190 @@
 
 import React, { useState } from 'react';
-import Layout from '@/components/layout/Layout';
+import Header from '@/components/layout/Header';
+import Footer from '@/components/layout/Footer';
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { Textarea } from '@/components/ui/textarea';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Copy, RefreshCw } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import { Copy, RotateCcw, Repeat } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 const TextRepeater = () => {
-  const [text, setText] = useState('');
-  const [repetitions, setRepetitions] = useState(3);
-  const [separator, setSeparator] = useState(' ');
-  const [customSeparator, setCustomSeparator] = useState('');
-  const [result, setResult] = useState('');
+  const [inputText, setInputText] = useState('');
+  const [repeatCount, setRepeatCount] = useState(5);
+  const [separator, setSeparator] = useState('\n');
+  const [output, setOutput] = useState('');
   const { toast } = useToast();
 
   const repeatText = () => {
-    if (!text.trim()) {
+    if (!inputText.trim()) {
       toast({
         title: "Error",
-        description: "Please enter some text to repeat",
-        variant: "destructive"
+        description: "Please enter some text to repeat.",
+        variant: "destructive",
       });
       return;
     }
 
-    let actualSeparator = separator;
-    if (separator === 'custom') {
-        actualSeparator = customSeparator;
-    } else if (separator === 'no-separator') {
-        actualSeparator = '';
+    if (repeatCount < 1 || repeatCount > 1000) {
+      toast({
+        title: "Error",
+        description: "Repeat count must be between 1 and 1000.",
+        variant: "destructive",
+      });
+      return;
     }
-    
-    const repeatedText = Array(repetitions).fill(text).join(actualSeparator);
-    setResult(repeatedText);
+
+    const repeated = Array(repeatCount).fill(inputText).join(separator);
+    setOutput(repeated);
   };
 
   const copyToClipboard = () => {
-    navigator.clipboard.writeText(result);
+    navigator.clipboard.writeText(output);
     toast({
       title: "Copied!",
-      description: "Repeated text copied to clipboard",
+      description: "Repeated text copied to clipboard.",
     });
   };
 
-  const getSeparatorDisplay = (value: string) => {
-    switch (value) {
-      case ' ': return 'Space';
-      case '\n': return 'New Line';
-      case ', ': return 'Comma + Space';
-      case 'no-separator': return 'No Separator';
-      case '': return 'No Separator';
-      case 'custom': return 'Custom';
-      default: return value;
-    }
+  const clearAll = () => {
+    setInputText('');
+    setOutput('');
+    setRepeatCount(5);
+    setSeparator('\n');
   };
 
+  const separatorOptions = [
+    { label: 'New Line', value: '\n' },
+    { label: 'Space', value: ' ' },
+    { label: 'Comma', value: ', ' },
+    { label: 'Tab', value: '\t' },
+    { label: 'No Separator', value: '' },
+  ];
+
   return (
-    <Layout>
-      <div className="py-12">
+    <div className="flex flex-col min-h-screen">
+      <Header />
+      <main className="flex-1 bg-gray-50 py-12">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-8">
-            <h1 className="text-4xl font-bold text-gray-900">Text Repeater</h1>
-            <p className="mt-4 text-lg text-gray-600">
-              Duplicate any text multiple times with custom separators
+          <div className="text-center mb-12">
+            <h1 className="text-4xl font-bold text-gray-900 mb-4">
+              Text Repeater Tool
+            </h1>
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+              Repeat any text multiple times with custom separators. Perfect for creating lists, patterns, or filling content.
             </p>
+            <div className="flex flex-wrap justify-center gap-2 mt-4">
+              <Badge variant="secondary">Custom Separators</Badge>
+              <Badge variant="secondary">Bulk Repeat</Badge>
+              <Badge variant="secondary">Copy Function</Badge>
+            </div>
           </div>
 
-          <Card className="mb-8">
-            <CardHeader>
-              <CardTitle>Repeat Text</CardTitle>
-              <CardDescription>
-                Enter your text and specify how many times you want to repeat it
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="space-y-2">
-                <Label htmlFor="text">Text to Repeat</Label>
-                <Textarea
-                  id="text"
-                  placeholder="Enter the text you want to repeat..."
-                  value={text}
-                  onChange={(e) => setText(e.target.value)}
-                  rows={3}
-                />
-              </div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Repeat className="h-5 w-5" />
+                  Input Text
+                </CardTitle>
+                <CardDescription>
+                  Enter the text you want to repeat and configure the settings
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div>
+                  <Label htmlFor="input-text">Text to Repeat</Label>
+                  <Textarea
+                    id="input-text"
+                    placeholder="Enter the text you want to repeat..."
+                    value={inputText}
+                    onChange={(e) => setInputText(e.target.value)}
+                    className="min-h-[100px] mt-2"
+                  />
+                </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="repetitions">Number of Repetitions</Label>
+                <div>
+                  <Label htmlFor="repeat-count">Repeat Count (1-1000)</Label>
                   <Input
-                    id="repetitions"
+                    id="repeat-count"
                     type="number"
                     min="1"
                     max="1000"
-                    value={repetitions}
-                    onChange={(e) => setRepetitions(parseInt(e.target.value) || 1)}
+                    value={repeatCount}
+                    onChange={(e) => setRepeatCount(parseInt(e.target.value) || 1)}
+                    className="mt-2"
                   />
                 </div>
-                <div className="space-y-2">
-                  <Label htmlFor="separator">Separator</Label>
-                  <Select value={separator} onValueChange={setSeparator}>
-                    <SelectTrigger>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value=" ">Space</SelectItem>
-                      <SelectItem value={"\n"}>New Line</SelectItem>
-                      <SelectItem value=", ">Comma + Space</SelectItem>
-                      <SelectItem value="no-separator">No Separator</SelectItem>
-                      <SelectItem value="custom">Custom</SelectItem>
-                    </SelectContent>
-                  </Select>
+
+                <div>
+                  <Label>Separator</Label>
+                  <div className="grid grid-cols-2 gap-2 mt-2">
+                    {separatorOptions.map((option) => (
+                      <Button
+                        key={option.value}
+                        variant={separator === option.value ? "default" : "outline"}
+                        size="sm"
+                        onClick={() => setSeparator(option.value)}
+                      >
+                        {option.label}
+                      </Button>
+                    ))}
+                  </div>
                 </div>
-              </div>
 
-              {separator === 'custom' && (
-                <div className="space-y-2">
-                  <Label htmlFor="customSeparator">Custom Separator</Label>
-                  <Input
-                    id="customSeparator"
-                    placeholder="Enter custom separator..."
-                    value={customSeparator}
-                    onChange={(e) => setCustomSeparator(e.target.value)}
-                  />
+                <div className="flex gap-2">
+                  <Button onClick={repeatText} className="flex-1">
+                    <Repeat className="h-4 w-4 mr-2" />
+                    Repeat Text
+                  </Button>
+                  <Button variant="outline" onClick={clearAll}>
+                    <RotateCcw className="h-4 w-4 mr-2" />
+                    Clear
+                  </Button>
                 </div>
-              )}
+              </CardContent>
+            </Card>
 
-              <Button onClick={repeatText} className="w-full" size="lg" disabled={!text.trim()}>
-                <RefreshCw className="mr-2 h-4 w-4" />
-                Repeat Text
-              </Button>
-
-              {result && (
-                <div className="space-y-4">
-                  <div className="flex justify-between items-center">
-                    <h3 className="text-lg font-semibold">Result:</h3>
-                    <Button onClick={copyToClipboard} variant="outline" size="sm">
-                      <Copy className="mr-2 h-4 w-4" />
+            <Card>
+              <CardHeader>
+                <div className="flex justify-between items-center">
+                  <div>
+                    <CardTitle>Repeated Text Output</CardTitle>
+                    <CardDescription>
+                      Your repeated text will appear here
+                    </CardDescription>
+                  </div>
+                  {output && (
+                    <Button variant="outline" size="sm" onClick={copyToClipboard}>
+                      <Copy className="h-4 w-4 mr-2" />
                       Copy
                     </Button>
-                  </div>
-                  <div className="p-4 bg-gray-50 rounded-lg max-h-96 overflow-y-auto">
-                    <pre className="whitespace-pre-wrap text-sm">{result}</pre>
-                  </div>
-                  <div className="text-sm text-gray-600">
-                    <p>Character count: {result.length}</p>
-                    <p>Separator used: {getSeparatorDisplay(separator === 'custom' ? customSeparator : separator)}</p>
-                  </div>
+                  )}
                 </div>
-              )}
-            </CardContent>
-          </Card>
+              </CardHeader>
+              <CardContent>
+                <Textarea
+                  value={output}
+                  readOnly
+                  placeholder="Repeated text will appear here..."
+                  className="min-h-[300px] text-sm"
+                />
+                {output && (
+                  <div className="mt-4 text-sm text-gray-600">
+                    <p>Characters: {output.length.toLocaleString()}</p>
+                    <p>Lines: {output.split('\n').length.toLocaleString()}</p>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          </div>
         </div>
-      </div>
-    </Layout>
+      </main>
+      <Footer />
+    </div>
   );
 };
 
