@@ -54,6 +54,7 @@ import WhitespaceRemover from "./pages/tools/text/WhitespaceRemover";
 import ArticleTitleGenerator from "./pages/tools/text/ArticleTitleGenerator";
 import AsciiArtGenerator from "./pages/tools/text/AsciiArtGenerator";
 import BigTextGenerator from "./pages/tools/text/BigTextGenerator";
+import BoldTextGenerator from "./pages/tools/text/BoldTextGenerator";
 
 const queryClient = new QueryClient();
 
@@ -125,6 +126,7 @@ const App = () => (
             <Route path="/tools/text/article-title-generator" element={<ArticleTitleGenerator />} />
             <Route path="/tools/text/ascii-art-generator" element={<AsciiArtGenerator />} />
             <Route path="/tools/text/big-text-generator" element={<BigTextGenerator />} />
+            <Route path="/tools/text/bold-text-generator" element={<BoldTextGenerator />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
