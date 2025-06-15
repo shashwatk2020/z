@@ -99,6 +99,8 @@ import SitemapGenerator from "./pages/tools/web/SitemapGenerator";
 import SchemaMarkupGenerator from "./pages/tools/web/SchemaMarkupGenerator";
 import KeywordDensityAnalyzer from "./pages/tools/web/KeywordDensityAnalyzer";
 import SerpPreviewTool from "./pages/tools/web/SerpPreviewTool";
+import BrokenLinkChecker from "./pages/tools/web/BrokenLinkChecker";
+import PageSpeedAnalyzer from "./pages/tools/web/PageSpeedAnalyzer";
 
 const queryClient = new QueryClient();
 
@@ -215,6 +217,8 @@ const App = () => (
             <Route path="/tools/web/schema-markup-generator" element={<SchemaMarkupGenerator />} />
             <Route path="/tools/web/keyword-density-analyzer" element={<KeywordDensityAnalyzer />} />
             <Route path="/tools/web/serp-preview-tool" element={<SerpPreviewTool />} />
+            <Route path="/tools/web/broken-link-checker" element={<BrokenLinkChecker />} />
+            <Route path="/tools/web/page-speed-analyzer" element={<PageSpeedAnalyzer />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
