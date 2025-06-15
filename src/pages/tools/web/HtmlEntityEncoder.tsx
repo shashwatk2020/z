@@ -27,7 +27,7 @@ const HtmlEntityEncoder = () => {
     '&': '&amp;',
     '<': '&lt;',
     '>': '&gt;',
-    '"': '&quot;',
+    '\u0022': '&quot;', // Regular quotation mark
     "'": '&#39;',
     '©': '&copy;',
     '®': '&reg;',
@@ -47,13 +47,13 @@ const HtmlEntityEncoder = () => {
     '‹': '&lsaquo;',
     '›': '&rsaquo;',
     '‚': '&sbquo;',
-    '"': '&ldquo;',
-    '"': '&rdquo;',
-    '\u2018': '&lsquo;',
-    '\u2019': '&rsquo;',
+    '\u201C': '&ldquo;', // Left double quotation mark
+    '\u201D': '&rdquo;', // Right double quotation mark
+    '\u2018': '&lsquo;', // Left single quotation mark
+    '\u2019': '&rsquo;', // Right single quotation mark
     '–': '&ndash;',
     '—': '&mdash;',
-    ' ': '&nbsp;',
+    '\u00A0': '&nbsp;', // Non-breaking space
     '¡': '&iexcl;',
     '¿': '&iquest;',
     'À': '&Agrave;',
