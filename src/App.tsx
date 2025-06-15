@@ -31,6 +31,7 @@ import Security from "./pages/tools/Security";
 import VideoTools from "./pages/tools/VideoTools";
 import AudioTools from "./pages/tools/AudioTools";
 import PDFTools from "./pages/tools/PDFTools";
+// Text Tools
 import CaseConverter from "./pages/tools/text/CaseConverter";
 import SentenceCaseConverter from "./pages/tools/text/SentenceCaseConverter";
 import BinaryTextConverter from "./pages/tools/text/BinaryTextConverter";
@@ -77,6 +78,9 @@ import UpsideDownTextGenerator from "./pages/tools/text/UpsideDownTextGenerator"
 import UsernameGenerator from "./pages/tools/text/UsernameGenerator";
 import YodaTranslator from "./pages/tools/text/YodaTranslator";
 import ZalgoGlitchText from "./pages/tools/text/ZalgoGlitchText";
+// Web Tools
+import HtmlPreviewer from "./pages/tools/web/HtmlPreviewer";
+import HtmlValidator from "./pages/tools/web/HtmlValidator";
 
 const queryClient = new QueryClient();
 
@@ -114,6 +118,7 @@ const App = () => (
                 <Dashboard />
               </ProtectedRoute>
             } />
+            {/* Tool Category Pages */}
             <Route path="/tools/text" element={<TextTools />} />
             <Route path="/tools/web" element={<WebTools />} />
             <Route path="/tools/image" element={<ImageTools />} />
@@ -124,6 +129,7 @@ const App = () => (
             <Route path="/tools/video" element={<VideoTools />} />
             <Route path="/tools/audio" element={<AudioTools />} />
             <Route path="/tools/pdf" element={<PDFTools />} />
+            {/* Text Tools */}
             <Route path="/tools/text/case-converter" element={<CaseConverter />} />
             <Route path="/tools/text/sentence-case-converter" element={<SentenceCaseConverter />} />
             <Route path="/tools/text/binary-text-converter" element={<BinaryTextConverter />} />
@@ -170,6 +176,9 @@ const App = () => (
             <Route path="/tools/text/username-generator" element={<UsernameGenerator />} />
             <Route path="/tools/text/yoda-translator" element={<YodaTranslator />} />
             <Route path="/tools/text/zalgo-glitch-text" element={<ZalgoGlitchText />} />
+            {/* Web Tools */}
+            <Route path="/tools/web/html-previewer" element={<HtmlPreviewer />} />
+            <Route path="/tools/web/html-validator" element={<HtmlValidator />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

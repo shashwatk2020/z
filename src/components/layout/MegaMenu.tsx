@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { allTextTools } from '@/data/textToolsData';
@@ -17,6 +16,7 @@ const MegaMenu: React.FC<MegaMenuProps> = ({ activeCategory, onClose }) => {
     web: {
       title: 'Web Tools',
       tools: [
+        { name: 'HTML Previewer', path: '/tools/web/html-previewer' },
         { name: 'HTML Validator', path: '/tools/web/html-validator' },
         { name: 'CSS Validator', path: '/tools/web/css-validator' },
         { name: 'JavaScript Minifier', path: '/tools/web/javascript-minifier' },
