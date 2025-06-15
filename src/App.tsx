@@ -65,6 +65,13 @@ import AreaCalculator from "./pages/tools/calculators/AreaCalculator";
 import SpeedConverter from "./pages/tools/calculators/SpeedConverter";
 import TimeZoneConverter from "./pages/tools/calculators/TimeZoneConverter";
 import DateCalculator from "./pages/tools/calculators/DateCalculator";
+import AgeCalculator from "./pages/tools/calculators/AgeCalculator";
+import BMICalculator from "./pages/tools/calculators/BMICalculator";
+import CalorieCalculator from "./pages/tools/calculators/CalorieCalculator";
+import GPACalculator from "./pages/tools/calculators/GPACalculator";
+import FuelCostCalculator from "./pages/tools/calculators/FuelCostCalculator";
+import PaintCalculator from "./pages/tools/calculators/PaintCalculator";
+import PregnancyCalculator from "./pages/tools/calculators/PregnancyCalculator";
 
 // Text tools
 import CharacterCounter from "./pages/tools/text/CharacterCounter";
@@ -269,6 +276,13 @@ const App = () => (
             <Route path="/tools/calculators/speed-converter" element={<SpeedConverter />} />
             <Route path="/tools/calculators/time-zone-converter" element={<TimeZoneConverter />} />
             <Route path="/tools/calculators/date-calculator" element={<DateCalculator />} />
+            <Route path="/tools/calculators/age-calculator" element={<AgeCalculator />} />
+            <Route path="/tools/calculators/bmi-calculator" element={<BMICalculator />} />
+            <Route path="/tools/calculators/calorie-calculator" element={<CalorieCalculator />} />
+            <Route path="/tools/calculators/gpa-calculator" element={<GPACalculator />} />
+            <Route path="/tools/calculators/fuel-cost-calculator" element={<FuelCostCalculator />} />
+            <Route path="/tools/calculators/paint-calculator" element={<PaintCalculator />} />
+            <Route path="/tools/calculators/pregnancy-calculator" element={<PregnancyCalculator />} />
 
             {/* Text tools */}
             <Route path="/tools/text/character-counter" element={<CharacterCounter />} />
