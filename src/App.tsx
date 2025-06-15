@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -81,6 +80,10 @@ import ZalgoGlitchText from "./pages/tools/text/ZalgoGlitchText";
 // Web Tools
 import HtmlPreviewer from "./pages/tools/web/HtmlPreviewer";
 import HtmlValidator from "./pages/tools/web/HtmlValidator";
+import CssValidator from "./pages/tools/web/CssValidator";
+import JavaScriptMinifier from "./pages/tools/web/JavaScriptMinifier";
+import CssMinifier from "./pages/tools/web/CssMinifier";
+import HtmlMinifier from "./pages/tools/web/HtmlMinifier";
 
 const queryClient = new QueryClient();
 
@@ -179,6 +182,10 @@ const App = () => (
             {/* Web Tools */}
             <Route path="/tools/web/html-previewer" element={<HtmlPreviewer />} />
             <Route path="/tools/web/html-validator" element={<HtmlValidator />} />
+            <Route path="/tools/web/css-validator" element={<CssValidator />} />
+            <Route path="/tools/web/javascript-minifier" element={<JavaScriptMinifier />} />
+            <Route path="/tools/web/css-minifier" element={<CssMinifier />} />
+            <Route path="/tools/web/html-minifier" element={<HtmlMinifier />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
