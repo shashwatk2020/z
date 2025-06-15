@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -101,6 +100,11 @@ import KeywordDensityAnalyzer from "./pages/tools/web/KeywordDensityAnalyzer";
 import SerpPreviewTool from "./pages/tools/web/SerpPreviewTool";
 import BrokenLinkChecker from "./pages/tools/web/BrokenLinkChecker";
 import PageSpeedAnalyzer from "./pages/tools/web/PageSpeedAnalyzer";
+import ColorPaletteGenerator from "./pages/tools/web/ColorPaletteGenerator";
+import GradientGenerator from "./pages/tools/web/GradientGenerator";
+import BoxShadowGenerator from "./pages/tools/web/BoxShadowGenerator";
+import BorderRadiusGenerator from "./pages/tools/web/BorderRadiusGenerator";
+import CssGridGenerator from "./pages/tools/web/CssGridGenerator";
 
 const queryClient = new QueryClient();
 
@@ -219,6 +223,11 @@ const App = () => (
             <Route path="/tools/web/serp-preview-tool" element={<SerpPreviewTool />} />
             <Route path="/tools/web/broken-link-checker" element={<BrokenLinkChecker />} />
             <Route path="/tools/web/page-speed-analyzer" element={<PageSpeedAnalyzer />} />
+            <Route path="/tools/web/color-palette-generator" element={<ColorPaletteGenerator />} />
+            <Route path="/tools/web/gradient-generator" element={<GradientGenerator />} />
+            <Route path="/tools/web/box-shadow-generator" element={<BoxShadowGenerator />} />
+            <Route path="/tools/web/border-radius-generator" element={<BorderRadiusGenerator />} />
+            <Route path="/tools/web/css-grid-generator" element={<CssGridGenerator />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
