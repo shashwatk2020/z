@@ -23,12 +23,12 @@ const GPACalculator = () => {
   ]);
   const [currentGPA, setCurrentGPA] = useState(0);
   const [currentCredits, setCurrentCredits] = useState(0);
-  const [scale, setScale] = useState('4.0');
+  const [scale, setScale] = useState<'4.0' | '5.0'>('4.0');
   const [result, setResult] = useState<any>(null);
   const [history, setHistory] = useState<string[]>([]);
   const { toast } = useToast();
 
-  const gradePoints = {
+  const gradePoints: Record<'4.0' | '5.0', Record<string, number>> = {
     '4.0': {
       'A+': 4.0, 'A': 4.0, 'A-': 3.7,
       'B+': 3.3, 'B': 3.0, 'B-': 2.7,
@@ -79,13 +79,13 @@ const GPACalculator = () => {
       return;
     }
 
-    const gradeScale = gradePoints[scale as keyof typeof gradePoints];
+    const gradeScale = gradePoints[scale];
     let totalPoints = 0;
     let totalCredits = 0;
 
     courses.forEach(course => {
       if (course.grade && course.credits > 0) {
-        const points = gradeScale[course.grade as keyof typeof gradeScale] || 0;
+        const points = gradeScale[course.grade] || 0;
         totalPoints += points * course.credits;
         totalCredits += course.credits;
       }
@@ -190,7 +190,7 @@ const GPACalculator = () => {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div>
                     <Label>GPA Scale</Label>
-                    <Select value={scale} onValueChange={setScale}>
+                    <Select value={scale} onValueChange={(value: '4.0' | '5.0') => setScale(value)}>
                       <SelectTrigger>
                         <SelectValue />
                       </SelectTrigger>
@@ -251,7 +251,7 @@ const GPACalculator = () => {
                               <SelectValue />
                             </SelectTrigger>
                             <SelectContent>
-                              {Object.keys(gradePoints[scale as keyof typeof gradePoints]).map(grade => (
+                              {Object.keys(gradePoints[scale]).map(grade => (
                                 <SelectItem key={grade} value={grade}>{grade}</SelectItem>
                               ))}
                             </SelectContent>
@@ -271,7 +271,7 @@ const GPACalculator = () => {
                         <div>
                           <Label className="text-sm">Points</Label>
                           <div className="h-10 flex items-center px-3 bg-gray-50 rounded text-sm">
-                            {((gradePoints[scale as keyof typeof gradePoints][course.grade as keyof typeof gradePoints[typeof scale]] || 0) * course.credits).toFixed(2)}
+                            {((gradePoints[scale][course.grade] || 0) * course.credits).toFixed(2)}
                           </div>
                         </div>
                         <div className="flex items-end">
@@ -348,7 +348,7 @@ const GPACalculator = () => {
                         <div className="grid grid-cols-3 md:grid-cols-6 gap-4">
                           {Object.entries(result.gradeDistribution).map(([grade, count]) => (
                             <div key={grade} className="bg-gray-50 p-4 rounded-lg text-center">
-                              <div className="text-2xl font-bold text-gray-700">{count}</div>
+                              <div className="text-2xl font-bold text-gray-700">{count as number}</div>
                               <div className="text-sm text-gray-600">Grade {grade}</div>
                             </div>
                           ))}
@@ -357,7 +357,7 @@ const GPACalculator = () => {
 
                       <TabsContent value="scale">
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                          {Object.entries(gradePoints[scale as keyof typeof gradePoints]).map(([grade, points]) => (
+                          {Object.entries(gradePoints[scale]).map(([grade, points]) => (
                             <div key={grade} className="bg-gray-50 p-3 rounded-lg text-center">
                               <div className="font-bold">{grade}</div>
                               <div className="text-sm text-gray-600">{points} points</div>

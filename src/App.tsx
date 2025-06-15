@@ -203,52 +203,61 @@ import HttpHeaderChecker from "./pages/tools/web/HttpHeaderChecker";
 
 const queryClient = new QueryClient();
 
+import { AdminAuthProvider } from "@/contexts/AdminAuthContext";
+import AdminLogin from "./pages/AdminLogin";
+import AdminPanel from "./pages/AdminPanel";
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <AuthProvider>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <Routes>
-            {/* Main pages */}
-            <Route path="/" element={<Index />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/pricing" element={<Pricing />} />
-            <Route path="/blog" element={<Blog />} />
-            <Route path="/help" element={<Help />} />
-            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-            <Route path="/terms-of-service" element={<TermsOfService />} />
-            <Route path="/feature-request" element={<FeatureRequest />} />
-            <Route path="/tool-request" element={<ToolRequest />} />
+      <AdminAuthProvider>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <Routes>
+              {/* Main pages */}
+              <Route path="/" element={<Index />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/pricing" element={<Pricing />} />
+              <Route path="/blog" element={<Blog />} />
+              <Route path="/help" element={<Help />} />
+              <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+              <Route path="/terms-of-service" element={<TermsOfService />} />
+              <Route path="/feature-request" element={<FeatureRequest />} />
+              <Route path="/tool-request" element={<ToolRequest />} />
 
-            {/* Auth pages */}
-            <Route path="/auth" element={<Auth />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route
-              path="/dashboard"
-              element={
-                <ProtectedRoute>
-                  <Dashboard />
-                </ProtectedRoute>
-              }
-            />
+              {/* Auth pages */}
+              <Route path="/auth" element={<Auth />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route
+                path="/dashboard"
+                element={
+                  <ProtectedRoute>
+                    <Dashboard />
+                  </ProtectedRoute>
+                }
+              />
 
-            {/* Tool category pages */}
-            <Route path="/tools/text" element={<TextTools />} />
-            <Route path="/tools/image" element={<ImageTools />} />
-            <Route path="/tools/pdf" element={<PDFTools />} />
-            <Route path="/tools/video" element={<VideoTools />} />
-            <Route path="/tools/audio" element={<AudioTools />} />
-            <Route path="/tools/web" element={<WebTools />} />
-            <Route path="/tools/security" element={<Security />} />
-            <Route path="/tools/productivity" element={<Productivity />} />
-            <Route path="/tools/archive" element={<ArchiveTools />} />
-            <Route path="/tools/calculators" element={<Calculators />} />
+              {/* Admin pages */}
+              <Route path="/admin-login" element={<AdminLogin />} />
+              <Route path="/admin-panel" element={<AdminPanel />} />
 
-            {/* Calculator tools */}
+              {/* Tool category pages */}
+              <Route path="/tools/text" element={<TextTools />} />
+              <Route path="/tools/image" element={<ImageTools />} />
+              <Route path="/tools/pdf" element={<PDFTools />} />
+              <Route path="/tools/video" element={<VideoTools />} />
+              <Route path="/tools/audio" element={<AudioTools />} />
+              <Route path="/tools/web" element={<WebTools />} />
+              <Route path="/tools/security" element={<Security />} />
+              <Route path="/tools/productivity" element={<Productivity />} />
+              <Route path="/tools/archive" element={<ArchiveTools />} />
+              <Route path="/tools/calculators" element={<Calculators />} />
+
+              {/* Calculator tools */}
             <Route path="/tools/calculators/basic-calculator" element={<BasicCalculator />} />
             <Route path="/tools/calculators/scientific-calculator" element={<ScientificCalculator />} />
             <Route path="/tools/calculators/binary-calculator" element={<BinaryCalculator />} />
@@ -284,7 +293,7 @@ const App = () => (
             <Route path="/tools/calculators/paint-calculator" element={<PaintCalculator />} />
             <Route path="/tools/calculators/pregnancy-calculator" element={<PregnancyCalculator />} />
 
-            {/* Text tools */}
+              {/* Text tools */}
             <Route path="/tools/text/character-counter" element={<CharacterCounter />} />
             <Route path="/tools/text/word-counter" element={<WordCounter />} />
             <Route path="/tools/text/case-converter" element={<CaseConverter />} />
@@ -332,7 +341,7 @@ const App = () => (
             <Route path="/tools/text/random-word-generator" element={<RandomWordGenerator />} />
             <Route path="/tools/text/random-letter-generator" element={<RandomLetterGenerator />} />
 
-            {/* Image tools */}
+              {/* Image tools */}
             <Route path="/tools/image/image-compressor" element={<ImageCompressor />} />
             <Route path="/tools/image/image-resizer" element={<ImageResizer />} />
             <Route path="/tools/image/image-cropper" element={<ImageCropper />} />
@@ -370,7 +379,7 @@ const App = () => (
             <Route path="/tools/image/favicon-generator" element={<FaviconGenerator />} />
             <Route path="/tools/image/qr-code-to-image" element={<QrCodeToImage />} />
 
-            {/* Web tools */}
+              {/* Web tools */}
             <Route path="/tools/web/base64-encoder-decoder" element={<Base64EncoderDecoder />} />
             <Route path="/tools/web/url-encoder-decoder" element={<UrlEncoderDecoder />} />
             <Route path="/tools/web/html-entity-encoder" element={<HtmlEntityEncoder />} />
@@ -412,11 +421,12 @@ const App = () => (
             <Route path="/tools/web/port-scanner" element={<PortScanner />} />
             <Route path="/tools/web/http-header-checker" element={<HttpHeaderChecker />} />
 
-            {/* 404 page */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
-      </TooltipProvider>
+              {/* 404 page */}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </BrowserRouter>
+        </TooltipProvider>
+      </AdminAuthProvider>
     </AuthProvider>
   </QueryClientProvider>
 );
