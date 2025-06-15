@@ -136,6 +136,7 @@ const App = () => (
             <Route path="/tools/text/character-counter" element={<CharacterCounter />} />
             <Route path="/tools/text/duplicate-line-remover" element={<DuplicateLineRemover />} />
             <Route path="/tools/text/emoji-text-generator" element={<EmojiTextGenerator />} />
+            <Route path="/tools/text/fancy-text-generator" element={<FancyTextGenerator />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
