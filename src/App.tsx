@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -41,6 +40,26 @@ import Productivity from "./pages/tools/Productivity";
 import ArchiveTools from "./pages/tools/ArchiveTools";
 import Calculators from "./pages/tools/Calculators";
 
+// Productivity tools
+import TodoList from "./pages/tools/productivity/TodoList";
+import KanbanBoard from "./pages/tools/productivity/KanbanBoard";
+import ProjectPlanner from "./pages/tools/productivity/ProjectPlanner";
+import TeamTaskManager from "./pages/tools/productivity/TeamTaskManager";
+import GoalTracker from "./pages/tools/productivity/GoalTracker";
+import HabitTracker from "./pages/tools/productivity/HabitTracker";
+import PriorityMatrix from "./pages/tools/productivity/PriorityMatrix";
+import MilestoneTracker from "./pages/tools/productivity/MilestoneTracker";
+
+// New time management tools
+import TimeTracker from "./pages/tools/productivity/TimeTracker";
+import PomodoroTimer from "./pages/tools/productivity/PomodoroTimer";
+import WorkSchedulePlanner from "./pages/tools/productivity/WorkSchedulePlanner";
+import MeetingScheduler from "./pages/tools/productivity/MeetingScheduler";
+import TimeZonePlanner from "./pages/tools/productivity/TimeZonePlanner";
+import CalendarSync from "./pages/tools/productivity/CalendarSync";
+import DeadlineCalculator from "./pages/tools/productivity/DeadlineCalculator";
+import TimeBlocking from "./pages/tools/productivity/TimeBlocking";
+
 // Calculator tools
 import BasicCalculator from "./pages/tools/calculators/BasicCalculator";
 import ScientificCalculator from "./pages/tools/calculators/ScientificCalculator";
@@ -76,16 +95,6 @@ import GPACalculator from "./pages/tools/calculators/GPACalculator";
 import FuelCostCalculator from "./pages/tools/calculators/FuelCostCalculator";
 import PaintCalculator from "./pages/tools/calculators/PaintCalculator";
 import PregnancyCalculator from "./pages/tools/calculators/PregnancyCalculator";
-
-// Productivity tools
-import TodoList from "./pages/tools/productivity/TodoList";
-import KanbanBoard from "./pages/tools/productivity/KanbanBoard";
-import ProjectPlanner from "./pages/tools/productivity/ProjectPlanner";
-import TeamTaskManager from "./pages/tools/productivity/TeamTaskManager";
-import GoalTracker from "./pages/tools/productivity/GoalTracker";
-import HabitTracker from "./pages/tools/productivity/HabitTracker";
-import PriorityMatrix from "./pages/tools/productivity/PriorityMatrix";
-import MilestoneTracker from "./pages/tools/productivity/MilestoneTracker";
 
 // Text tools
 import CharacterCounter from "./pages/tools/text/CharacterCounter";
@@ -278,6 +287,16 @@ const App = () => (
               <Route path="/tools/productivity/habit-tracker" element={<HabitTracker />} />
               <Route path="/tools/productivity/priority-matrix" element={<PriorityMatrix />} />
               <Route path="/tools/productivity/milestone-tracker" element={<MilestoneTracker />} />
+
+              {/* New time management tools */}
+              <Route path="/tools/productivity/time-tracker" element={<TimeTracker />} />
+              <Route path="/tools/productivity/pomodoro-timer" element={<PomodoroTimer />} />
+              <Route path="/tools/productivity/schedule-planner" element={<WorkSchedulePlanner />} />
+              <Route path="/tools/productivity/meeting-scheduler" element={<MeetingScheduler />} />
+              <Route path="/tools/productivity/timezone-planner" element={<TimeZonePlanner />} />
+              <Route path="/tools/productivity/calendar-sync" element={<CalendarSync />} />
+              <Route path="/tools/productivity/deadline-calculator" element={<DeadlineCalculator />} />
+              <Route path="/tools/productivity/time-blocking" element={<TimeBlocking />} />
 
               {/* Calculator tools */}
               <Route path="/tools/calculators/basic-calculator" element={<BasicCalculator />} />
