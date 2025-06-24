@@ -4,12 +4,12 @@ import { Link } from 'react-router-dom';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { Badge } from '@/components/ui/badge';
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import { Users, Plus, Calendar, ArrowLeft, Clock } from 'lucide-react';
+import { Users, ArrowLeft } from 'lucide-react';
+import { TeamMemberCard } from '@/components/productivity/TeamMemberCard';
+import { AddTeamMemberForm } from '@/components/productivity/AddTeamMemberForm';
+import { AddTaskForm } from '@/components/productivity/AddTaskForm';
+import { TaskCard } from '@/components/productivity/TaskCard';
+import { TaskFilters } from '@/components/productivity/TaskFilters';
 
 interface TeamMember {
   id: string;
@@ -147,42 +147,18 @@ const TeamTaskManager = () => {
                   </CardHeader>
                   <CardContent className="space-y-3">
                     {teamMembers.map((member) => (
-                      <div key={member.id} className="flex items-center space-x-3">
-                        <Avatar className="h-8 w-8">
-                          <AvatarFallback>{getInitials(member.name)}</AvatarFallback>
-                        </Avatar>
-                        <div className="flex-1 min-w-0">
-                          <p className="text-sm font-medium truncate">{member.name}</p>
-                          <p className="text-xs text-gray-500">{member.role}</p>
-                        </div>
-                      </div>
+                      <TeamMemberCard
+                        key={member.id}
+                        member={member}
+                        getInitials={getInitials}
+                      />
                     ))}
                     
-                    {/* Add Member */}
-                    <div className="border-t pt-3 mt-3 space-y-2">
-                      <Input
-                        placeholder="Name"
-                        value={newMember.name}
-                        onChange={(e) => setNewMember({ ...newMember, name: e.target.value })}
-                        className="text-sm"
-                      />
-                      <Input
-                        placeholder="Email"
-                        value={newMember.email}
-                        onChange={(e) => setNewMember({ ...newMember, email: e.target.value })}
-                        className="text-sm"
-                      />
-                      <Input
-                        placeholder="Role"
-                        value={newMember.role}
-                        onChange={(e) => setNewMember({ ...newMember, role: e.target.value })}
-                        className="text-sm"
-                      />
-                      <Button onClick={addTeamMember} size="sm" className="w-full">
-                        <Plus className="h-4 w-4 mr-2" />
-                        Add Member
-                      </Button>
-                    </div>
+                    <AddTeamMemberForm
+                      newMember={newMember}
+                      setNewMember={setNewMember}
+                      onAddMember={addTeamMember}
+                    />
                   </CardContent>
                 </Card>
 
@@ -191,76 +167,25 @@ const TeamTaskManager = () => {
                   <CardHeader>
                     <CardTitle>Add New Task</CardTitle>
                   </CardHeader>
-                  <CardContent className="space-y-4">
-                    <Input
-                      placeholder="Task title"
-                      value={newTask.title}
-                      onChange={(e) => setNewTask({ ...newTask, title: e.target.value })}
+                  <CardContent>
+                    <AddTaskForm
+                      newTask={newTask}
+                      setNewTask={setNewTask}
+                      teamMembers={teamMembers}
+                      onAddTask={addTask}
                     />
-                    <Textarea
-                      placeholder="Description"
-                      value={newTask.description}
-                      onChange={(e) => setNewTask({ ...newTask, description: e.target.value })}
-                      rows={3}
-                    />
-                    <select
-                      value={newTask.assignedTo}
-                      onChange={(e) => setNewTask({ ...newTask, assignedTo: e.target.value })}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md"
-                    >
-                      <option value="">Select assignee</option>
-                      {teamMembers.map(member => (
-                        <option key={member.id} value={member.id}>{member.name}</option>
-                      ))}
-                    </select>
-                    <select
-                      value={newTask.priority}
-                      onChange={(e) => setNewTask({ ...newTask, priority: e.target.value as any })}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md"
-                    >
-                      <option value="low">Low Priority</option>
-                      <option value="medium">Medium Priority</option>
-                      <option value="high">High Priority</option>
-                    </select>
-                    <Input
-                      type="date"
-                      value={newTask.dueDate}
-                      onChange={(e) => setNewTask({ ...newTask, dueDate: e.target.value })}
-                    />
-                    <Button onClick={addTask} className="w-full">
-                      <Plus className="h-4 w-4 mr-2" />
-                      Add Task
-                    </Button>
                   </CardContent>
                 </Card>
               </div>
 
               {/* Tasks */}
               <div className="lg:col-span-3 space-y-6">
-                {/* Filters */}
-                <Card>
-                  <CardContent className="p-4">
-                    <div className="flex flex-wrap gap-2">
-                      <Button
-                        variant={filterAssignee === 'all' ? 'default' : 'outline'}
-                        size="sm"
-                        onClick={() => setFilterAssignee('all')}
-                      >
-                        All Tasks ({tasks.length})
-                      </Button>
-                      {teamMembers.map(member => (
-                        <Button
-                          key={member.id}
-                          variant={filterAssignee === member.id ? 'default' : 'outline'}
-                          size="sm"
-                          onClick={() => setFilterAssignee(member.id)}
-                        >
-                          {member.name} ({tasks.filter(t => t.assignedTo === member.id).length})
-                        </Button>
-                      ))}
-                    </div>
-                  </CardContent>
-                </Card>
+                <TaskFilters
+                  teamMembers={teamMembers}
+                  tasks={tasks}
+                  filterAssignee={filterAssignee}
+                  setFilterAssignee={setFilterAssignee}
+                />
 
                 {/* Task List */}
                 <div className="space-y-4">
@@ -278,63 +203,15 @@ const TeamTaskManager = () => {
                     </Card>
                   ) : (
                     filteredTasks.map((task) => (
-                      <Card key={task.id}>
-                        <CardContent className="p-4">
-                          <div className="flex items-start justify-between">
-                            <div className="flex-1">
-                              <div className="flex items-center space-x-2 mb-2">
-                                <h3 className="font-semibold">{task.title}</h3>
-                                <Badge className={getPriorityColor(task.priority)}>
-                                  {task.priority}
-                                </Badge>
-                                <Badge className={getStatusColor(task.status)}>
-                                  {task.status}
-                                </Badge>
-                              </div>
-                              
-                              {task.description && (
-                                <p className="text-gray-600 text-sm mb-3">{task.description}</p>
-                              )}
-                              
-                              <div className="flex items-center space-x-4 text-sm text-gray-500">
-                                <div className="flex items-center space-x-2">
-                                  <Avatar className="h-6 w-6">
-                                    <AvatarFallback className="text-xs">
-                                      {getInitials(getAssigneeName(task.assignedTo))}
-                                    </AvatarFallback>
-                                  </Avatar>
-                                  <span>{getAssigneeName(task.assignedTo)}</span>
-                                </div>
-                                
-                                {task.dueDate && (
-                                  <span className="flex items-center">
-                                    <Calendar className="h-4 w-4 mr-1" />
-                                    Due: {new Date(task.dueDate).toLocaleDateString()}
-                                  </span>
-                                )}
-                                
-                                <span className="flex items-center">
-                                  <Clock className="h-4 w-4 mr-1" />
-                                  Created: {new Date(task.createdAt).toLocaleDateString()}
-                                </span>
-                              </div>
-                            </div>
-                            
-                            <div className="ml-4">
-                              <select
-                                value={task.status}
-                                onChange={(e) => updateTaskStatus(task.id, e.target.value as Task['status'])}
-                                className="px-3 py-1 border border-gray-300 rounded text-sm"
-                              >
-                                <option value="todo">To Do</option>
-                                <option value="in-progress">In Progress</option>
-                                <option value="review">Review</option>
-                                <option value="completed">Completed</option>
-                              </select>
-                            </div>
-                          </div>
-                        </CardContent>
-                      </Card>
+                      <TaskCard
+                        key={task.id}
+                        task={task}
+                        getAssigneeName={getAssigneeName}
+                        getInitials={getInitials}
+                        getPriorityColor={getPriorityColor}
+                        getStatusColor={getStatusColor}
+                        onStatusChange={updateTaskStatus}
+                      />
                     ))
                   )}
                 </div>
