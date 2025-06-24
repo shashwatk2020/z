@@ -103,9 +103,13 @@ const CalendarSync = () => {
     }
   ]);
 
-  const [newCalendar, setNewCalendar] = useState({
+  const [newCalendar, setNewCalendar] = useState<{
+    name: string;
+    type: 'google' | 'outlook' | 'apple' | 'ical' | 'csv';
+    url: string;
+  }>({
     name: '',
-    type: 'google' as const,
+    type: 'google',
     url: ''
   });
 
@@ -524,7 +528,7 @@ END:VEVENT
                       <Label htmlFor="calendar-type">Calendar Type</Label>
                       <Select
                         value={newCalendar.type}
-                        onValueChange={(value) => setNewCalendar({...newCalendar, type: value as any})}
+                        onValueChange={(value: 'google' | 'outlook' | 'apple' | 'ical' | 'csv') => setNewCalendar({...newCalendar, type: value})}
                       >
                         <SelectTrigger>
                           <SelectValue />
