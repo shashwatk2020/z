@@ -224,6 +224,11 @@ import PingTestTool from "./pages/tools/web/PingTestTool";
 import PortScanner from "./pages/tools/web/PortScanner";
 import HttpHeaderChecker from "./pages/tools/web/HttpHeaderChecker";
 
+// New productivity tools imports
+import DigitalNotes from "./pages/tools/productivity/DigitalNotes";
+import DocumentOrganizer from "./pages/tools/productivity/DocumentOrganizer";
+import ContactManager from "./pages/tools/productivity/ContactManager";
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -297,6 +302,11 @@ const App = () => (
               <Route path="/tools/productivity/calendar-sync" element={<CalendarSync />} />
               <Route path="/tools/productivity/deadline-calculator" element={<DeadlineCalculator />} />
               <Route path="/tools/productivity/time-blocking" element={<TimeBlocking />} />
+
+              {/* New productivity organization tools */}
+              <Route path="/tools/productivity/notes" element={<DigitalNotes />} />
+              <Route path="/tools/productivity/document-organizer" element={<DocumentOrganizer />} />
+              <Route path="/tools/productivity/contact-manager" element={<ContactManager />} />
 
               {/* Calculator tools */}
               <Route path="/tools/calculators/basic-calculator" element={<BasicCalculator />} />
