@@ -201,6 +201,16 @@ import PingTestTool from "./pages/tools/web/PingTestTool";
 import PortScanner from "./pages/tools/web/PortScanner";
 import HttpHeaderChecker from "./pages/tools/web/HttpHeaderChecker";
 
+// Productivity tools
+import TodoList from "./pages/tools/productivity/TodoList";
+import KanbanBoard from "./pages/tools/productivity/KanbanBoard";
+import ProjectPlanner from "./pages/tools/productivity/ProjectPlanner";
+import TeamTaskManager from "./pages/tools/productivity/TeamTaskManager";
+import GoalTracker from "./pages/tools/productivity/GoalTracker";
+import HabitTracker from "./pages/tools/productivity/HabitTracker";
+import PriorityMatrix from "./pages/tools/productivity/PriorityMatrix";
+import MilestoneTracker from "./pages/tools/productivity/MilestoneTracker";
+
 const queryClient = new QueryClient();
 
 import { AdminAuthProvider } from "@/contexts/AdminAuthContext";
@@ -256,6 +266,18 @@ const App = () => (
               <Route path="/tools/productivity" element={<Productivity />} />
               <Route path="/tools/archive" element={<ArchiveTools />} />
               <Route path="/tools/calculators" element={<Calculators />} />
+
+              {/* Productivity tools */}
+              <Route path="/tools/productivity/advanced-todo-list" element={<TodoList />} />
+              <Route path="/tools/productivity/todo-list" element={<TodoList />} />
+              <Route path="/tools/productivity/kanban-board" element={<KanbanBoard />} />
+              <Route path="/tools/productivity/project-planner" element={<ProjectPlanner />} />
+              <Route path="/tools/productivity/team-task-manager" element={<TeamTaskManager />} />
+              <Route path="/tools/productivity/team-tasks" element={<TeamTaskManager />} />
+              <Route path="/tools/productivity/goal-tracker" element={<GoalTracker />} />
+              <Route path="/tools/productivity/habit-tracker" element={<HabitTracker />} />
+              <Route path="/tools/productivity/priority-matrix" element={<PriorityMatrix />} />
+              <Route path="/tools/productivity/milestone-tracker" element={<MilestoneTracker />} />
 
               {/* Calculator tools */}
             <Route path="/tools/calculators/basic-calculator" element={<BasicCalculator />} />

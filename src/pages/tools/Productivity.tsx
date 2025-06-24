@@ -10,7 +10,7 @@ const tools = [
   {
     name: 'Todo List Manager',
     description: 'Organize tasks, set priorities, and track progress with a powerful todo list system. Features deadlines, categories, and collaboration tools for team productivity.',
-    link: '/tools/productivity/todo-list',
+    link: '/tools/productivity/advanced-todo-list',
     icon: <CheckSquare className="h-8 w-8 text-blue-500" />
   },
   {
@@ -34,7 +34,7 @@ const tools = [
   {
     name: 'Project Manager',
     description: 'Plan, track, and manage projects with Gantt charts, milestone tracking, and team collaboration. Keep projects on time and within budget.',
-    link: '/tools/productivity/project-manager',
+    link: '/tools/productivity/project-planner',
     icon: <Users className="h-8 w-8 text-red-500" />
   },
   {
@@ -46,10 +46,10 @@ const tools = [
 ];
 
 const taskManagementTools = [
-    { name: 'Advanced Todo List', description: 'Feature-rich task management with priorities and deadlines.', link: '/tools/productivity/todo-list' },
+    { name: 'Advanced Todo List', description: 'Feature-rich task management with priorities and deadlines.', link: '/tools/productivity/advanced-todo-list' },
     { name: 'Kanban Board', description: 'Visual task management with drag-and-drop workflow.', link: '/tools/productivity/kanban-board' },
     { name: 'Project Planner', description: 'Plan projects with timelines, milestones, and dependencies.', link: '/tools/productivity/project-planner' },
-    { name: 'Team Task Manager', description: 'Assign and track tasks across team members.', link: '/tools/productivity/team-tasks' },
+    { name: 'Team Task Manager', description: 'Assign and track tasks across team members.', link: '/tools/productivity/team-task-manager' },
     { name: 'Goal Tracker', description: 'Set and track personal and professional goals.', link: '/tools/productivity/goal-tracker' },
     { name: 'Habit Tracker', description: 'Build positive habits with daily tracking and streaks.', link: '/tools/productivity/habit-tracker' },
     { name: 'Priority Matrix', description: 'Organize tasks using Eisenhower priority matrix.', link: '/tools/productivity/priority-matrix' },
