@@ -164,19 +164,19 @@ const TeamTaskManager = () => {
                         placeholder="Name"
                         value={newMember.name}
                         onChange={(e) => setNewMember({ ...newMember, name: e.target.value })}
-                        size="sm"
+                        className="text-sm"
                       />
                       <Input
                         placeholder="Email"
                         value={newMember.email}
                         onChange={(e) => setNewMember({ ...newMember, email: e.target.value })}
-                        size="sm"
+                        className="text-sm"
                       />
                       <Input
                         placeholder="Role"
                         value={newMember.role}
                         onChange={(e) => setNewMember({ ...newMember, role: e.target.value })}
-                        size="sm"
+                        className="text-sm"
                       />
                       <Button onClick={addTeamMember} size="sm" className="w-full">
                         <Plus className="h-4 w-4 mr-2" />
