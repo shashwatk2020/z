@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '@/components/layout/Header';
@@ -10,7 +9,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
-import { Calendar, ArrowLeft, Sync, Check, X, AlertCircle, ExternalLink, Download, Upload } from 'lucide-react';
+import { Calendar, ArrowLeft, RotateCw, Check, X, AlertCircle, ExternalLink, Download, Upload } from 'lucide-react';
 
 interface CalendarSource {
   id: string;
@@ -313,7 +312,7 @@ END:VEVENT
                   <CardHeader className="flex flex-row items-center justify-between">
                     <CardTitle>Connected Calendars</CardTitle>
                     <Button onClick={performSync} className="flex items-center">
-                      <Sync className="h-4 w-4 mr-2" />
+                      <RotateCw className="h-4 w-4 mr-2" />
                       Sync All
                     </Button>
                   </CardHeader>
@@ -377,7 +376,7 @@ END:VEVENT
                   <CardContent>
                     {syncRules.length === 0 ? (
                       <div className="text-center py-8">
-                        <Sync className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+                        <RotateCw className="h-12 w-12 text-gray-400 mx-auto mb-4" />
                         <p className="text-gray-600">No sync rules configured. Create your first rule!</p>
                       </div>
                     ) : (
