@@ -29,6 +29,14 @@ interface Task {
   createdAt: string;
 }
 
+interface NewTask {
+  title: string;
+  description: string;
+  assignedTo: string;
+  priority: 'low' | 'medium' | 'high';
+  dueDate: string;
+}
+
 const TeamTaskManager = () => {
   const [teamMembers, setTeamMembers] = useState<TeamMember[]>([
     { id: '1', name: 'You', email: 'you@example.com', role: 'Manager' },
@@ -37,7 +45,7 @@ const TeamTaskManager = () => {
   ]);
   
   const [tasks, setTasks] = useState<Task[]>([]);
-  const [newTask, setNewTask] = useState({
+  const [newTask, setNewTask] = useState<NewTask>({
     title: '',
     description: '',
     assignedTo: '',
