@@ -334,7 +334,7 @@ const App = () => (
               <Route path="/tools/archive" element={<ArchiveTools />} />
               <Route path="/tools/calculators" element={<Calculators />} />
 
-              {/* Productivity tools - existing ones */}
+              {/* Productivity tools */}
               <Route path="/tools/productivity/advanced-todo-list" element={<TodoList />} />
               <Route path="/tools/productivity/todo-list" element={<TodoList />} />
               <Route path="/tools/productivity/kanban-board" element={<KanbanBoard />} />
