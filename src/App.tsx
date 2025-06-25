@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -68,12 +69,12 @@ import BookmarkManager from "./pages/tools/productivity/BookmarkManager";
 import PasswordOrganizer from "./pages/tools/productivity/PasswordOrganizer";
 import FileNaming from "./pages/tools/productivity/FileNaming";
 
-// New productivity tools
+// New advanced productivity tools
 import ArchiveSystem from "./pages/tools/productivity/ArchiveSystem";
 import Automation from "./pages/tools/productivity/Automation";
 import Calendar from "./pages/tools/productivity/Calendar";
 import CollaborationHub from "./pages/tools/productivity/CollaborationHub";
-import Dashboard from "./pages/tools/productivity/Dashboard";
+import ProductivityDashboard from "./pages/tools/productivity/Dashboard";
 import FeedbackCollection from "./pages/tools/productivity/FeedbackCollection";
 import MeetingNotes from "./pages/tools/productivity/MeetingNotes";
 import ResourceSharing from "./pages/tools/productivity/ResourceSharing";
@@ -333,7 +334,7 @@ const App = () => (
               <Route path="/tools/productivity/automation" element={<Automation />} />
               <Route path="/tools/productivity/calendar" element={<Calendar />} />
               <Route path="/tools/productivity/collaboration-hub" element={<CollaborationHub />} />
-              <Route path="/tools/productivity/dashboard" element={<Dashboard />} />
+              <Route path="/tools/productivity/dashboard" element={<ProductivityDashboard />} />
               <Route path="/tools/productivity/feedback-collection" element={<FeedbackCollection />} />
               <Route path="/tools/productivity/meeting-notes" element={<MeetingNotes />} />
               <Route path="/tools/productivity/resource-sharing" element={<ResourceSharing />} />

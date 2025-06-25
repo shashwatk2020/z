@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '@/components/layout/Header';
@@ -224,13 +223,11 @@ const TeamCommunication = () => {
                           placeholder="Channel name"
                           value={newChannelName}
                           onChange={(e) => setNewChannelName(e.target.value)}
-                          size="sm"
                         />
                         <Input
                           placeholder="Description"
                           value={newChannelDescription}
                           onChange={(e) => setNewChannelDescription(e.target.value)}
-                          size="sm"
                         />
                         <div className="flex space-x-2">
                           <Button size="sm" className="flex-1">Create</Button>
