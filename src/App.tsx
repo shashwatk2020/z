@@ -68,6 +68,20 @@ import BookmarkManager from "./pages/tools/productivity/BookmarkManager";
 import PasswordOrganizer from "./pages/tools/productivity/PasswordOrganizer";
 import FileNaming from "./pages/tools/productivity/FileNaming";
 
+// New productivity tools
+import ArchiveSystem from "./pages/tools/productivity/ArchiveSystem";
+import Automation from "./pages/tools/productivity/Automation";
+import Calendar from "./pages/tools/productivity/Calendar";
+import CollaborationHub from "./pages/tools/productivity/CollaborationHub";
+import Dashboard from "./pages/tools/productivity/Dashboard";
+import FeedbackCollection from "./pages/tools/productivity/FeedbackCollection";
+import MeetingNotes from "./pages/tools/productivity/MeetingNotes";
+import ResourceSharing from "./pages/tools/productivity/ResourceSharing";
+import SharedWorkspace from "./pages/tools/productivity/SharedWorkspace";
+import TeamCalendar from "./pages/tools/productivity/TeamCalendar";
+import TeamCommunication from "./pages/tools/productivity/TeamCommunication";
+import Workspace from "./pages/tools/productivity/Workspace";
+
 // Calculator tools
 import BasicCalculator from "./pages/tools/calculators/BasicCalculator";
 import ScientificCalculator from "./pages/tools/calculators/ScientificCalculator";
@@ -284,7 +298,7 @@ const App = () => (
               <Route path="/tools/archive" element={<ArchiveTools />} />
               <Route path="/tools/calculators" element={<Calculators />} />
 
-              {/* Productivity tools */}
+              {/* Productivity tools - existing ones */}
               <Route path="/tools/productivity/advanced-todo-list" element={<TodoList />} />
               <Route path="/tools/productivity/todo-list" element={<TodoList />} />
               <Route path="/tools/productivity/kanban-board" element={<KanbanBoard />} />
@@ -313,6 +327,20 @@ const App = () => (
               <Route path="/tools/productivity/bookmark-manager" element={<BookmarkManager />} />
               <Route path="/tools/productivity/password-organizer" element={<PasswordOrganizer />} />
               <Route path="/tools/productivity/file-naming" element={<FileNaming />} />
+
+              {/* New advanced productivity tools */}
+              <Route path="/tools/productivity/archive-system" element={<ArchiveSystem />} />
+              <Route path="/tools/productivity/automation" element={<Automation />} />
+              <Route path="/tools/productivity/calendar" element={<Calendar />} />
+              <Route path="/tools/productivity/collaboration-hub" element={<CollaborationHub />} />
+              <Route path="/tools/productivity/dashboard" element={<Dashboard />} />
+              <Route path="/tools/productivity/feedback-collection" element={<FeedbackCollection />} />
+              <Route path="/tools/productivity/meeting-notes" element={<MeetingNotes />} />
+              <Route path="/tools/productivity/resource-sharing" element={<ResourceSharing />} />
+              <Route path="/tools/productivity/shared-workspace" element={<SharedWorkspace />} />
+              <Route path="/tools/productivity/team-calendar" element={<TeamCalendar />} />
+              <Route path="/tools/productivity/team-communication" element={<TeamCommunication />} />
+              <Route path="/tools/productivity/workspace" element={<Workspace />} />
 
               {/* Calculator tools */}
               <Route path="/tools/calculators/basic-calculator" element={<BasicCalculator />} />
