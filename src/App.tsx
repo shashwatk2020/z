@@ -60,6 +60,14 @@ import CalendarSync from "./pages/tools/productivity/CalendarSync";
 import DeadlineCalculator from "./pages/tools/productivity/DeadlineCalculator";
 import TimeBlocking from "./pages/tools/productivity/TimeBlocking";
 
+// New productivity organization tools
+import DigitalNotes from "./pages/tools/productivity/DigitalNotes";
+import DocumentOrganizer from "./pages/tools/productivity/DocumentOrganizer";
+import ContactManager from "./pages/tools/productivity/ContactManager";
+import BookmarkManager from "./pages/tools/productivity/BookmarkManager";
+import PasswordOrganizer from "./pages/tools/productivity/PasswordOrganizer";
+import FileNaming from "./pages/tools/productivity/FileNaming";
+
 // Calculator tools
 import BasicCalculator from "./pages/tools/calculators/BasicCalculator";
 import ScientificCalculator from "./pages/tools/calculators/ScientificCalculator";
@@ -224,11 +232,6 @@ import PingTestTool from "./pages/tools/web/PingTestTool";
 import PortScanner from "./pages/tools/web/PortScanner";
 import HttpHeaderChecker from "./pages/tools/web/HttpHeaderChecker";
 
-// New productivity tools imports
-import DigitalNotes from "./pages/tools/productivity/DigitalNotes";
-import DocumentOrganizer from "./pages/tools/productivity/DocumentOrganizer";
-import ContactManager from "./pages/tools/productivity/ContactManager";
-
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -307,6 +310,9 @@ const App = () => (
               <Route path="/tools/productivity/notes" element={<DigitalNotes />} />
               <Route path="/tools/productivity/document-organizer" element={<DocumentOrganizer />} />
               <Route path="/tools/productivity/contact-manager" element={<ContactManager />} />
+              <Route path="/tools/productivity/bookmark-manager" element={<BookmarkManager />} />
+              <Route path="/tools/productivity/password-organizer" element={<PasswordOrganizer />} />
+              <Route path="/tools/productivity/file-naming" element={<FileNaming />} />
 
               {/* Calculator tools */}
               <Route path="/tools/calculators/basic-calculator" element={<BasicCalculator />} />
