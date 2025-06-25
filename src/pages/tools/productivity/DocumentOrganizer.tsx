@@ -47,9 +47,14 @@ const DocumentOrganizer = () => {
     }
   ]);
 
-  const [newDocument, setNewDocument] = useState({
+  const [newDocument, setNewDocument] = useState<{
+    name: string;
+    type: 'pdf' | 'doc' | 'image' | 'video' | 'other';
+    category: string;
+    tags: string;
+  }>({
     name: '',
-    type: 'pdf' as const,
+    type: 'pdf',
     category: 'work',
     tags: ''
   });
@@ -149,7 +154,7 @@ const DocumentOrganizer = () => {
                       <Label htmlFor="doc-type">Type</Label>
                       <Select 
                         value={newDocument.type} 
-                        onValueChange={(value: 'pdf' | 'doc' | 'image' | 'video' | 'other') => setNewDocument({...newDocument, type: value})}
+                        onValueChange={(value: string) => setNewDocument({...newDocument, type: value as 'pdf' | 'doc' | 'image' | 'video' | 'other'})}
                       >
                         <SelectTrigger>
                           <SelectValue />
