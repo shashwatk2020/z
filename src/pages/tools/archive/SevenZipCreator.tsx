@@ -29,6 +29,14 @@ const SevenZipCreator = () => {
     setFiles(prev => [...prev, ...selectedFiles]);
   };
 
+  const handleEncryptHeadersChange = (checked: boolean | "indeterminate") => {
+    setEncryptHeaders(checked === true);
+  };
+
+  const handleSolidArchiveChange = (checked: boolean | "indeterminate") => {
+    setSolidArchive(checked === true);
+  };
+
   const create7zArchive = async () => {
     if (files.length === 0) {
       toast({
@@ -147,11 +155,11 @@ const SevenZipCreator = () => {
 
               <div className="space-y-2">
                 <div className="flex items-center space-x-2">
-                  <Checkbox checked={encryptHeaders} onCheckedChange={setEncryptHeaders} />
+                  <Checkbox checked={encryptHeaders} onCheckedChange={handleEncryptHeadersChange} />
                   <Label>Encrypt file names</Label>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <Checkbox checked={solidArchive} onCheckedChange={setSolidArchive} />
+                  <Checkbox checked={solidArchive} onCheckedChange={handleSolidArchiveChange} />
                   <Label>Create solid archive</Label>
                 </div>
               </div>
