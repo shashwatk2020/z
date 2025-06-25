@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -246,6 +245,42 @@ import IpAddressLookup from "./pages/tools/web/IpAddressLookup";
 import PingTestTool from "./pages/tools/web/PingTestTool";
 import PortScanner from "./pages/tools/web/PortScanner";
 import HttpHeaderChecker from "./pages/tools/web/HttpHeaderChecker";
+
+// Archive tools
+import ZipCreator from "./pages/tools/archive/ZipCreator";
+import ZipExtractor from "./pages/tools/archive/ZipExtractor";
+import RarExtractor from "./pages/tools/archive/RarExtractor";
+import SevenZipCreator from "./pages/tools/archive/SevenZipCreator";
+import ArchiveConverter from "./pages/tools/archive/ArchiveConverter";
+import ArchiveInspector from "./pages/tools/archive/ArchiveInspector";
+import FileCompressor from "./pages/tools/archive/FileCompressor";
+import BackupCreator from "./pages/tools/archive/BackupCreator";
+import BackupRestore from "./pages/tools/archive/BackupRestore";
+import BackupScheduler from "./pages/tools/archive/BackupScheduler";
+import BackupVerify from "./pages/tools/archive/BackupVerify";
+import BackupCatalog from "./pages/tools/archive/BackupCatalog";
+import BackupEncryption from "./pages/tools/archive/BackupEncryption";
+import IncrementalBackup from "./pages/tools/archive/IncrementalBackup";
+import CloudSync from "./pages/tools/archive/CloudSync";
+import BatchCreator from "./pages/tools/archive/BatchCreator";
+import MultiExtractor from "./pages/tools/archive/MultiExtractor";
+import FormatConverter from "./pages/tools/archive/FormatConverter";
+import CompressionAnalyzer from "./pages/tools/archive/CompressionAnalyzer";
+import SizeAnalyzer from "./pages/tools/archive/SizeAnalyzer";
+import DuplicateFinder from "./pages/tools/archive/DuplicateFinder";
+import RepairTool from "./pages/tools/archive/RepairTool";
+import PasswordRecovery from "./pages/tools/archive/PasswordRecovery";
+import ArchiveSplitter from "./pages/tools/archive/ArchiveSplitter";
+import ArchiveMerger from "./pages/tools/archive/ArchiveMerger";
+import TarTool from "./pages/tools/archive/TarTool";
+import GzipCompressor from "./pages/tools/archive/GzipCompressor";
+import SevenZipToZip from "./pages/tools/archive/SevenZipToZip";
+import RarToZip from "./pages/tools/archive/RarToZip";
+import TarToZip from "./pages/tools/archive/TarToZip";
+import ZipToRar from "./pages/tools/archive/ZipToRar";
+import IsoExtractor from "./pages/tools/archive/IsoExtractor";
+import CabExtractor from "./pages/tools/archive/CabExtractor";
+import DmgExtractor from "./pages/tools/archive/DmgExtractor";
 
 const queryClient = new QueryClient();
 
@@ -517,6 +552,42 @@ const App = () => (
               <Route path="/tools/web/ping-test-tool" element={<PingTestTool />} />
               <Route path="/tools/web/port-scanner" element={<PortScanner />} />
               <Route path="/tools/web/http-header-checker" element={<HttpHeaderChecker />} />
+
+              {/* Archive tools */}
+              <Route path="/tools/archive/zip-creator" element={<ZipCreator />} />
+              <Route path="/tools/archive/zip-extractor" element={<ZipExtractor />} />
+              <Route path="/tools/archive/rar-extractor" element={<RarExtractor />} />
+              <Route path="/tools/archive/7z-creator" element={<SevenZipCreator />} />
+              <Route path="/tools/archive/archive-converter" element={<ArchiveConverter />} />
+              <Route path="/tools/archive/archive-inspector" element={<ArchiveInspector />} />
+              <Route path="/tools/archive/file-compressor" element={<FileCompressor />} />
+              <Route path="/tools/archive/backup-creator" element={<BackupCreator />} />
+              <Route path="/tools/archive/backup-restore" element={<BackupRestore />} />
+              <Route path="/tools/archive/backup-scheduler" element={<BackupScheduler />} />
+              <Route path="/tools/archive/backup-verify" element={<BackupVerify />} />
+              <Route path="/tools/archive/backup-catalog" element={<BackupCatalog />} />
+              <Route path="/tools/archive/backup-encryption" element={<BackupEncryption />} />
+              <Route path="/tools/archive/incremental-backup" element={<IncrementalBackup />} />
+              <Route path="/tools/archive/cloud-sync" element={<CloudSync />} />
+              <Route path="/tools/archive/batch-creator" element={<BatchCreator />} />
+              <Route path="/tools/archive/multi-extractor" element={<MultiExtractor />} />
+              <Route path="/tools/archive/format-converter" element={<FormatConverter />} />
+              <Route path="/tools/archive/compression-analyzer" element={<CompressionAnalyzer />} />
+              <Route path="/tools/archive/size-analyzer" element={<SizeAnalyzer />} />
+              <Route path="/tools/archive/duplicate-finder" element={<DuplicateFinder />} />
+              <Route path="/tools/archive/repair-tool" element={<RepairTool />} />
+              <Route path="/tools/archive/password-recovery" element={<PasswordRecovery />} />
+              <Route path="/tools/archive/splitter" element={<ArchiveSplitter />} />
+              <Route path="/tools/archive/merger" element={<ArchiveMerger />} />
+              <Route path="/tools/archive/tar-tool" element={<TarTool />} />
+              <Route path="/tools/archive/gzip-compressor" element={<GzipCompressor />} />
+              <Route path="/tools/archive/7z-to-zip" element={<SevenZipToZip />} />
+              <Route path="/tools/archive/rar-to-zip" element={<RarToZip />} />
+              <Route path="/tools/archive/tar-to-zip" element={<TarToZip />} />
+              <Route path="/tools/archive/zip-to-rar" element={<ZipToRar />} />
+              <Route path="/tools/archive/iso-extractor" element={<IsoExtractor />} />
+              <Route path="/tools/archive/cab-extractor" element={<CabExtractor />} />
+              <Route path="/tools/archive/dmg-extractor" element={<DmgExtractor />} />
 
               {/* 404 page */}
               <Route path="*" element={<NotFound />} />
