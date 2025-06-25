@@ -253,7 +253,7 @@ const FileNaming = () => {
                       <Checkbox 
                         id="includeProject" 
                         checked={includeProject}
-                        onCheckedChange={setIncludeProject}
+                        onCheckedChange={(checked) => setIncludeProject(checked === true)}
                       />
                       <Label htmlFor="includeProject">Include Project</Label>
                     </div>
@@ -274,7 +274,7 @@ const FileNaming = () => {
                       <Checkbox 
                         id="includeDate" 
                         checked={includeDate}
-                        onCheckedChange={setIncludeDate}
+                        onCheckedChange={(checked) => setIncludeDate(checked === true)}
                       />
                       <Label htmlFor="includeDate">Include Date</Label>
                     </div>
@@ -295,7 +295,7 @@ const FileNaming = () => {
                       <Checkbox 
                         id="includeVersion" 
                         checked={includeVersion}
-                        onCheckedChange={setIncludeVersion}
+                        onCheckedChange={(checked) => setIncludeVersion(checked === true)}
                       />
                       <Label htmlFor="includeVersion">Include Version</Label>
                     </div>
