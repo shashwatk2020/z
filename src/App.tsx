@@ -315,30 +315,41 @@ const App = () => (
               <Route path="/tools/productivity/time-tracker" element={<TimeTracker />} />
               <Route path="/tools/productivity/pomodoro-timer" element={<PomodoroTimer />} />
               <Route path="/tools/productivity/schedule-planner" element={<WorkSchedulePlanner />} />
+              <Route path="/tools/productivity/work-schedule-planner" element={<WorkSchedulePlanner />} />
               <Route path="/tools/productivity/meeting-scheduler" element={<MeetingScheduler />} />
               <Route path="/tools/productivity/timezone-planner" element={<TimeZonePlanner />} />
+              <Route path="/tools/productivity/time-zone-planner" element={<TimeZonePlanner />} />
               <Route path="/tools/productivity/calendar-sync" element={<CalendarSync />} />
+              <Route path="/tools/productivity/calendar-sync-tool" element={<CalendarSync />} />
               <Route path="/tools/productivity/deadline-calculator" element={<DeadlineCalculator />} />
               <Route path="/tools/productivity/time-blocking" element={<TimeBlocking />} />
+              <Route path="/tools/productivity/time-blocking-tool" element={<TimeBlocking />} />
 
               {/* New productivity organization tools */}
               <Route path="/tools/productivity/notes" element={<DigitalNotes />} />
+              <Route path="/tools/productivity/digital-note-system" element={<DigitalNotes />} />
               <Route path="/tools/productivity/document-organizer" element={<DocumentOrganizer />} />
               <Route path="/tools/productivity/contact-manager" element={<ContactManager />} />
               <Route path="/tools/productivity/bookmark-manager" element={<BookmarkManager />} />
               <Route path="/tools/productivity/password-organizer" element={<PasswordOrganizer />} />
               <Route path="/tools/productivity/file-naming" element={<FileNaming />} />
+              <Route path="/tools/productivity/file-naming-system" element={<FileNaming />} />
 
               {/* New advanced productivity tools */}
               <Route path="/tools/productivity/archive-system" element={<ArchiveSystem />} />
               <Route path="/tools/productivity/automation" element={<Automation />} />
               <Route path="/tools/productivity/calendar" element={<Calendar />} />
               <Route path="/tools/productivity/collaboration-hub" element={<CollaborationHub />} />
+              <Route path="/tools/productivity/team-collaboration-hub" element={<CollaborationHub />} />
               <Route path="/tools/productivity/dashboard" element={<ProductivityDashboard />} />
+              <Route path="/tools/productivity/project-dashboard" element={<ProductivityDashboard />} />
               <Route path="/tools/productivity/feedback-collection" element={<FeedbackCollection />} />
               <Route path="/tools/productivity/meeting-notes" element={<MeetingNotes />} />
+              <Route path="/tools/productivity/meeting-notes-organizer" element={<MeetingNotes />} />
               <Route path="/tools/productivity/resource-sharing" element={<ResourceSharing />} />
+              <Route path="/tools/productivity/resource-sharing-tool" element={<ResourceSharing />} />
               <Route path="/tools/productivity/shared-workspace" element={<SharedWorkspace />} />
+              <Route path="/tools/productivity/digital-workspace" element={<SharedWorkspace />} />
               <Route path="/tools/productivity/team-calendar" element={<TeamCalendar />} />
               <Route path="/tools/productivity/team-communication" element={<TeamCommunication />} />
               <Route path="/tools/productivity/workspace" element={<Workspace />} />
