@@ -7,7 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Progress } from '@/components/ui/progress';
 import { Checkbox } from '@/components/ui/checkbox';
-import { FileArchive, Upload, Download, Folder, File, Windows, Info } from 'lucide-react';
+import { FileArchive, Upload, Download, Folder, File, Monitor, Info } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 const CabExtractor = () => {
@@ -151,7 +151,7 @@ const CabExtractor = () => {
             {cabFile && cabInfo && (
               <div className="p-4 bg-orange-50 rounded-lg">
                 <div className="flex items-center">
-                  <Windows className="h-4 w-4 mr-2 text-orange-600" />
+                  <Monitor className="h-4 w-4 mr-2 text-orange-600" />
                   <span className="font-medium">CAB Archive Information</span>
                 </div>
                 <div className="mt-2 text-sm space-y-1">
