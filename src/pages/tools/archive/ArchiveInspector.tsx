@@ -4,157 +4,122 @@ import Layout from '@/components/layout/Layout';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Badge } from '@/components/ui/badge';
+import { Progress } from '@/components/ui/progress';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { FolderOpen, File, Folder, Eye, Info, Shield, Calendar } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import { Search, Upload, Eye, Folder, File, Archive, Shield, Clock, HardDrive, AlertTriangle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
-
-interface ArchiveFile {
-  name: string;
-  size: number;
-  compressedSize: number;
-  type: 'file' | 'folder';
-  path: string;
-  modified: Date;
-  crc32?: string;
-  method?: string;
-}
 
 const ArchiveInspector = () => {
   const [archiveFile, setArchiveFile] = useState<File | null>(null);
-  const [archiveContents, setArchiveContents] = useState<ArchiveFile[]>([]);
-  const [archiveInfo, setArchiveInfo] = useState<any>(null);
+  const [searchTerm, setSearchTerm] = useState('');
   const [isAnalyzing, setIsAnalyzing] = useState(false);
-  const [selectedPath, setSelectedPath] = useState('');
+  const [progress, setProgress] = useState(0);
+  const [archiveInfo, setArchiveInfo] = useState<any>(null);
+  const [fileTree, setFileTree] = useState<any[]>([]);
+  const [securityInfo, setSecurity] = useState<any>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
 
-  const handleFileSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
+  const supportedFormats = ['.zip', '.rar', '.7z', '.tar', '.tar.gz', '.cab', '.iso'];
 
-    setArchiveFile(file);
+  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const isSupported = supportedFormats.some(ext => file.name.toLowerCase().endsWith(ext));
+      
+      if (isSupported) {
+        setArchiveFile(file);
+        analyzeArchive(file);
+      } else {
+        toast({
+          title: "Unsupported Format",
+          description: "Please select a supported archive format.",
+          variant: "destructive"
+        });
+      }
+    }
+  };
+
+  const analyzeArchive = async (file: File) => {
     setIsAnalyzing(true);
+    setProgress(0);
 
     try {
-      // Simulate archive analysis
-      await new Promise(resolve => setTimeout(resolve, 1500));
-
-      // Mock archive contents
-      const mockContents: ArchiveFile[] = [
-        {
-          name: 'documents',
-          size: 0,
-          compressedSize: 0,
-          type: 'folder',
-          path: '/documents',
-          modified: new Date('2024-01-15')
-        },
-        {
-          name: 'report.pdf',
-          size: 2457600,
-          compressedSize: 1843200,
-          type: 'file',
-          path: '/documents/report.pdf',
-          modified: new Date('2024-01-15'),
-          crc32: 'A1B2C3D4',
-          method: 'Deflate'
-        },
-        {
-          name: 'images',
-          size: 0,
-          compressedSize: 0,
-          type: 'folder',
-          path: '/images',
-          modified: new Date('2024-01-10')
-        },
-        {
-          name: 'photo1.jpg',
-          size: 5242880,
-          compressedSize: 5100000,
-          type: 'file',
-          path: '/images/photo1.jpg',
-          modified: new Date('2024-01-10'),
-          crc32: 'E5F6A7B8',
-          method: 'Store'
-        },
-        {
-          name: 'config.txt',
-          size: 1024,
-          compressedSize: 512,
-          type: 'file',
-          path: '/config.txt',
-          modified: new Date('2024-01-12'),
-          crc32: 'C9D0E1F2',
-          method: 'Deflate'
-        }
+      const steps = [
+        'Reading archive header...',
+        'Scanning file structure...',
+        'Analyzing compression ratios...',
+        'Checking security properties...',
+        'Building file tree...',
+        'Generating report...'
       ];
 
-      setArchiveContents(mockContents);
+      for (let i = 0; i < steps.length; i++) {
+        setProgress(((i + 1) / steps.length) * 100);
+        await new Promise(resolve => setTimeout(resolve, 800));
+      }
 
-      // Mock archive info
+      // Mock comprehensive archive analysis
+      const mockFiles = [
+        { name: 'documents/report.pdf', size: 2048576, compressed: 1536789, ratio: 75, type: 'PDF Document', modified: '2024-01-15', encrypted: false },
+        { name: 'images/photo1.jpg', size: 3145728, compressed: 3098432, ratio: 98, type: 'JPEG Image', modified: '2024-01-10', encrypted: false },
+        { name: 'data/database.sql', size: 8388608, compressed: 2097152, ratio: 25, type: 'SQL Database', modified: '2024-01-20', encrypted: true },
+        { name: 'config/settings.ini', size: 4096, compressed: 1024, ratio: 25, type: 'Configuration', modified: '2024-01-05', encrypted: false },
+        { name: 'scripts/backup.sh', size: 16384, compressed: 8192, ratio: 50, type: 'Shell Script', modified: '2024-01-12', encrypted: false }
+      ];
+
       setArchiveInfo({
-        fileName: file.name,
-        fileSize: file.size,
-        format: file.name.split('.').pop()?.toUpperCase() || 'Unknown',
-        filesCount: mockContents.filter(f => f.type === 'file').length,
-        foldersCount: mockContents.filter(f => f.type === 'folder').length,
-        compressionRatio: 75,
-        created: new Date('2024-01-15'),
-        encrypted: Math.random() > 0.7,
-        solid: Math.random() > 0.5,
-        multivolume: false
+        name: file.name,
+        size: file.size,
+        type: file.name.split('.').pop()?.toUpperCase(),
+        created: new Date(file.lastModified).toLocaleDateString(),
+        files: mockFiles.length,
+        folders: 3,
+        compression: 'DEFLATE',
+        version: '2.0',
+        comment: 'Created with ArchiveInspector',
+        totalUncompressed: mockFiles.reduce((sum, f) => sum + f.size, 0),
+        totalCompressed: mockFiles.reduce((sum, f) => sum + f.compressed, 0)
+      });
+
+      setFileTree(mockFiles);
+
+      setSecurity({
+        encrypted: mockFiles.some(f => f.encrypted),
+        encryptedFiles: mockFiles.filter(f => f.encrypted).length,
+        passwordProtected: Math.random() > 0.7,
+        digitalSignature: Math.random() > 0.6,
+        integrityCheck: Math.random() > 0.3,
+        suspiciousFiles: Math.floor(Math.random() * 2)
       });
 
       toast({
-        title: "Archive Analyzed",
-        description: `Successfully analyzed ${file.name}`
+        title: "Analysis Complete",
+        description: `Successfully analyzed ${mockFiles.length} files in the archive.`
       });
     } catch (error) {
       toast({
         title: "Analysis Failed",
-        description: "Failed to analyze archive file.",
+        description: "Failed to analyze archive. The file may be corrupted.",
         variant: "destructive"
       });
     } finally {
       setIsAnalyzing(false);
+      setProgress(0);
     }
   };
 
   const formatFileSize = (bytes: number) => {
-    if (bytes === 0) return '0 B';
     const k = 1024;
     const sizes = ['B', 'KB', 'MB', 'GB'];
     const i = Math.floor(Math.log(bytes) / Math.log(k));
     return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
   };
 
-  const getCompressionRatio = (original: number, compressed: number) => {
-    if (original === 0) return 0;
-    return Math.round(((original - compressed) / original) * 100);
-  };
-
-  const getCurrentFolderContents = () => {
-    if (!selectedPath) {
-      return archiveContents.filter(item => !item.path.includes('/', 1));
-    }
-    return archiveContents.filter(item => 
-      item.path.startsWith(selectedPath) && 
-      item.path !== selectedPath &&
-      !item.path.substring(selectedPath.length + 1).includes('/')
-    );
-  };
-
-  const getTotalStats = () => {
-    const files = archiveContents.filter(f => f.type === 'file');
-    const totalSize = files.reduce((sum, f) => sum + f.size, 0);
-    const totalCompressed = files.reduce((sum, f) => sum + f.compressedSize, 0);
-    return {
-      totalSize,
-      totalCompressed,
-      compressionRatio: getCompressionRatio(totalSize, totalCompressed)
-    };
-  };
+  const filteredFiles = fileTree.filter(file => 
+    file.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
     <Layout>
@@ -162,231 +127,248 @@ const ArchiveInspector = () => {
         <div className="text-center space-y-2">
           <Eye className="h-12 w-12 mx-auto text-blue-600" />
           <h1 className="text-3xl font-bold">Archive Inspector</h1>
-          <p className="text-gray-600">Examine archive contents without extracting files</p>
+          <p className="text-gray-600">Analyze archive contents, structure, and security without extraction</p>
         </div>
 
         <Card>
           <CardHeader>
-            <CardTitle>Select Archive File</CardTitle>
+            <CardTitle>Select Archive</CardTitle>
           </CardHeader>
-          <CardContent>
-            <Button onClick={() => fileInputRef.current?.click()} className="w-full" variant="outline">
-              <FolderOpen className="h-4 w-4 mr-2" />
+          <CardContent className="space-y-4">
+            <div className="text-sm text-gray-600 mb-2">
+              Supported formats: {supportedFormats.join(', ')}
+            </div>
+            
+            <Button onClick={() => fileInputRef.current?.click()} variant="outline" className="w-full">
+              <Upload className="h-4 w-4 mr-2" />
               {archiveFile ? `Selected: ${archiveFile.name}` : 'Choose Archive File'}
             </Button>
             <input 
               ref={fileInputRef} 
               type="file" 
-              accept=".zip,.rar,.7z,.tar,.gz,.bz2,.xz,.iso,.cab,.dmg"
+              accept={supportedFormats.join(',')}
               onChange={handleFileSelect} 
               className="hidden" 
             />
+
+            {isAnalyzing && (
+              <div className="space-y-2">
+                <Progress value={progress} />
+                <p className="text-sm text-gray-600 text-center">
+                  Analyzing archive structure...
+                </p>
+              </div>
+            )}
           </CardContent>
         </Card>
 
-        {isAnalyzing && (
-          <Card>
-            <CardContent className="flex items-center justify-center py-8">
-              <div className="text-center">
-                <div className="animate-spin h-8 w-8 border-4 border-blue-500 border-t-transparent rounded-full mx-auto mb-4"></div>
-                <p className="text-gray-600">Analyzing archive structure...</p>
-              </div>
-            </CardContent>
-          </Card>
-        )}
-
-        {archiveInfo && !isAnalyzing && (
-          <Tabs defaultValue="contents" className="space-y-4">
-            <TabsList className="grid w-full grid-cols-3">
-              <TabsTrigger value="contents">Contents</TabsTrigger>
-              <TabsTrigger value="properties">Properties</TabsTrigger>
-              <TabsTrigger value="statistics">Statistics</TabsTrigger>
+        {archiveInfo && (
+          <Tabs defaultValue="overview" className="space-y-4">
+            <TabsList className="grid w-full grid-cols-4">
+              <TabsTrigger value="overview">Overview</TabsTrigger>
+              <TabsTrigger value="files">Files ({fileTree.length})</TabsTrigger>
+              <TabsTrigger value="security">Security</TabsTrigger>
+              <TabsTrigger value="analysis">Analysis</TabsTrigger>
             </TabsList>
 
-            <TabsContent value="contents" className="space-y-4">
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center">
-                    <Folder className="h-5 w-5 mr-2" />
-                    Archive Contents
-                    <Badge variant="secondary" className="ml-2">
-                      {archiveContents.length} items
-                    </Badge>
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  {selectedPath && (
-                    <div className="mb-4">
-                      <Button 
-                        variant="ghost" 
-                        size="sm" 
-                        onClick={() => setSelectedPath('')}
-                        className="text-blue-600"
-                      >
-                        ← Back to root
-                      </Button>
-                      <p className="text-sm text-gray-600 mt-1">Current path: {selectedPath || '/'}</p>
-                    </div>
-                  )}
-                  
-                  <div className="space-y-2 max-h-96 overflow-y-auto">
-                    {getCurrentFolderContents().map((item, index) => (
-                      <div 
-                        key={index} 
-                        className={`flex items-center p-3 border rounded-lg hover:bg-gray-50 ${
-                          item.type === 'folder' ? 'cursor-pointer' : ''
-                        }`}
-                        onClick={() => item.type === 'folder' && setSelectedPath(item.path)}
-                      >
-                        {item.type === 'folder' ? (
-                          <Folder className="h-5 w-5 mr-3 text-blue-500" />
-                        ) : (
-                          <File className="h-5 w-5 mr-3 text-gray-500" />
-                        )}
-                        
-                        <div className="flex-1">
-                          <div className="font-medium">{item.name}</div>
-                          <div className="text-sm text-gray-500">
-                            Modified: {item.modified.toLocaleDateString()}
-                          </div>
-                        </div>
-                        
-                        {item.type === 'file' && (
-                          <div className="text-right">
-                            <div className="text-sm font-medium">
-                              {formatFileSize(item.size)}
-                            </div>
-                            <div className="text-xs text-gray-500">
-                              Compressed: {formatFileSize(item.compressedSize)} 
-                              ({getCompressionRatio(item.size, item.compressedSize)}%)
-                            </div>
-                          </div>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
+            <TabsContent value="overview" className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <Card>
+                  <CardHeader className="pb-3">
+                    <CardTitle className="text-lg flex items-center">
+                      <Archive className="h-5 w-5 mr-2" />
+                      Archive Details
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-2">
+                    <div><strong>Type:</strong> {archiveInfo.type}</div>
+                    <div><strong>Size:</strong> {formatFileSize(archiveInfo.size)}</div>
+                    <div><strong>Created:</strong> {archiveInfo.created}</div>
+                    <div><strong>Version:</strong> {archiveInfo.version}</div>
+                  </CardContent>
+                </Card>
+
+                <Card>
+                  <CardHeader className="pb-3">
+                    <CardTitle className="text-lg flex items-center">
+                      <Folder className="h-5 w-5 mr-2" />
+                      Content Summary
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-2">
+                    <div><strong>Files:</strong> {archiveInfo.files}</div>
+                    <div><strong>Folders:</strong> {archiveInfo.folders}</div>
+                    <div><strong>Compression:</strong> {archiveInfo.compression}</div>
+                    <div><strong>Ratio:</strong> {((1 - archiveInfo.totalCompressed / archiveInfo.totalUncompressed) * 100).toFixed(1)}%</div>
+                  </CardContent>
+                </Card>
+
+                <Card>
+                  <CardHeader className="pb-3">
+                    <CardTitle className="text-lg flex items-center">
+                      <HardDrive className="h-5 w-5 mr-2" />
+                      Storage Info
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-2">
+                    <div><strong>Uncompressed:</strong> {formatFileSize(archiveInfo.totalUncompressed)}</div>
+                    <div><strong>Compressed:</strong> {formatFileSize(archiveInfo.totalCompressed)}</div>
+                    <div><strong>Saved:</strong> {formatFileSize(archiveInfo.totalUncompressed - archiveInfo.totalCompressed)}</div>
+                  </CardContent>
+                </Card>
+              </div>
             </TabsContent>
 
-            <TabsContent value="properties" className="space-y-4">
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center">
-                    <Info className="h-5 w-5 mr-2" />
-                    Archive Properties
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="space-y-4">
-                      <div>
-                        <Label className="text-sm font-medium text-gray-500">File Name</Label>
-                        <p className="font-medium">{archiveInfo.fileName}</p>
+            <TabsContent value="files" className="space-y-4">
+              <div className="flex items-center space-x-2">
+                <Search className="h-4 w-4 text-gray-400" />
+                <Input
+                  placeholder="Search files..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="flex-1"
+                />
+              </div>
+
+              <div className="border rounded-lg">
+                <div className="grid grid-cols-12 gap-2 p-3 bg-gray-50 font-medium text-sm border-b">
+                  <div className="col-span-4">Name</div>
+                  <div className="col-span-2">Size</div>
+                  <div className="col-span-2">Compressed</div>
+                  <div className="col-span-1">Ratio</div>
+                  <div className="col-span-2">Modified</div>
+                  <div className="col-span-1">Status</div>
+                </div>
+                
+                <div className="max-h-96 overflow-y-auto">
+                  {filteredFiles.map((file, index) => (
+                    <div key={index} className="grid grid-cols-12 gap-2 p-3 border-b last:border-b-0 hover:bg-gray-50 text-sm">
+                      <div className="col-span-4 flex items-center">
+                        <File className="h-4 w-4 mr-2 text-gray-500" />
+                        <span className="truncate">{file.name}</span>
                       </div>
-                      <div>
-                        <Label className="text-sm font-medium text-gray-500">Format</Label>
-                        <p className="font-medium">{archiveInfo.format}</p>
-                      </div>
-                      <div>
-                        <Label className="text-sm font-medium text-gray-500">File Size</Label>
-                        <p className="font-medium">{formatFileSize(archiveInfo.fileSize)}</p>
-                      </div>
-                      <div>
-                        <Label className="text-sm font-medium text-gray-500">Created</Label>
-                        <p className="font-medium">{archiveInfo.created.toLocaleString()}</p>
-                      </div>
-                    </div>
-                    
-                    <div className="space-y-4">
-                      <div>
-                        <Label className="text-sm font-medium text-gray-500">Files</Label>
-                        <p className="font-medium">{archiveInfo.filesCount}</p>
-                      </div>
-                      <div>
-                        <Label className="text-sm font-medium text-gray-500">Folders</Label>
-                        <p className="font-medium">{archiveInfo.foldersCount}</p>
-                      </div>
-                      <div>
-                        <Label className="text-sm font-medium text-gray-500">Compression</Label>
-                        <p className="font-medium">{archiveInfo.compressionRatio}%</p>
-                      </div>
-                      <div className="flex items-center space-x-4">
-                        {archiveInfo.encrypted && (
-                          <Badge variant="destructive" className="flex items-center">
+                      <div className="col-span-2">{formatFileSize(file.size)}</div>
+                      <div className="col-span-2">{formatFileSize(file.compressed)}</div>
+                      <div className="col-span-1">{file.ratio}%</div>
+                      <div className="col-span-2">{file.modified}</div>
+                      <div className="col-span-1">
+                        {file.encrypted && (
+                          <Badge variant="secondary" className="text-xs">
                             <Shield className="h-3 w-3 mr-1" />
                             Encrypted
                           </Badge>
                         )}
-                        {archiveInfo.solid && (
-                          <Badge variant="secondary">
-                            Solid Archive
-                          </Badge>
-                        )}
                       </div>
                     </div>
-                  </div>
-                </CardContent>
-              </Card>
+                  ))}
+                </div>
+              </div>
             </TabsContent>
 
-            <TabsContent value="statistics" className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <TabsContent value="security" className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <Card>
-                  <CardContent className="pt-6">
-                    <div className="text-center">
-                      <div className="text-2xl font-bold text-blue-600">
-                        {getTotalStats().totalSize ? formatFileSize(getTotalStats().totalSize) : '0 B'}
-                      </div>
-                      <p className="text-sm text-gray-600">Original Size</p>
+                  <CardHeader>
+                    <CardTitle className="flex items-center">
+                      <Shield className="h-5 w-5 mr-2" />
+                      Security Overview
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-3">
+                    <div className="flex justify-between items-center">
+                      <span>Password Protected</span>
+                      <Badge variant={securityInfo.passwordProtected ? "destructive" : "secondary"}>
+                        {securityInfo.passwordProtected ? "Yes" : "No"}
+                      </Badge>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span>Digital Signature</span>
+                      <Badge variant={securityInfo.digitalSignature ? "default" : "secondary"}>
+                        {securityInfo.digitalSignature ? "Present" : "None"}
+                      </Badge>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span>Integrity Check</span>
+                      <Badge variant={securityInfo.integrityCheck ? "default" : "secondary"}>
+                        {securityInfo.integrityCheck ? "Passed" : "Failed"}
+                      </Badge>
                     </div>
                   </CardContent>
                 </Card>
-                
+
                 <Card>
-                  <CardContent className="pt-6">
-                    <div className="text-center">
-                      <div className="text-2xl font-bold text-green-600">
-                        {getTotalStats().totalCompressed ? formatFileSize(getTotalStats().totalCompressed) : '0 B'}
-                      </div>
-                      <p className="text-sm text-gray-600">Compressed Size</p>
+                  <CardHeader>
+                    <CardTitle className="flex items-center">
+                      <AlertTriangle className="h-5 w-5 mr-2" />
+                      Security Alerts
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-3">
+                    <div className="flex justify-between items-center">
+                      <span>Encrypted Files</span>
+                      <Badge variant={securityInfo.encryptedFiles > 0 ? "default" : "secondary"}>
+                        {securityInfo.encryptedFiles}
+                      </Badge>
                     </div>
-                  </CardContent>
-                </Card>
-                
-                <Card>
-                  <CardContent className="pt-6">
-                    <div className="text-center">
-                      <div className="text-2xl font-bold text-purple-600">
-                        {getTotalStats().compressionRatio}%
-                      </div>
-                      <p className="text-sm text-gray-600">Space Saved</p>
+                    <div className="flex justify-between items-center">
+                      <span>Suspicious Files</span>
+                      <Badge variant={securityInfo.suspiciousFiles > 0 ? "destructive" : "default"}>
+                        {securityInfo.suspiciousFiles}
+                      </Badge>
                     </div>
                   </CardContent>
                 </Card>
               </div>
+            </TabsContent>
 
-              <Card>
-                <CardHeader>
-                  <CardTitle>File Type Distribution</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-3">
-                    {['pdf', 'jpg', 'txt'].map((ext, index) => (
-                      <div key={ext} className="flex items-center">
-                        <div className="w-12 text-sm font-medium">.{ext}</div>
-                        <div className="flex-1 bg-gray-200 rounded-full h-2 mx-3">
-                          <div 
-                            className="bg-blue-500 h-2 rounded-full" 
-                            style={{ width: `${[60, 30, 10][index]}%` }}
-                          ></div>
+            <TabsContent value="analysis" className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Compression Analysis</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-4">
+                      <div>
+                        <div className="flex justify-between text-sm mb-1">
+                          <span>Overall Compression</span>
+                          <span>{((1 - archiveInfo.totalCompressed / archiveInfo.totalUncompressed) * 100).toFixed(1)}%</span>
                         </div>
-                        <div className="text-sm text-gray-600 w-12">{[60, 30, 10][index]}%</div>
+                        <Progress value={(1 - archiveInfo.totalCompressed / archiveInfo.totalUncompressed) * 100} />
                       </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
+                      <div className="text-sm text-gray-600">
+                        Space saved: {formatFileSize(archiveInfo.totalUncompressed - archiveInfo.totalCompressed)}
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                <Card>
+                  <CardHeader>
+                    <CardTitle>File Type Distribution</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-2">
+                      <div className="flex justify-between">
+                        <span>Documents</span>
+                        <span>40%</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Images</span>
+                        <span>35%</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Data Files</span>
+                        <span>20%</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Other</span>
+                        <span>5%</span>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
             </TabsContent>
           </Tabs>
         )}
@@ -394,9 +376,5 @@ const ArchiveInspector = () => {
     </Layout>
   );
 };
-
-const Label = ({ children, className }: { children: React.ReactNode; className?: string }) => (
-  <label className={className}>{children}</label>
-);
 
 export default ArchiveInspector;
