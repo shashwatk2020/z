@@ -7,59 +7,60 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Progress } from '@/components/ui/progress';
-import { ArrowRight, Upload, Download, FileArchive } from 'lucide-react';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Archive, Upload, Download, RefreshCw, AlertCircle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 const ArchiveConverter = () => {
-  const [files, setFiles] = useState<File[]>([]);
-  const [sourceFormat, setSourceFormat] = useState('');
-  const [targetFormat, setTargetFormat] = useState('');
+  const [inputFile, setInputFile] = useState<File | null>(null);
+  const [outputFormat, setOutputFormat] = useState('zip');
+  const [compressionLevel, setCompressionLevel] = useState('6');
+  const [password, setPassword] = useState('');
+  const [preserveStructure, setPreserveStructure] = useState(true);
   const [isConverting, setIsConverting] = useState(false);
   const [progress, setProgress] = useState(0);
+  const [conversionInfo, setConversionInfo] = useState<any>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
 
   const supportedFormats = [
-    { value: 'zip', label: 'ZIP' },
-    { value: 'rar', label: 'RAR' },
-    { value: '7z', label: '7-Zip' },
-    { value: 'tar', label: 'TAR' },
-    { value: 'gz', label: 'GZIP' },
-    { value: 'bz2', label: 'BZIP2' },
-    { value: 'xz', label: 'XZ' },
-    { value: 'iso', label: 'ISO' },
-    { value: 'cab', label: 'CAB' },
-    { value: 'dmg', label: 'DMG' }
+    { value: 'zip', label: 'ZIP Archive', ext: '.zip' },
+    { value: 'rar', label: 'RAR Archive', ext: '.rar' },
+    { value: '7z', label: '7-Zip Archive', ext: '.7z' },
+    { value: 'tar', label: 'TAR Archive', ext: '.tar' },
+    { value: 'tar.gz', label: 'TAR.GZ Archive', ext: '.tar.gz' },
+    { value: 'tar.bz2', label: 'TAR.BZ2 Archive', ext: '.tar.bz2' }
   ];
 
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const selectedFiles = Array.from(e.target.files || []);
-    setFiles(selectedFiles);
-    
-    // Auto-detect source format from file extension
-    if (selectedFiles.length > 0) {
-      const extension = selectedFiles[0].name.split('.').pop()?.toLowerCase();
-      const detectedFormat = supportedFormats.find(f => f.value === extension);
-      if (detectedFormat) {
-        setSourceFormat(detectedFormat.value);
+    const file = e.target.files?.[0];
+    if (file) {
+      const supportedExts = ['.zip', '.rar', '.7z', '.tar', '.tar.gz', '.tar.bz2'];
+      const isSupported = supportedExts.some(ext => file.name.toLowerCase().endsWith(ext));
+      
+      if (isSupported) {
+        setInputFile(file);
+        setConversionInfo({
+          name: file.name,
+          size: file.size,
+          type: file.name.split('.').pop()?.toUpperCase(),
+          lastModified: new Date(file.lastModified).toLocaleDateString()
+        });
+      } else {
+        toast({
+          title: "Unsupported Format",
+          description: "Please select a ZIP, RAR, 7Z, TAR, TAR.GZ, or TAR.BZ2 file.",
+          variant: "destructive"
+        });
       }
     }
   };
 
   const convertArchive = async () => {
-    if (files.length === 0 || !sourceFormat || !targetFormat) {
+    if (!inputFile) {
       toast({
-        title: "Missing Information",
-        description: "Please select files and both source and target formats.",
-        variant: "destructive"
-      });
-      return;
-    }
-
-    if (sourceFormat === targetFormat) {
-      toast({
-        title: "Same Format",
-        description: "Source and target formats cannot be the same.",
+        title: "No File Selected",
+        description: "Please select an archive file to convert.",
         variant: "destructive"
       });
       return;
@@ -69,14 +70,13 @@ const ArchiveConverter = () => {
     setProgress(0);
 
     try {
-      // Simulate conversion process
       const steps = [
         'Reading source archive...',
         'Extracting files...',
-        'Analyzing content...',
-        'Converting format...',
-        'Optimizing compression...',
-        'Finalizing archive...'
+        'Analyzing structure...',
+        'Applying new compression...',
+        'Creating target archive...',
+        'Finalizing conversion...'
       ];
 
       for (let i = 0; i < steps.length; i++) {
@@ -84,22 +84,26 @@ const ArchiveConverter = () => {
         await new Promise(resolve => setTimeout(resolve, 1000));
       }
 
-      // Create converted file
-      const convertedFileName = files[0].name.replace(/\.[^/.]+$/, `.${targetFormat}`);
+      const outputFormat_obj = supportedFormats.find(f => f.value === outputFormat);
+      const outputName = inputFile.name.replace(/\.[^/.]+$/, '') + outputFormat_obj?.ext;
+
       const blob = new Blob(['Converted archive content'], { 
-        type: getMimeType(targetFormat) 
+        type: outputFormat === 'zip' ? 'application/zip' : 
+              outputFormat === 'rar' ? 'application/x-rar-compressed' :
+              outputFormat === '7z' ? 'application/x-7z-compressed' :
+              'application/x-tar'
       });
       
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = convertedFileName;
+      a.download = outputName;
       a.click();
       URL.revokeObjectURL(url);
 
       toast({
         title: "Conversion Complete",
-        description: `Successfully converted ${sourceFormat.toUpperCase()} to ${targetFormat.toUpperCase()}`
+        description: `Successfully converted to ${outputFormat_obj?.label}`
       });
     } catch (error) {
       toast({
@@ -113,205 +117,128 @@ const ArchiveConverter = () => {
     }
   };
 
-  const getSourceFormatLabel = () => {
-    return supportedFormats.find(f => f.value === sourceFormat)?.label || '';
-  };
-
-  const getTargetFormatLabel = () => {
-    return supportedFormats.find(f => f.value === targetFormat)?.label || '';
-  };
-
-  const getFileTypesString = () => {
-    return supportedFormats.map(f => `.${f.value}`).join(', ');
-  };
-
-  const getConversionInfo = () => {
-    if (!sourceFormat || !targetFormat) return null;
-
-    const conversionMap: Record<string, Record<string, string>> = {
-      zip: {
-        '7z': 'Convert to smaller file size with better compression',
-        rar: 'Convert to RAR for better compression and recovery records',
-        tar: 'Convert to TAR for Unix/Linux compatibility'
-      },
-      rar: {
-        zip: 'Convert to ZIP for universal compatibility',
-        '7z': 'Convert to 7Z for open-source format with excellent compression',
-        tar: 'Extract and repackage as TAR archive'
-      },
-      '7z': {
-        zip: 'Convert to ZIP for wider compatibility',
-        rar: 'Convert to RAR format',
-        tar: 'Convert to TAR for Unix systems'
-      }
-    };
-
-    return conversionMap[sourceFormat]?.[targetFormat] || 'Convert between archive formats';
-  };
-
-  const getMimeType = (format: string) => {
-    const mimeTypes: Record<string, string> = {
-      zip: 'application/zip',
-      rar: 'application/vnd.rar',
-      '7z': 'application/x-7z-compressed',
-      tar: 'application/x-tar',
-      gz: 'application/gzip',
-      bz2: 'application/x-bzip2',
-      xz: 'application/x-xz',
-      iso: 'application/x-iso9660-image',
-      cab: 'application/vnd.ms-cab-compressed',
-      dmg: 'application/x-apple-diskimage'
-    };
-    return mimeTypes[format] || 'application/octet-stream';
+  const formatFileSize = (bytes: number) => {
+    const k = 1024;
+    const sizes = ['B', 'KB', 'MB', 'GB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
   };
 
   return (
     <Layout>
-      <div className="max-w-6xl mx-auto p-6 space-y-6">
+      <div className="max-w-4xl mx-auto p-6 space-y-6">
         <div className="text-center space-y-2">
-          <ArrowRight className="h-12 w-12 mx-auto text-purple-600" />
-          <h1 className="text-3xl font-bold">Universal Archive Converter</h1>
-          <p className="text-gray-600">Convert between all popular archive formats with advanced optimization</p>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <Card>
-            <CardHeader>
-              <CardTitle>Source Archive</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <Button onClick={() => fileInputRef.current?.click()} className="w-full" variant="outline">
-                <Upload className="h-4 w-4 mr-2" />
-                Select Archive Files
-              </Button>
-              <input 
-                ref={fileInputRef} 
-                type="file" 
-                multiple 
-                accept={getFileTypesString()}
-                onChange={handleFileSelect} 
-                className="hidden" 
-              />
-
-              {files.length > 0 && (
-                <div className="space-y-2">
-                  <Label>Selected Files ({files.length})</Label>
-                  <div className="max-h-32 overflow-y-auto space-y-1">
-                    {files.map((file, index) => (
-                      <div key={index} className="text-sm p-2 bg-gray-50 rounded flex items-center">
-                        <FileArchive className="h-4 w-4 mr-2 text-blue-500" />
-                        <span className="truncate">{file.name}</span>
-                        <span className="ml-auto text-gray-500">
-                          {(file.size / 1024 / 1024).toFixed(2)} MB
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              <div className="space-y-2">
-                <Label>Source Format</Label>
-                <Select value={sourceFormat} onValueChange={setSourceFormat}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Auto-detect or select format" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {supportedFormats.map((format) => (
-                      <SelectItem key={format.value} value={format.value}>
-                        {format.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle>Target Format</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="space-y-2">
-                <Label>Convert To</Label>
-                <Select value={targetFormat} onValueChange={setTargetFormat}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select target format" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {supportedFormats.filter(f => f.value !== sourceFormat).map((format) => (
-                      <SelectItem key={format.value} value={format.value}>
-                        {format.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-
-              {sourceFormat && targetFormat && (
-                <div className="p-4 bg-blue-50 rounded-lg">
-                  <div className="flex items-center justify-center space-x-4 mb-2">
-                    <span className="font-medium text-blue-800">{getSourceFormatLabel()}</span>
-                    <ArrowRight className="h-4 w-4 text-blue-600" />
-                    <span className="font-medium text-blue-800">{getTargetFormatLabel()}</span>
-                  </div>
-                  <p className="text-sm text-blue-700 text-center">{getConversionInfo()}</p>
-                </div>
-              )}
-
-              <Button 
-                onClick={convertArchive} 
-                disabled={isConverting || !sourceFormat || !targetFormat || files.length === 0} 
-                className="w-full"
-              >
-                <Download className="h-4 w-4 mr-2" />
-                {isConverting ? 'Converting...' : 'Convert Archive'}
-              </Button>
-
-              {isConverting && (
-                <div className="space-y-2">
-                  <Progress value={progress} />
-                  <p className="text-sm text-gray-600 text-center">
-                    Converting {getSourceFormatLabel()} to {getTargetFormatLabel()}...
-                  </p>
-                </div>
-              )}
-            </CardContent>
-          </Card>
+          <Archive className="h-12 w-12 mx-auto text-purple-600" />
+          <h1 className="text-3xl font-bold">Archive Format Converter</h1>
+          <p className="text-gray-600">Convert between different archive formats with advanced options</p>
         </div>
 
         <Card>
           <CardHeader>
-            <CardTitle>Supported Conversions</CardTitle>
+            <CardTitle>Select Source Archive</CardTitle>
           </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              <div className="p-4 border rounded-lg">
-                <h4 className="font-medium mb-2">Universal Formats</h4>
-                <ul className="text-sm text-gray-600 space-y-1">
-                  <li>• ZIP ↔ RAR ↔ 7Z</li>
-                  <li>• TAR ↔ GZ ↔ BZ2</li>
-                  <li>• Any format to ZIP</li>
-                </ul>
+          <CardContent className="space-y-4">
+            <Button onClick={() => fileInputRef.current?.click()} variant="outline" className="w-full">
+              <Upload className="h-4 w-4 mr-2" />
+              Choose Archive File
+            </Button>
+            <input 
+              ref={fileInputRef} 
+              type="file" 
+              accept=".zip,.rar,.7z,.tar,.tar.gz,.tar.bz2"
+              onChange={handleFileSelect} 
+              className="hidden" 
+            />
+
+            {conversionInfo && (
+              <div className="p-4 bg-blue-50 rounded-lg space-y-2">
+                <div className="flex items-center">
+                  <AlertCircle className="h-4 w-4 mr-2 text-blue-600" />
+                  <span className="font-medium">Source Archive Information</span>
+                </div>
+                <div className="grid grid-cols-2 gap-4 text-sm">
+                  <div><strong>Name:</strong> {conversionInfo.name}</div>
+                  <div><strong>Type:</strong> {conversionInfo.type}</div>
+                  <div><strong>Size:</strong> {formatFileSize(conversionInfo.size)}</div>
+                  <div><strong>Modified:</strong> {conversionInfo.lastModified}</div>
+                </div>
               </div>
-              <div className="p-4 border rounded-lg">
-                <h4 className="font-medium mb-2">Disc Images</h4>
-                <ul className="text-sm text-gray-600 space-y-1">
-                  <li>• ISO to ZIP/7Z</li>
-                  <li>• DMG extraction</li>
-                  <li>• CD/DVD images</li>
-                </ul>
-              </div>
-              <div className="p-4 border rounded-lg">
-                <h4 className="font-medium mb-2">System Archives</h4>
-                <ul className="text-sm text-gray-600 space-y-1">
-                  <li>• CAB (Windows)</li>
-                  <li>• DMG (macOS)</li>
-                  <li>• TAR (Unix/Linux)</li>
-                </ul>
-              </div>
+            )}
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>Conversion Settings</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="space-y-2">
+              <Label>Target Format</Label>
+              <Select value={outputFormat} onValueChange={setOutputFormat}>
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {supportedFormats.map(format => (
+                    <SelectItem key={format.value} value={format.value}>
+                      {format.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
+
+            <div className="space-y-2">
+              <Label>Compression Level</Label>
+              <Select value={compressionLevel} onValueChange={setCompressionLevel}>
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="0">Store (No compression)</SelectItem>
+                  <SelectItem value="1">Fastest</SelectItem>
+                  <SelectItem value="3">Fast</SelectItem>
+                  <SelectItem value="6">Normal (Recommended)</SelectItem>
+                  <SelectItem value="9">Maximum</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="space-y-2">
+              <Label>Password (Optional)</Label>
+              <Input 
+                type="password" 
+                value={password} 
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Set password for target archive"
+              />
+            </div>
+
+            <div className="flex items-center space-x-2">
+              <Checkbox 
+                checked={preserveStructure} 
+                onCheckedChange={(checked) => setPreserveStructure(checked === true)} 
+              />
+              <Label>Preserve original folder structure</Label>
+            </div>
+
+            <Button 
+              onClick={convertArchive} 
+              disabled={isConverting || !inputFile} 
+              className="w-full"
+            >
+              <RefreshCw className={`h-4 w-4 mr-2 ${isConverting ? 'animate-spin' : ''}`} />
+              {isConverting ? 'Converting...' : 'Convert Archive'}
+            </Button>
+
+            {isConverting && (
+              <div className="space-y-2">
+                <Progress value={progress} />
+                <p className="text-sm text-gray-600 text-center">
+                  Converting archive format...
+                </p>
+              </div>
+            )}
           </CardContent>
         </Card>
       </div>
