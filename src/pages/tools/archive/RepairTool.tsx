@@ -1,4 +1,3 @@
-
 import React, { useState, useRef } from 'react';
 import Layout from '@/components/layout/Layout';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
@@ -6,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
-import { Wrench, Upload, Download, AlertTriangle, CheckCircle, XCircle, Info, Shield } from 'lucride-react';
+import { Wrench, Upload, Download, AlertTriangle, CheckCircle, XCircle, Info, Shield } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 const RepairTool = () => {

@@ -12,6 +12,11 @@ import { Textarea } from '@/components/ui/textarea';
 import { HardDrive, Upload, Download, Folder, Shield, Clock, Settings, CheckCircle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
+// Extend the input element to support webkitdirectory
+interface FileInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+  webkitdirectory?: string;
+}
+
 const BackupCreator = () => {
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [backupName, setBackupName] = useState('');
@@ -208,7 +213,7 @@ const BackupCreator = () => {
             <input 
               ref={folderInputRef} 
               type="file" 
-              webkitdirectory=""
+              {...({ webkitdirectory: "" } as FileInputProps)}
               multiple 
               onChange={handleFolderSelect} 
               className="hidden" 
