@@ -1,4 +1,3 @@
-
 import React from 'react';
 import Layout from '@/components/layout/Layout';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
@@ -14,9 +13,9 @@ const BackupScheduler = () => (
         <p className="text-gray-600">Schedule automatic backups</p>
       </div>
       <Card>
-        <CardHeader><CardTitle>Schedule Backups</CardTitle></CardHeader>
+        <CardHeader><CardTitle>Schedule Backup</CardTitle></CardHeader>
         <CardContent>
-          <Button className="w-full">Create Schedule</Button>
+          <Button className="w-full">Schedule Backup</Button>
         </CardContent>
       </Card>
     </div>

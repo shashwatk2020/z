@@ -10,85 +10,85 @@ const tools = [
   {
     name: 'Basic Calculator',
     description: 'Perform basic arithmetic operations with an easy-to-use interface. Perfect for quick calculations, percentages, and everyday math tasks with full keyboard support.',
-    link: '/tools/calculators/basic-calculator',
+    link: '/tools/calculators/BasicCalculator',
     icon: <Calculator className="h-8 w-8 text-blue-500" />
   },
   {
     name: 'Loan Calculator',
     description: 'Calculate monthly payments, total interest, and amortization schedules for mortgages, auto loans, and personal loans. Make informed financial decisions with detailed breakdowns.',
-    link: '/tools/calculators/loan-calculator',
+    link: '/tools/calculators/LoanCalculator',
     icon: <DollarSign className="h-8 w-8 text-green-500" />
   },
   {
     name: 'Percentage Calculator',
     description: 'Calculate percentages, percentage increases, decreases, and percentage of totals. Essential for discounts, tax calculations, tips, and statistical analysis.',
-    link: '/tools/calculators/percentage-calculator',
+    link: '/tools/calculators/PercentageCalculator',
     icon: <Percent className="h-8 w-8 text-purple-500" />
   },
   {
     name: 'Date Calculator',
     description: 'Calculate differences between dates, add or subtract days from dates, and determine business days. Perfect for project planning and deadline management.',
-    link: '/tools/calculators/date-calculator',
+    link: '/tools/calculators/DateCalculator',
     icon: <Calendar className="h-8 w-8 text-orange-500" />
   },
   {
     name: 'Investment Calculator',
     description: 'Calculate compound interest, investment returns, and retirement savings. Plan your financial future with detailed projections and growth scenarios.',
-    link: '/tools/calculators/investment-calculator',
+    link: '/tools/calculators/InvestmentCalculator',
     icon: <TrendingUp className="h-8 w-8 text-red-500" />
   },
   {
     name: 'Mortgage Calculator',
     description: 'Calculate monthly mortgage payments, total interest costs, and compare different loan scenarios. Essential tool for home buyers and refinancing decisions.',
-    link: '/tools/calculators/mortgage-calculator',
+    link: '/tools/calculators/MortgageCalculator',
     icon: <Home className="h-8 w-8 text-indigo-500" />
   },
 ];
 
 const basicCalculators = [
-    { name: 'Basic Calculator', description: 'Standard calculator with arithmetic operations and memory functions.', link: '/tools/calculators/basic-calculator' },
-    { name: 'Scientific Calculator', description: 'Advanced calculator with trigonometric and logarithmic functions.', link: '/tools/calculators/scientific-calculator' },
-    { name: 'Fraction Calculator', description: 'Perform calculations with fractions and mixed numbers.', link: '/tools/calculators/fraction-calculator' },
-    { name: 'Percentage Calculator', description: 'Calculate percentages, increases, decreases, and ratios.', link: '/tools/calculators/percentage-calculator' },
-    { name: 'Square Root Calculator', description: 'Calculate square roots and other radical expressions.', link: '/tools/calculators/square-root-calculator' },
-    { name: 'Algebra Calculator', description: 'Solve algebraic equations and expressions step by step.', link: '/tools/calculators/algebra-calculator' },
-    { name: 'Binary Calculator', description: 'Perform calculations in binary, octal, and hexadecimal.', link: '/tools/calculators/binary-calculator' },
-    { name: 'Matrix Calculator', description: 'Perform matrix operations like multiplication and determinants.', link: '/tools/calculators/matrix-calculator' },
+    { name: 'Basic Calculator', description: 'Standard calculator with arithmetic operations and memory functions.', link: '/tools/calculators/BasicCalculator' },
+    { name: 'Scientific Calculator', description: 'Advanced calculator with trigonometric and logarithmic functions.', link: '/tools/calculators/ScientificCalculator' },
+    { name: 'Fraction Calculator', description: 'Perform calculations with fractions and mixed numbers.', link: '/tools/calculators/FractionCalculator' },
+    { name: 'Percentage Calculator', description: 'Calculate percentages, increases, decreases, and ratios.', link: '/tools/calculators/PercentageCalculator' },
+    { name: 'Square Root Calculator', description: 'Calculate square roots and other radical expressions.', link: '/tools/calculators/SquareRootCalculator' },
+    { name: 'Algebra Calculator', description: 'Solve algebraic equations and expressions step by step.', link: '/tools/calculators/AlgebraCalculator' },
+    { name: 'Binary Calculator', description: 'Perform calculations in binary, octal, and hexadecimal.', link: '/tools/calculators/BinaryCalculator' },
+    { name: 'Matrix Calculator', description: 'Perform matrix operations like multiplication and determinants.', link: '/tools/calculators/MatrixCalculator' },
 ];
 
 const financialCalculators = [
-    { name: 'Loan Calculator', description: 'Calculate monthly payments and total interest for any loan.', link: '/tools/calculators/loan-calculator' },
-    { name: 'Mortgage Calculator', description: 'Calculate mortgage payments with taxes and insurance.', link: '/tools/calculators/mortgage-calculator' },
-    { name: 'Investment Calculator', description: 'Calculate compound interest and investment growth.', link: '/tools/calculators/investment-calculator' },
-    { name: 'Retirement Calculator', description: 'Plan your retirement savings and withdrawal strategy.', link: '/tools/calculators/retirement-calculator' },
-    { name: 'Tax Calculator', description: 'Estimate federal and state income taxes.', link: '/tools/calculators/tax-calculator' },
-    { name: 'Salary Calculator', description: 'Convert between hourly, weekly, monthly, and annual salaries.', link: '/tools/calculators/salary-calculator' },
-    { name: 'Budget Calculator', description: 'Create and manage personal or business budgets.', link: '/tools/calculators/budget-calculator' },
-    { name: 'ROI Calculator', description: 'Calculate return on investment for business decisions.', link: '/tools/calculators/roi-calculator' },
-    { name: 'Currency Converter', description: 'Convert between different currencies with live rates.', link: '/tools/calculators/currency-converter' },
-    { name: 'Tip Calculator', description: 'Calculate tips and split bills among multiple people.', link: '/tools/calculators/tip-calculator' },
+    { name: 'Loan Calculator', description: 'Calculate monthly payments and total interest for any loan.', link: '/tools/calculators/LoanCalculator' },
+    { name: 'Mortgage Calculator', description: 'Calculate mortgage payments with taxes and insurance.', link: '/tools/calculators/MortgageCalculator' },
+    { name: 'Investment Calculator', description: 'Calculate compound interest and investment growth.', link: '/tools/calculators/InvestmentCalculator' },
+    { name: 'Retirement Calculator', description: 'Plan your retirement savings and withdrawal strategy.', link: '/tools/calculators/RetirementCalculator' },
+    { name: 'Tax Calculator', description: 'Estimate federal and state income taxes.', link: '/tools/calculators/TaxCalculator' },
+    { name: 'Salary Calculator', description: 'Convert between hourly, weekly, monthly, and annual salaries.', link: '/tools/calculators/SalaryCalculator' },
+    { name: 'Budget Calculator', description: 'Create and manage personal or business budgets.', link: '/tools/calculators/BudgetCalculator' },
+    { name: 'ROI Calculator', description: 'Calculate return on investment for business decisions.', link: '/tools/calculators/ROICalculator' },
+    { name: 'Currency Converter', description: 'Convert between different currencies with live rates.', link: '/tools/calculators/CurrencyConverter' },
+    { name: 'Tip Calculator', description: 'Calculate tips and split bills among multiple people.', link: '/tools/calculators/TipCalculator' },
 ];
 
 const conversionCalculators = [
-    { name: 'Unit Converter', description: 'Convert between different units of measurement.', link: '/tools/calculators/unit-converter' },
-    { name: 'Temperature Converter', description: 'Convert between Celsius, Fahrenheit, and Kelvin.', link: '/tools/calculators/temperature-converter' },
-    { name: 'Length Converter', description: 'Convert between inches, feet, meters, kilometers, etc.', link: '/tools/calculators/length-converter' },
-    { name: 'Weight Converter', description: 'Convert between pounds, kilograms, ounces, and more.', link: '/tools/calculators/weight-converter' },
-    { name: 'Volume Converter', description: 'Convert between liters, gallons, cups, and other volumes.', link: '/tools/calculators/volume-converter' },
-    { name: 'Area Calculator', description: 'Calculate areas of rectangles, circles, triangles, and more.', link: '/tools/calculators/area-calculator' },
-    { name: 'Speed Converter', description: 'Convert between mph, km/h, and other speed units.', link: '/tools/calculators/speed-converter' },
-    { name: 'Time Zone Converter', description: 'Convert times between different time zones worldwide.', link: '/tools/calculators/timezone-converter' },
+    { name: 'Unit Converter', description: 'Convert between different units of measurement.', link: '/tools/calculators/UnitConverter' },
+    { name: 'Temperature Converter', description: 'Convert between Celsius, Fahrenheit, and Kelvin.', link: '/tools/calculators/TemperatureConverter' },
+    { name: 'Length Converter', description: 'Convert between inches, feet, meters, kilometers, etc.', link: '/tools/calculators/LengthConverter' },
+    { name: 'Weight Converter', description: 'Convert between pounds, kilograms, ounces, and more.', link: '/tools/calculators/WeightConverter' },
+    { name: 'Volume Converter', description: 'Convert between liters, gallons, cups, and other volumes.', link: '/tools/calculators/VolumeConverter' },
+    { name: 'Area Calculator', description: 'Calculate areas of rectangles, circles, triangles, and more.', link: '/tools/calculators/AreaCalculator' },
+    { name: 'Speed Converter', description: 'Convert between mph, km/h, and other speed units.', link: '/tools/calculators/SpeedConverter' },
+    { name: 'Time Zone Converter', description: 'Convert times between different time zones worldwide.', link: '/tools/calculators/TimeZoneConverter' },
 ];
 
 const specialtyCalculators = [
-    { name: 'Date Calculator', description: 'Calculate differences between dates and add/subtract days.', link: '/tools/calculators/date-calculator' },
-    { name: 'Age Calculator', description: 'Calculate exact age in years, months, and days.', link: '/tools/calculators/age-calculator' },
-    { name: 'BMI Calculator', description: 'Calculate Body Mass Index and health recommendations.', link: '/tools/calculators/bmi-calculator' },
-    { name: 'Calorie Calculator', description: 'Calculate daily caloric needs and burn rates.', link: '/tools/calculators/calorie-calculator' },
-    { name: 'GPA Calculator', description: 'Calculate grade point averages for students.', link: '/tools/calculators/gpa-calculator' },
-    { name: 'Fuel Cost Calculator', description: 'Calculate fuel costs for trips and compare vehicles.', link: '/tools/calculators/fuel-calculator' },
-    { name: 'Paint Calculator', description: 'Calculate how much paint needed for walls and rooms.', link: '/tools/calculators/paint-calculator' },
-    { name: 'Pregnancy Calculator', description: 'Calculate due dates and pregnancy milestones.', link: '/tools/calculators/pregnancy-calculator' },
+    { name: 'Date Calculator', description: 'Calculate differences between dates and add/subtract days.', link: '/tools/calculators/DateCalculator' },
+    { name: 'Age Calculator', description: 'Calculate exact age in years, months, and days.', link: '/tools/calculators/AgeCalculator' },
+    { name: 'BMI Calculator', description: 'Calculate Body Mass Index and health recommendations.', link: '/tools/calculators/BMICalculator' },
+    { name: 'Calorie Calculator', description: 'Calculate daily caloric needs and burn rates.', link: '/tools/calculators/CalorieCalculator' },
+    { name: 'GPA Calculator', description: 'Calculate grade point averages for students.', link: '/tools/calculators/GPACalculator' },
+    { name: 'Fuel Cost Calculator', description: 'Calculate fuel costs for trips and compare vehicles.', link: '/tools/calculators/FuelCostCalculator' },
+    { name: 'Paint Calculator', description: 'Calculate how much paint needed for walls and rooms.', link: '/tools/calculators/PaintCalculator' },
+    { name: 'Pregnancy Calculator', description: 'Calculate due dates and pregnancy milestones.', link: '/tools/calculators/PregnancyCalculator' },
 ];
 
 const Calculators = () => {

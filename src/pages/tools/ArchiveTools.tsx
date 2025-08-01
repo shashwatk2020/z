@@ -72,8 +72,8 @@ const managementTools = [
     { name: 'Duplicate File Finder', description: 'Find duplicate files within archives to save space.', link: '/tools/archive/duplicate-finder' },
     { name: 'Archive Repair Tool', description: 'Attempt to repair corrupted or damaged archive files.', link: '/tools/archive/repair-tool' },
     { name: 'Password Recovery', description: 'Recover passwords from protected archive files.', link: '/tools/archive/password-recovery' },
-    { name: 'Archive Splitter', description: 'Split large archives into smaller parts for easier transfer.', link: '/tools/archive/splitter' },
-    { name: 'Archive Merger', description: 'Merge multi-part archives back into single files.', link: '/tools/archive/merger' },
+    { name: 'Archive Splitter', description: 'Split large archives into smaller parts for easier transfer.', link: '/tools/archive/archive-splitter' },
+    { name: 'Archive Merger', description: 'Merge multi-part archives back into single files.', link: '/tools/archive/archive-merger' },
     { name: 'Compression Analyzer', description: 'Compare compression ratios across different formats.', link: '/tools/archive/compression-analyzer' },
 ];
 

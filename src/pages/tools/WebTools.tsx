@@ -10,91 +10,91 @@ const tools = [
   {
     name: 'HTML Validator',
     description: 'Check your HTML code for errors and ensure it meets web standards. Validate markup, identify issues, and improve your website\'s compatibility across all browsers.',
-    link: '/tools/web/html-validator',
+    link: '/tools/web/HtmlValidator',
     icon: <Code className="h-8 w-8 text-blue-500" />
   },
   {
     name: 'CSS Minifier',
     description: 'Compress your CSS files by removing unnecessary whitespace, comments, and formatting. Reduce file sizes to improve website loading speed and performance.',
-    link: '/tools/web/css-minifier',
+    link: '/tools/web/CssMinifier',
     icon: <Zap className="h-8 w-8 text-green-500" />
   },
   {
     name: 'Color Palette Generator',
     description: 'Create beautiful and harmonious color schemes for your website. Generate complementary colors, extract palettes from images, and find the perfect colors for your brand.',
-    link: '/tools/web/color-palette-generator',
+    link: '/tools/web/ColorPaletteGenerator',
     icon: <Palette className="h-8 w-8 text-purple-500" />
   },
   {
     name: 'SEO Meta Tag Generator',
     description: 'Generate optimized meta tags for better search engine visibility. Create title tags, meta descriptions, and Open Graph tags to improve your website\'s SEO performance.',
-    link: '/tools/web/seo-meta-tag-generator',
+    link: '/tools/web/SeoMetaTagGenerator',
     icon: <Search className="h-8 w-8 text-orange-500" />
   },
   {
     name: 'Website Speed Test',
     description: 'Analyze your website\'s loading performance and get actionable insights to improve speed. Test page load times, identify bottlenecks, and optimize for better user experience.',
-    link: '/tools/web/website-speed-test',
+    link: '/tools/web/PageSpeedAnalyzer',
     icon: <Globe className="h-8 w-8 text-red-500" />
   },
   {
     name: 'SSL Certificate Checker',
     description: 'Verify the validity and security of SSL certificates on any website. Check expiration dates, certificate chains, and ensure your site is properly secured.',
-    link: '/tools/web/ssl-certificate-checker',
+    link: '/tools/web/SslCertificateChecker',
     icon: <Shield className="h-8 w-8 text-indigo-500" />
-  },
+  }
 ];
 
 const developmentTools = [
-    { name: 'HTML Validator', description: 'Validate HTML markup for errors and standards compliance.', link: '/tools/web/html-validator' },
-    { name: 'CSS Validator', description: 'Check CSS code for syntax errors and best practices.', link: '/tools/web/css-validator' },
-    { name: 'JavaScript Minifier', description: 'Compress JavaScript files to reduce loading times.', link: '/tools/web/javascript-minifier' },
-    { name: 'CSS Minifier', description: 'Minimize CSS files by removing unnecessary characters.', link: '/tools/web/css-minifier' },
-    { name: 'HTML Minifier', description: 'Compress HTML code while preserving functionality.', link: '/tools/web/html-minifier' },
-    { name: 'JSON Formatter', description: 'Format and validate JSON data with proper indentation.', link: '/tools/web/json-formatter' },
-    { name: 'XML Formatter', description: 'Pretty-print XML with proper structure and indentation.', link: '/tools/web/xml-formatter' },
-    { name: 'Base64 Encoder/Decoder', description: 'Convert text to Base64 encoding and vice versa.', link: '/tools/web/base64-encoder-decoder' },
-    { name: 'URL Encoder/Decoder', description: 'Encode and decode URLs for web compatibility.', link: '/tools/web/url-encoder-decoder' },
-    { name: 'HTML Entity Encoder', description: 'Convert special characters to HTML entities.', link: '/tools/web/html-entity-encoder' },
-    { name: 'Regex Tester', description: 'Test and debug regular expressions with live results.', link: '/tools/web/regex-tester' },
+    { name: 'HTML Validator', description: 'Validate HTML markup for errors and standards compliance.', link: '/tools/web/HtmlValidator' },
+    { name: 'CSS Validator', description: 'Check CSS code for syntax errors and best practices.', link: '/tools/web/CssValidator' },
+    { name: 'JavaScript Minifier', description: 'Compress JavaScript files to reduce loading times.', link: '/tools/web/JavaScriptMinifier' },
+    { name: 'CSS Minifier', description: 'Minimize CSS files by removing unnecessary characters.', link: '/tools/web/CssMinifier' },
+    { name: 'HTML Minifier', description: 'Compress HTML code while preserving functionality.', link: '/tools/web/HtmlMinifier' },
+    { name: 'JSON Formatter', description: 'Format and validate JSON data with proper indentation.', link: '/tools/web/JsonFormatter' },
+    { name: 'XML Formatter', description: 'Pretty-print XML with proper structure and indentation.', link: '/tools/web/XmlFormatter' },
+    { name: 'Base64 Encoder/Decoder', description: 'Convert text to Base64 encoding and vice versa.', link: '/tools/web/Base64EncoderDecoder' },
+    { name: 'URL Encoder/Decoder', description: 'Encode and decode URLs for web compatibility.', link: '/tools/web/UrlEncoderDecoder' },
+    { name: 'HTML Entity Encoder', description: 'Convert special characters to HTML entities.', link: '/tools/web/HtmlEntityEncoder' },
+    { name: 'Regex Tester', description: 'Test and debug regular expressions with live results.', link: '/tools/web/RegexTester' },
 ];
 
 const seoTools = [
-    { name: 'SEO Meta Tag Generator', description: 'Create optimized meta tags for better search rankings.', link: '/tools/web/seo-meta-tag-generator' },
-    { name: 'Open Graph Generator', description: 'Generate Open Graph tags for social media sharing.', link: '/tools/web/open-graph-generator' },
-    { name: 'Twitter Card Generator', description: 'Create Twitter Card meta tags for enhanced tweets.', link: '/tools/web/twitter-card-generator' },
-    { name: 'Robots.txt Generator', description: 'Generate robots.txt files for search engine crawlers.', link: '/tools/web/robots-txt-generator' },
-    { name: 'Sitemap Generator', description: 'Create XML sitemaps for better search engine indexing.', link: '/tools/web/sitemap-generator' },
-    { name: 'Schema Markup Generator', description: 'Generate structured data markup for rich snippets.', link: '/tools/web/schema-markup-generator' },
-    { name: 'Keyword Density Analyzer', description: 'Analyze keyword frequency in your web content.', link: '/tools/web/keyword-density-analyzer' },
-    { name: 'Page Speed Analyzer', description: 'Analyze website loading speed and performance.', link: '/tools/web/page-speed-analyzer' },
-    { name: 'Broken Link Checker', description: 'Find and identify broken links on websites.', link: '/tools/web/broken-link-checker' },
-    { name: 'SERP Preview Tool', description: 'Preview how your page appears in search results.', link: '/tools/web/serp-preview-tool' },
+    { name: 'SEO Meta Tag Generator', description: 'Create optimized meta tags for better search rankings.', link: '/tools/web/SeoMetaTagGenerator' },
+    { name: 'Open Graph Generator', description: 'Generate Open Graph tags for social media sharing.', link: '/tools/web/OpenGraphGenerator' },
+    { name: 'Twitter Card Generator', description: 'Create Twitter Card meta tags for enhanced tweets.', link: '/tools/web/TwitterCardGenerator' },
+    { name: 'Robots.txt Generator', description: 'Generate robots.txt files for search engine crawlers.', link: '/tools/web/RobotsTxtGenerator' },
+    { name: 'Sitemap Generator', description: 'Create XML sitemaps for better search engine indexing.', link: '/tools/web/SitemapGenerator' },
+    { name: 'Schema Markup Generator', description: 'Generate structured data markup for rich snippets.', link: '/tools/web/SchemaMarkupGenerator' },
+    { name: 'Keyword Density Analyzer', description: 'Analyze keyword frequency in your web content.', link: '/tools/web/KeywordDensityAnalyzer' },
+    { name: 'Page Speed Analyzer', description: 'Analyze website loading speed and performance.', link: '/tools/web/PageSpeedAnalyzer' },
+    { name: 'Broken Link Checker', description: 'Find and identify broken links on websites.', link: '/tools/web/BrokenLinkChecker' },
+    { name: 'SERP Preview Tool', description: 'Preview how your page appears in search results.', link: '/tools/web/SerpPreviewTool' },
 ];
 
 const designTools = [
-    { name: 'Color Palette Generator', description: 'Create harmonious color schemes for web design.', link: '/tools/web/color-palette-generator' },
-    { name: 'Gradient Generator', description: 'Generate beautiful CSS gradients with live preview.', link: '/tools/web/gradient-generator' },
-    { name: 'Box Shadow Generator', description: 'Create CSS box shadows with visual controls.', link: '/tools/web/box-shadow-generator' },
-    { name: 'Border Radius Generator', description: 'Generate CSS border-radius properties visually.', link: '/tools/web/border-radius-generator' },
-    { name: 'CSS Grid Generator', description: 'Create CSS Grid layouts with visual interface.', link: '/tools/web/css-grid-generator' },
-    { name: 'Flexbox Generator', description: 'Generate CSS Flexbox layouts with ease.', link: '/tools/web/flexbox-generator' },
-    { name: 'Font Pairing Tool', description: 'Find perfect font combinations for your website.', link: '/tools/web/font-pairing-tool' },
-    { name: 'Favicon Generator', description: 'Create favicons in multiple sizes and formats.', link: '/tools/web/favicon-generator' },
-    { name: 'CSS Animation Generator', description: 'Create CSS animations with keyframes.', link: '/tools/web/css-animation-generator' },
-    { name: 'QR Code Generator', description: 'Generate QR codes for websites and content.', link: '/tools/web/qr-code-generator' },
+    { name: 'Color Palette Generator', description: 'Create harmonious color schemes for web design.', link: '/tools/web/ColorPaletteGenerator' },
+    { name: 'Gradient Generator', description: 'Generate beautiful CSS gradients with live preview.', link: '/tools/web/GradientGenerator' },
+    { name: 'Box Shadow Generator', description: 'Create CSS box shadows with visual controls.', link: '/tools/web/BoxShadowGenerator' },
+    { name: 'Border Radius Generator', description: 'Generate CSS border-radius properties visually.', link: '/tools/web/BorderRadiusGenerator' },
+    { name: 'CSS Grid Generator', description: 'Create CSS Grid layouts with visual interface.', link: '/tools/web/CssGridGenerator' },
+    { name: 'Flexbox Generator', description: 'Generate CSS Flexbox layouts with ease.', link: '/tools/web/FlexboxGenerator' },
+    { name: 'Font Pairing Tool', description: 'Find perfect font combinations for your website.', link: '/tools/web/FontPairingTool' },
+    { name: 'Favicon Generator', description: 'Create favicons in multiple sizes and formats.', link: '/tools/web/FaviconGenerator' },
+    { name: 'CSS Animation Generator', description: 'Create CSS animations with keyframes.', link: '/tools/web/CssAnimationGenerator' },
+    { name: 'QR Code Generator', description: 'Generate QR codes for websites and content.', link: '/tools/web/QrCodeGenerator' },
 ];
 
 const securityTools = [
-    { name: 'SSL Certificate Checker', description: 'Verify SSL certificate validity and security.', link: '/tools/web/ssl-certificate-checker' },
-    { name: 'Website Security Scanner', description: 'Scan websites for common security vulnerabilities.', link: '/tools/web/website-security-scanner' },
-    { name: 'HTTP Header Checker', description: 'Analyze HTTP response headers for security.', link: '/tools/web/http-header-checker' },
-    { name: 'WHOIS Lookup', description: 'Get domain registration and ownership information.', link: '/tools/web/whois-lookup' },
-    { name: 'DNS Lookup Tool', description: 'Query DNS records for any domain name.', link: '/tools/web/dns-lookup-tool' },
-    { name: 'IP Address Lookup', description: 'Get detailed information about IP addresses.', link: '/tools/web/ip-address-lookup' },
-    { name: 'Port Scanner', description: 'Check open ports on servers and websites.', link: '/tools/web/port-scanner' },
-    { name: 'Website Uptime Monitor', description: 'Monitor website availability and uptime.', link: '/tools/web/website-uptime-monitor' },
-    { name: 'Ping Test Tool', description: 'Test network connectivity to websites and servers.', link: '/tools/web/ping-test-tool' },
+    { name: 'SSL Certificate Checker', description: 'Verify SSL certificate validity and security.', link: '/tools/web/SslCertificateChecker' },
+    { name: 'Website Security Scanner', description: 'Scan websites for common security vulnerabilities.', link: '/tools/web/WebsiteSecurityScanner' },
+    { name: 'HTTP Header Checker', description: 'Analyze HTTP response headers for security.', link: '/tools/web/HttpHeaderChecker' },
+    { name: 'WHOIS Lookup', description: 'Get domain registration and ownership information.', link: '/tools/web/WhoisLookup' },
+    { name: 'DNS Lookup Tool', description: 'Query DNS records for any domain name.', link: '/tools/web/DnsLookupTool' },
+    { name: 'IP Address Lookup', description: 'Get detailed information about IP addresses.', link: '/tools/web/IpAddressLookup' },
+    { name: 'Port Scanner', description: 'Check open ports on servers and websites.', link: '/tools/web/PortScanner' },
+    { name: 'Website Uptime Monitor', description: 'Monitor website availability and uptime.', link: '/tools/web/WebsiteUptimeMonitor' },
+    { name: 'Ping Test Tool', description: 'Test network connectivity to websites and servers.', link: '/tools/web/PingTestTool' },
 ];
 
 const WebTools = () => {

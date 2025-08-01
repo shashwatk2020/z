@@ -46,29 +46,29 @@ const tools = [
 ];
 
 const conversionTools = [
-    { name: 'JPEG to PNG Converter', description: 'Convert JPEG images to PNG format with transparency support.', link: '/tools/image/jpeg-to-png' },
-    { name: 'PNG to JPEG Converter', description: 'Convert PNG files to JPEG format with compression options.', link: '/tools/image/png-to-jpeg' },
-    { name: 'WebP Converter', description: 'Convert images to WebP format for better web performance.', link: '/tools/image/webp-converter' },
-    { name: 'GIF to MP4 Converter', description: 'Convert animated GIFs to MP4 videos for better compression.', link: '/tools/image/gif-to-mp4' },
-    { name: 'SVG to PNG Converter', description: 'Convert vector SVG files to raster PNG images.', link: '/tools/image/svg-to-png' },
-    { name: 'HEIC to JPEG Converter', description: 'Convert iPhone HEIC photos to universal JPEG format.', link: '/tools/image/heic-to-jpeg' },
-    { name: 'RAW Image Converter', description: 'Convert RAW camera files to common image formats.', link: '/tools/image/raw-converter' },
-    { name: 'Batch Image Converter', description: 'Convert multiple images at once to save time.', link: '/tools/image/batch-converter' },
-    { name: 'ICO to PNG Converter', description: 'Convert Windows icon files to PNG format.', link: '/tools/image/ico-to-png' },
-    { name: 'TIFF to PDF Converter', description: 'Convert TIFF images to PDF documents.', link: '/tools/image/tiff-to-pdf' },
+    { name: 'JPEG to PNG Converter', description: 'Convert JPEG images to PNG format with transparency support.', link: '/tools/image/JpegToPngConverter' },
+    { name: 'PNG to JPEG Converter', description: 'Convert PNG files to JPEG format with compression options.', link: '/tools/image/PngToJpegConverter' },
+    { name: 'WebP Converter', description: 'Convert images to WebP format for better web performance.', link: '/tools/image/WebpConverter' },
+    { name: 'GIF to MP4 Converter', description: 'Convert animated GIFs to MP4 videos for better compression.', link: '/tools/image/GifToMp4Converter' },
+    { name: 'SVG to PNG Converter', description: 'Convert vector SVG files to raster PNG images.', link: '/tools/image/SvgToPngConverter' },
+    { name: 'HEIC to JPEG Converter', description: 'Convert iPhone HEIC photos to universal JPEG format.', link: '/tools/image/HeicToJpegConverter' },
+    { name: 'RAW Image Converter', description: 'Convert RAW camera files to common image formats.', link: '/tools/image/RawImageConverter' },
+    { name: 'Batch Image Converter', description: 'Convert multiple images at once to save time.', link: '/tools/image/BatchImageConverter' },
+    { name: 'ICO to PNG Converter', description: 'Convert Windows icon files to PNG format.', link: '/tools/image/IcoToPngConverter' },
+    { name: 'TIFF to PDF Converter', description: 'Convert TIFF images to PDF documents.', link: '/tools/image/TiffToPdfConverter' },
 ];
 
 const editingTools = [
-    { name: 'Image Resizer', description: 'Resize images to specific dimensions or percentages.', link: '/tools/image/image-resizer' },
-    { name: 'Image Cropper', description: 'Crop images to remove unwanted areas or focus on subjects.', link: '/tools/image/image-cropper' },
-    { name: 'Image Rotator', description: 'Rotate images by any angle or flip horizontally/vertically.', link: '/tools/image/image-rotator' },
-    { name: 'Background Remover', description: 'Remove backgrounds from images automatically.', link: '/tools/image/background-remover' },
-    { name: 'Image Filters', description: 'Apply artistic filters and effects to enhance photos.', link: '/tools/image/image-filters' },
-    { name: 'Brightness Adjuster', description: 'Adjust image brightness, contrast, and exposure.', link: '/tools/image/brightness-adjuster' },
-    { name: 'Color Adjuster', description: 'Modify hue, saturation, and color balance.', link: '/tools/image/color-adjuster' },
-    { name: 'Image Blur Tool', description: 'Add blur effects or motion blur to images.', link: '/tools/image/image-blur' },
-    { name: 'Image Sharpener', description: 'Enhance image sharpness and detail clarity.', link: '/tools/image/image-sharpener' },
-    { name: 'Watermark Adder', description: 'Add text or image watermarks to protect images.', link: '/tools/image/watermark-adder' },
+    { name: 'Image Resizer', description: 'Resize images to specific dimensions or percentages.', link: '/tools/image/ImageResizer' },
+    { name: 'Image Cropper', description: 'Crop images to remove unwanted areas or focus on subjects.', link: '/tools/image/ImageCropper' },
+    { name: 'Image Rotator', description: 'Rotate images by any angle or flip horizontally/vertically.', link: '/tools/image/ImageRotator' },
+    { name: 'Background Remover', description: 'Remove backgrounds from images automatically.', link: '/tools/image/BackgroundRemover' },
+    { name: 'Image Filters', description: 'Apply artistic filters and effects to enhance photos.', link: '/tools/image/ImageFilters' },
+    { name: 'Brightness Adjuster', description: 'Adjust image brightness, contrast, and exposure.', link: '/tools/image/BrightnessAdjuster' },
+    { name: 'Color Adjuster', description: 'Modify hue, saturation, and color balance.', link: '/tools/image/ColorAdjuster' },
+    { name: 'Image Blur Tool', description: 'Add blur effects or motion blur to images.', link: '/tools/image/ImageBlurTool' },
+    { name: 'Image Sharpener', description: 'Enhance image sharpness and detail clarity.', link: '/tools/image/ImageSharpener' },
+    { name: 'Watermark Adder', description: 'Add text or image watermarks to protect images.', link: '/tools/image/WatermarkAdder' },
 ];
 
 const optimizationTools = [

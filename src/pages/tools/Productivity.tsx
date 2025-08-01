@@ -10,72 +10,72 @@ const tools = [
   {
     name: 'Todo List Manager',
     description: 'Organize tasks, set priorities, and track progress with a powerful todo list system. Features deadlines, categories, and collaboration tools for team productivity.',
-    link: '/tools/productivity/advanced-todo-list',
+    link: '/tools/productivity/AdvancedTodoList',
     icon: <CheckSquare className="h-8 w-8 text-blue-500" />
   },
   {
     name: 'Time Tracker',
     description: 'Track time spent on projects and tasks with detailed reporting. Perfect for freelancers, consultants, and teams who need accurate time logging for billing and analysis.',
-    link: '/tools/productivity/time-tracker',
+    link: '/tools/productivity/TimeTracker',
     icon: <Clock className="h-8 w-8 text-green-500" />
   },
   {
     name: 'Note Taking System',
     description: 'Create, organize, and search through notes with rich formatting, tagging, and collaboration features. Your digital notebook for ideas, meetings, and projects.',
-    link: '/tools/productivity/notes',
+    link: '/tools/productivity/DigitalNotes',
     icon: <FileText className="h-8 w-8 text-purple-500" />
   },
   {
     name: 'Calendar Scheduler',
     description: 'Schedule meetings, set reminders, and manage your calendar with smart scheduling features. Integrates with popular calendar systems for seamless workflow.',
-    link: '/tools/productivity/calendar',
+    link: '/tools/productivity/Calendar',
     icon: <Calendar className="h-8 w-8 text-orange-500" />
   },
   {
     name: 'Project Manager',
     description: 'Plan, track, and manage projects with Gantt charts, milestone tracking, and team collaboration. Keep projects on time and within budget.',
-    link: '/tools/productivity/project-planner',
+    link: '/tools/productivity/ProjectPlanner',
     icon: <Users className="h-8 w-8 text-red-500" />
   },
   {
     name: 'Workflow Automation',
     description: 'Automate repetitive tasks and create efficient workflows. Connect different tools and services to streamline your daily operations.',
-    link: '/tools/productivity/automation',
+    link: '/tools/productivity/Automation',
     icon: <Zap className="h-8 w-8 text-indigo-500" />
   },
 ];
 
 const taskManagementTools = [
-    { name: 'Advanced Todo List', description: 'Feature-rich task management with priorities and deadlines.', link: '/tools/productivity/advanced-todo-list' },
-    { name: 'Kanban Board', description: 'Visual task management with drag-and-drop workflow.', link: '/tools/productivity/kanban-board' },
-    { name: 'Project Planner', description: 'Plan projects with timelines, milestones, and dependencies.', link: '/tools/productivity/project-planner' },
-    { name: 'Team Task Manager', description: 'Assign and track tasks across team members.', link: '/tools/productivity/team-task-manager' },
-    { name: 'Goal Tracker', description: 'Set and track personal and professional goals.', link: '/tools/productivity/goal-tracker' },
-    { name: 'Habit Tracker', description: 'Build positive habits with daily tracking and streaks.', link: '/tools/productivity/habit-tracker' },
-    { name: 'Priority Matrix', description: 'Organize tasks using Eisenhower priority matrix.', link: '/tools/productivity/priority-matrix' },
-    { name: 'Milestone Tracker', description: 'Track important project and personal milestones.', link: '/tools/productivity/milestone-tracker' },
+    { name: 'Advanced Todo List', description: 'Feature-rich task management with priorities and deadlines.', link: '/tools/productivity/AdvancedTodoList' },
+    { name: 'Kanban Board', description: 'Visual task management with drag-and-drop workflow.', link: '/tools/productivity/KanbanBoard' },
+    { name: 'Project Planner', description: 'Plan projects with timelines, milestones, and dependencies.', link: '/tools/productivity/ProjectPlanner' },
+    { name: 'Team Task Manager', description: 'Assign and track tasks across team members.', link: '/tools/productivity/TeamTaskManager' },
+    { name: 'Goal Tracker', description: 'Set and track personal and professional goals.', link: '/tools/productivity/GoalTracker' },
+    { name: 'Habit Tracker', description: 'Build positive habits with daily tracking and streaks.', link: '/tools/productivity/HabitTracker' },
+    { name: 'Priority Matrix', description: 'Organize tasks using Eisenhower priority matrix.', link: '/tools/productivity/PriorityMatrix' },
+    { name: 'Milestone Tracker', description: 'Track important project and personal milestones.', link: '/tools/productivity/MilestoneTracker' },
 ];
 
 const timeManagementTools = [
-    { name: 'Time Tracker', description: 'Track time spent on projects with detailed reporting.', link: '/tools/productivity/time-tracker' },
-    { name: 'Pomodoro Timer', description: 'Boost focus with the Pomodoro Technique timer.', link: '/tools/productivity/pomodoro-timer' },
-    { name: 'Work Schedule Planner', description: 'Plan and optimize your work schedule and shifts.', link: '/tools/productivity/schedule-planner' },
-    { name: 'Meeting Scheduler', description: 'Schedule meetings across time zones with availability.', link: '/tools/productivity/meeting-scheduler' },
-    { name: 'Time Zone Planner', description: 'Plan activities across multiple time zones.', link: '/tools/productivity/timezone-planner' },
-    { name: 'Calendar Sync Tool', description: 'Synchronize calendars from multiple platforms.', link: '/tools/productivity/calendar-sync' },
-    { name: 'Deadline Calculator', description: 'Calculate and track project deadlines and milestones.', link: '/tools/productivity/deadline-calculator' },
-    { name: 'Time Blocking Tool', description: 'Block time for focused work and deep work sessions.', link: '/tools/productivity/time-blocking' },
+    { name: 'Time Tracker', description: 'Track time spent on projects with detailed reporting.', link: '/tools/productivity/TimeTracker' },
+    { name: 'Pomodoro Timer', description: 'Boost focus with the Pomodoro Technique timer.', link: '/tools/productivity/PomodoroTimer' },
+    { name: 'Work Schedule Planner', description: 'Plan and optimize your work schedule and shifts.', link: '/tools/productivity/WorkSchedulePlanner' },
+    { name: 'Meeting Scheduler', description: 'Schedule meetings across time zones with availability.', link: '/tools/productivity/MeetingScheduler' },
+    { name: 'Time Zone Planner', description: 'Plan activities across multiple time zones.', link: '/tools/productivity/TimeZonePlanner' },
+    { name: 'Calendar Sync Tool', description: 'Synchronize calendars from multiple platforms.', link: '/tools/productivity/CalendarSync' },
+    { name: 'Deadline Calculator', description: 'Calculate and track project deadlines and milestones.', link: '/tools/productivity/DeadlineCalculator' },
+    { name: 'Time Blocking Tool', description: 'Block time for focused work and deep work sessions.', link: '/tools/productivity/TimeBlocking' },
 ];
 
 const organizationTools = [
-    { name: 'Digital Note System', description: 'Organize notes with tags, categories, and search.', link: '/tools/productivity/notes' },
-    { name: 'Document Organizer', description: 'Organize and categorize documents and files.', link: '/tools/productivity/document-organizer' },
-    { name: 'Contact Manager', description: 'Manage contacts with detailed information and groups.', link: '/tools/productivity/contact-manager' },
-    { name: 'Bookmark Manager', description: 'Organize and sync bookmarks across devices.', link: '/tools/productivity/bookmark-manager' },
-    { name: 'Password Organizer', description: 'Securely organize and manage passwords.', link: '/tools/productivity/password-organizer' },
-    { name: 'File Naming System', description: 'Generate consistent file naming conventions.', link: '/tools/productivity/file-naming' },
-    { name: 'Digital Workspace', description: 'Create organized digital workspaces for projects.', link: '/tools/productivity/workspace' },
-    { name: 'Archive System', description: 'Archive and organize completed projects and files.', link: '/tools/productivity/archive-system' },
+    { name: 'Digital Note System', description: 'Organize notes with tags, categories, and search.', link: '/tools/productivity/DigitalNotes' },
+    { name: 'Document Organizer', description: 'Organize and categorize documents and files.', link: '/tools/productivity/DocumentOrganizer' },
+    { name: 'Contact Manager', description: 'Manage contacts with detailed information and groups.', link: '/tools/productivity/ContactManager' },
+    { name: 'Bookmark Manager', description: 'Organize and sync bookmarks across devices.', link: '/tools/productivity/BookmarkManager' },
+    { name: 'Password Organizer', description: 'Securely organize and manage passwords.', link: '/tools/productivity/PasswordOrganizer' },
+    { name: 'File Naming System', description: 'Generate consistent file naming conventions.', link: '/tools/productivity/FileNaming' },
+    { name: 'Digital Workspace', description: 'Create organized digital workspaces for projects.', link: '/tools/productivity/Workspace' },
+    { name: 'Archive System', description: 'Archive and organize completed projects and files.', link: '/tools/productivity/ArchiveSystem' },
 ];
 
 const collaborationTools = [
